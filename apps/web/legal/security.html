@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>Chính sách bảo mật | Muon Noi</title>
+  <link rel="stylesheet" href="/assets/ui.css" />
+</head>
+<body>
+<div class="app" id="app" data-theme="dark">
+  <header class="topbar"><div class="topbar__inner">
+    <a class="brand" href="/#/"><span class="brand__mark"></span><span class="brand__name">muonnoi</span></a>
+    <div class="topbar__actions"><a class="btn btn--ghost" href="/#/">Về ứng dụng</a></div>
+  </div></header>
+
+  <main class="main">
+    <section class="panel" style="max-width:980px;margin:18px auto;">
+      <div class="panel__block">
+        <h1 style="margin:0;font-size:20px;">Chính sách bảo mật</h1>
+        <p class="muted" style="margin:10px 0 0 0;line-height:1.6;">
+          Nếu bạn phát hiện lỗ hổng, vui lòng báo cáo có trách nhiệm. Chúng tôi ưu tiên sửa nhanh và minh bạch.
+        </p>
+      </div>
+
+      <div class="panel__block">
+        <h2 class="h2">Liên hệ</h2>
+        <p class="muted" style="line-height:1.6;">
+          Email: <a class="link" href="mailto:security@muonnoi.org">security@muonnoi.org</a>
+        </p>
+
+        <h2 class="h2">Nguyên tắc báo cáo có trách nhiệm</h2>
+        <ul class="muted" style="line-height:1.8;margin:10px 0 0 18px;">
+          <li>Không khai thác gây ảnh hưởng người dùng hoặc làm gián đoạn dịch vụ.</li>
+          <li>Không truy cập dữ liệu riêng tư ngoài phạm vi cần thiết để chứng minh lỗi.</li>
+          <li>Cung cấp mô tả rõ ràng và bước tái hiện (PoC) tối thiểu.</li>
+        </ul>
+
+        <h2 class="h2">Phạm vi</h2>
+        <p class="muted" style="line-height:1.6;">
+          Các miền liên quan: muonnoi.org, app.muonnoi.org và các API/worker sau này.
+        </p>
+      </div>
+    </section>
+  </main>
+</div>
+<script>
+  (function(){try{var t=localStorage.getItem('mn_theme');if(t)document.getElementById('app').setAttribute('data-theme',t);}catch(e){}})();
+</script>
+</body>
+</html>
