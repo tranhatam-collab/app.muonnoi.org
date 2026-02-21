@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>Chính sách chống lạm dụng | Muon Noi</title>
+  <link rel="stylesheet" href="/assets/ui.css" />
+</head>
+<body>
+<div class="app" id="app" data-theme="dark">
+  <header class="topbar"><div class="topbar__inner">
+    <a class="brand" href="/#/"><span class="brand__mark"></span><span class="brand__name">muonnoi</span></a>
+    <div class="topbar__actions"><a class="btn btn--ghost" href="/#/">Về ứng dụng</a></div>
+  </div></header>
+
+  <main class="main">
+    <section class="panel" style="max-width:980px;margin:18px auto;">
+      <div class="panel__block">
+        <h1 style="margin:0;font-size:20px;">Chính sách chống lạm dụng</h1>
+        <p class="muted" style="margin:10px 0 0 0;line-height:1.6;">
+          Muon Noi áp dụng nhiều lớp bảo vệ để giảm spam, bot, phishing và phát tán mã độc.
+        </p>
+      </div>
+
+      <div class="panel__block">
+        <h2 class="h2">Các hành vi bị cấm</h2>
+        <ul class="muted" style="line-height:1.8;margin:10px 0 0 18px;">
+          <li>Spam hàng loạt, bot tự động, thao túng tương tác.</li>
+          <li>Phishing, lừa đảo tài chính, giả mạo danh tính.</li>
+          <li>Đính kèm hoặc dẫn link phát tán mã độc.</li>
+          <li>Tấn công hệ thống, khai thác lỗ hổng, DDoS.</li>
+        </ul>
+
+        <h2 class="h2">Biện pháp kỹ thuật</h2>
+        <ul class="muted" style="line-height:1.8;margin:10px 0 0 18px;">
+          <li>Giới hạn tốc độ (rate limit) theo IP/thiết bị/tài khoản.</li>
+          <li>Chống bot (Turnstile/WAF) cho hành vi rủi ro cao.</li>
+          <li>Lọc nội dung đầu vào: độ dài, ký tự nguy hiểm, liên kết.</li>
+          <li>Nhật ký lạm dụng và cơ chế chặn theo mức độ.</li>
+        </ul>
+
+        <h2 class="h2">Báo cáo lạm dụng</h2>
+        <p class="muted" style="line-height:1.6;">
+          Gửi báo cáo: <a class="link" href="mailto:abuse@muonnoi.org">abuse@muonnoi.org</a>
+        </p>
+      </div>
+    </section>
+  </main>
+</div>
+<script>
+  (function(){try{var t=localStorage.getItem('mn_theme');if(t)document.getElementById('app').setAttribute('data-theme',t);}catch(e){}})();
+</script>
+</body>
+</html>
