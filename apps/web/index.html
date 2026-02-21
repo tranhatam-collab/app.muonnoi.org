@@ -2,61 +2,342 @@
 <html lang="vi">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <meta name="color-scheme" content="dark light" />
-
-  <title>Muon Noi | Mang xa hoi phi tap trung cho tieng noi va lich su</title>
-  <meta name="description" content="Muon Noi la lop ha tang mang xa hoi phi tap trung. Danh tinh thuoc ve ban. Tin nhan ma hoa dau cuoi. Luu vinh vien va ton trong quyen an." />
+  <title>Muon Noi | App</title>
+  <meta name="description" content="Muon Noi app UI frame." />
   <link rel="canonical" href="https://app.muonnoi.org/" />
-
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="Muon Noi | Mang xa hoi phi tap trung" />
-  <meta property="og:description" content="No Center. No Control. Just People. Danh tinh thuoc ve ban. Tin nhan ma hoa dau cuoi. Luu vinh vien va ton trong quyen an." />
-  <meta property="og:url" content="https://app.muonnoi.org/" />
-
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Muon Noi | Mang xa hoi phi tap trung" />
-  <meta name="twitter:description" content="No Center. No Control. Just People." />
-
-  <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@type":"WebSite",
-    "name":"Muon Noi",
-    "url":"https://app.muonnoi.org/",
-    "description":"Mang xa hoi phi tap trung cho tieng noi va lich su. Danh tinh thuoc ve ban. Tin nhan ma hoa dau cuoi."
-  }
-  </script>
-
   <link rel="stylesheet" href="/assets/app.css" />
 </head>
+
 <body>
-  <a class="skip" href="#main">Bo qua noi dung lap</a>
+  <a class="skip" href="#appMain">Bo qua dieu huong</a>
 
-  <header class="topbar">
-    <div class="topbar__inner">
-      <a class="logo" href="/" aria-label="Muon Noi home">
-        <span class="logo__dot" aria-hidden="true"></span>
-        <span class="logo__text">muonnoi</span>
-      </a>
-      <nav class="nav" aria-label="Primary">
-        <a href="/start">Bat Dau</a>
-        <a href="/method">Cach Hoat Dong</a>
-        <a href="/legal/privacy">Quyen Rieng Tu</a>
-      </nav>
+  <!-- App Shell -->
+  <div class="app" data-theme="dark">
+    <!-- Topbar -->
+    <header class="topbar" role="banner">
+      <div class="topbar__inner">
+        <button class="iconbtn iconbtn--ghost" id="btnOpenRail" aria-label="Mo menu" aria-controls="rail" aria-expanded="false">
+          <svg class="icon"><use href="/assets/icons.svg#i-menu"></use></svg>
+        </button>
+
+        <a class="brand" href="#/home" aria-label="Muon Noi">
+          <span class="brand__mark" aria-hidden="true"></span>
+          <span class="brand__name">muonnoi</span>
+        </a>
+
+        <div class="topbar__actions">
+          <div class="search" role="search">
+            <svg class="icon search__icon" aria-hidden="true"><use href="/assets/icons.svg#i-search"></use></svg>
+            <input id="globalSearch" class="search__input" type="search" placeholder="Tim kiem" autocomplete="off" />
+            <button class="iconbtn iconbtn--ghost search__clear" id="btnClearSearch" aria-label="Xoa tim kiem">
+              <svg class="icon"><use href="/assets/icons.svg#i-x"></use></svg>
+            </button>
+          </div>
+
+          <button class="iconbtn" id="btnTheme" aria-label="Doi giao dien sang toi">
+            <svg class="icon"><use href="/assets/icons.svg#i-moon"></use></svg>
+          </button>
+
+          <button class="iconbtn" id="btnQuick" aria-label="Tao nhanh">
+            <svg class="icon"><use href="/assets/icons.svg#i-plus"></use></svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Layout -->
+    <div class="layout">
+      <!-- Left Rail (tablet/desktop) -->
+      <aside class="rail" id="rail" aria-label="Dieu huong">
+        <div class="rail__inner">
+          <nav class="nav" aria-label="Chinh">
+            <a class="nav__item" href="#/home" data-route="home">
+              <svg class="icon"><use href="/assets/icons.svg#i-home"></use></svg>
+              <span>Trang chu</span>
+            </a>
+            <a class="nav__item" href="#/explore" data-route="explore">
+              <svg class="icon"><use href="/assets/icons.svg#i-compass"></use></svg>
+              <span>Kham pha</span>
+            </a>
+            <a class="nav__item" href="#/create" data-route="create">
+              <svg class="icon"><use href="/assets/icons.svg#i-edit"></use></svg>
+              <span>Tao</span>
+            </a>
+            <a class="nav__item" href="#/messages" data-route="messages">
+              <svg class="icon"><use href="/assets/icons.svg#i-chat"></use></svg>
+              <span>Tin nhan</span>
+              <span class="badge" id="msgBadge" aria-label="So tin nhan">3</span>
+            </a>
+            <a class="nav__item" href="#/profile" data-route="profile">
+              <svg class="icon"><use href="/assets/icons.svg#i-user"></use></svg>
+              <span>Ho so</span>
+            </a>
+            <a class="nav__item" href="#/settings" data-route="settings">
+              <svg class="icon"><use href="/assets/icons.svg#i-settings"></use></svg>
+              <span>Cai dat</span>
+            </a>
+          </nav>
+
+          <div class="rail__divider"></div>
+
+          <div class="rail__meta">
+            <div class="miniCard">
+              <div class="miniCard__k">Muon Noi</div>
+              <div class="miniCard__v">No Center. No Control. Just People.</div>
+            </div>
+
+            <div class="rail__links">
+              <a href="#/legal" class="link">Phap ly</a>
+              <a href="#/privacy" class="link">Rieng tu</a>
+              <a href="#/about" class="link">Gioi thieu</a>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Main -->
+      <main class="main" id="appMain" role="main" tabindex="-1">
+        <!-- Page Header -->
+        <div class="pageTop">
+          <div class="pageTop__left">
+            <h1 class="pageTop__title" id="pageTitle">Trang chu</h1>
+            <p class="pageTop__sub" id="pageSub">Khung giao dien hoan thien. Chen noi dung sau.</p>
+          </div>
+          <div class="pageTop__right">
+            <button class="btn btn--ghost" id="btnOpenCommand">
+              <svg class="icon"><use href="/assets/icons.svg#i-command"></use></svg>
+              <span>Lenh</span>
+            </button>
+            <button class="btn btn--primary" id="btnPrimaryAction">
+              <svg class="icon"><use href="/assets/icons.svg#i-plus"></use></svg>
+              <span>Tao moi</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Content Grid -->
+        <div class="gridMain">
+          <!-- Center Feed Area -->
+          <section class="panel panel--feed" aria-label="Noi dung chinh">
+            <div class="panel__head">
+              <div class="tabs" role="tablist" aria-label="Tabs">
+                <button class="tab is-active" role="tab" aria-selected="true" data-tab="timeline">Timeline</button>
+                <button class="tab" role="tab" aria-selected="false" data-tab="proof">Proof</button>
+                <button class="tab" role="tab" aria-selected="false" data-tab="saved">Da luu</button>
+              </div>
+
+              <div class="panel__headActions">
+                <button class="iconbtn iconbtn--ghost" id="btnFilter" aria-label="Loc">
+                  <svg class="icon"><use href="/assets/icons.svg#i-filter"></use></svg>
+                </button>
+                <button class="iconbtn iconbtn--ghost" id="btnRefresh" aria-label="Lam moi">
+                  <svg class="icon"><use href="/assets/icons.svg#i-refresh"></use></svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Feed Skeleton -->
+            <div class="feed" id="feed">
+              <!-- Card 1 -->
+              <article class="post">
+                <div class="post__meta">
+                  <div class="avatar" aria-hidden="true"></div>
+                  <div class="post__metaText">
+                    <div class="post__name">Muon Noi</div>
+                    <div class="post__time">Vua xong</div>
+                  </div>
+                  <button class="iconbtn iconbtn--ghost post__more" aria-label="Tuy chon">
+                    <svg class="icon"><use href="/assets/icons.svg#i-more"></use></svg>
+                  </button>
+                </div>
+                <div class="post__body">
+                  <div class="skeleton sk-line w-92"></div>
+                  <div class="skeleton sk-line w-84"></div>
+                  <div class="skeleton sk-line w-68"></div>
+                </div>
+                <div class="post__actions">
+                  <button class="chip">
+                    <svg class="icon"><use href="/assets/icons.svg#i-heart"></use></svg>
+                    <span>Thich</span>
+                  </button>
+                  <button class="chip">
+                    <svg class="icon"><use href="/assets/icons.svg#i-reply"></use></svg>
+                    <span>Tra loi</span>
+                  </button>
+                  <button class="chip">
+                    <svg class="icon"><use href="/assets/icons.svg#i-repost"></use></svg>
+                    <span>Chia se</span>
+                  </button>
+                  <button class="chip chip--ghost">
+                    <svg class="icon"><use href="/assets/icons.svg#i-bookmark"></use></svg>
+                    <span>Luu</span>
+                  </button>
+                </div>
+              </article>
+
+              <!-- Card 2 -->
+              <article class="post">
+                <div class="post__meta">
+                  <div class="avatar avatar--alt" aria-hidden="true"></div>
+                  <div class="post__metaText">
+                    <div class="post__name">Creator</div>
+                    <div class="post__time">Hom nay</div>
+                  </div>
+                  <button class="iconbtn iconbtn--ghost post__more" aria-label="Tuy chon">
+                    <svg class="icon"><use href="/assets/icons.svg#i-more"></use></svg>
+                  </button>
+                </div>
+                <div class="post__body">
+                  <div class="skeleton sk-line w-88"></div>
+                  <div class="skeleton sk-line w-72"></div>
+                  <div class="skeleton sk-block"></div>
+                </div>
+                <div class="post__actions">
+                  <button class="chip">
+                    <svg class="icon"><use href="/assets/icons.svg#i-shield"></use></svg>
+                    <span>Proof</span>
+                  </button>
+                  <button class="chip chip--ghost">
+                    <svg class="icon"><use href="/assets/icons.svg#i-link"></use></svg>
+                    <span>Copy link</span>
+                  </button>
+                </div>
+              </article>
+
+              <!-- Empty state slot -->
+              <div class="empty" id="emptyState" hidden>
+                <div class="empty__icon" aria-hidden="true">
+                  <svg class="icon icon--lg"><use href="/assets/icons.svg#i-spark"></use></svg>
+                </div>
+                <div class="empty__title">Chua co noi dung</div>
+                <div class="empty__text">Khung giao dien da san sang. Chen noi dung va API o buoc sau.</div>
+                <button class="btn btn--primary" id="btnEmptyCreate">
+                  <svg class="icon"><use href="/assets/icons.svg#i-plus"></use></svg>
+                  <span>Tao bai dau tien</span>
+                </button>
+              </div>
+            </div>
+          </section>
+
+          <!-- Right Sidebar -->
+          <aside class="panel panel--side" aria-label="Thanh ben">
+            <div class="panel__block">
+              <div class="panel__titleRow">
+                <h2 class="h2">Quick</h2>
+                <button class="iconbtn iconbtn--ghost" aria-label="More">
+                  <svg class="icon"><use href="/assets/icons.svg#i-more"></use></svg>
+                </button>
+              </div>
+
+              <div class="quickGrid">
+                <button class="quick">
+                  <svg class="icon"><use href="/assets/icons.svg#i-edit"></use></svg>
+                  <span>Tao bai</span>
+                </button>
+                <button class="quick">
+                  <svg class="icon"><use href="/assets/icons.svg#i-bolt"></use></svg>
+                  <span>Proof</span>
+                </button>
+                <button class="quick">
+                  <svg class="icon"><use href="/assets/icons.svg#i-lock"></use></svg>
+                  <span>Private</span>
+                </button>
+                <button class="quick">
+                  <svg class="icon"><use href="/assets/icons.svg#i-globe"></use></svg>
+                  <span>Public</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="panel__block">
+              <h2 class="h2">Cac vung</h2>
+              <div class="list">
+                <a class="list__row" href="#/channels">
+                  <span class="dot"></span>
+                  <span>Channels</span>
+                  <span class="muted">12</span>
+                </a>
+                <a class="list__row" href="#/circles">
+                  <span class="dot dot--alt"></span>
+                  <span>Circles</span>
+                  <span class="muted">4</span>
+                </a>
+                <a class="list__row" href="#/drafts">
+                  <span class="dot dot--soft"></span>
+                  <span>Drafts</span>
+                  <span class="muted">2</span>
+                </a>
+              </div>
+            </div>
+
+            <div class="panel__block">
+              <h2 class="h2">Status</h2>
+              <div class="status">
+                <div class="status__row"><span class="muted">Mode</span><span class="pill">UI Frame</span></div>
+                <div class="status__row"><span class="muted">Data</span><span class="pill pill--ghost">Chua ket noi</span></div>
+                <div class="status__row"><span class="muted">Theme</span><span class="pill pill--ghost" id="themeLabel">Dark</span></div>
+              </div>
+            </div>
+          </aside>
+        </div>
+
+        <!-- Bottom Tabbar (mobile) -->
+        <nav class="tabbar" aria-label="Dieu huong nhanh">
+          <a class="tabbar__item is-active" href="#/home" data-route="home">
+            <svg class="icon"><use href="/assets/icons.svg#i-home"></use></svg>
+            <span>Home</span>
+          </a>
+          <a class="tabbar__item" href="#/explore" data-route="explore">
+            <svg class="icon"><use href="/assets/icons.svg#i-compass"></use></svg>
+            <span>Explore</span>
+          </a>
+          <a class="tabbar__item tabbar__item--primary" href="#/create" data-route="create" aria-label="Tao moi">
+            <span class="fab">
+              <svg class="icon"><use href="/assets/icons.svg#i-plus"></use></svg>
+            </span>
+          </a>
+          <a class="tabbar__item" href="#/messages" data-route="messages">
+            <svg class="icon"><use href="/assets/icons.svg#i-chat"></use></svg>
+            <span>Chat</span>
+          </a>
+          <a class="tabbar__item" href="#/profile" data-route="profile">
+            <svg class="icon"><use href="/assets/icons.svg#i-user"></use></svg>
+            <span>Me</span>
+          </a>
+        </nav>
+      </main>
     </div>
-  </header>
 
-  <main id="main" class="main">
-    <div id="homeMount" class="mount" aria-live="polite"></div>
-  </main>
+    <!-- Drawer overlay for rail (mobile/tablet) -->
+    <div class="overlay" id="overlay" hidden></div>
 
-  <footer class="footer">
-    <div class="footer__inner">
-      <p class="footer__line">Muon Noi. No Center. No Control. Just People.</p>
-      <p class="footer__line">Copyright © <span id="y"></span> muonnoi.org</p>
+    <!-- Modal: Command -->
+    <div class="modal" id="cmdModal" role="dialog" aria-modal="true" aria-label="Lenh" hidden>
+      <div class="modal__panel">
+        <div class="modal__head">
+          <div class="modal__title">Lenh</div>
+          <button class="iconbtn iconbtn--ghost" id="btnCloseCommand" aria-label="Dong">
+            <svg class="icon"><use href="/assets/icons.svg#i-x"></use></svg>
+          </button>
+        </div>
+        <div class="modal__body">
+          <div class="cmd">
+            <input class="input" id="cmdInput" placeholder="Go de tim nhanh: tao, proof, settings..." />
+            <div class="cmd__list" id="cmdList">
+              <button class="cmd__item" data-go="#/create"><span>Tao moi</span><span class="muted">Enter</span></button>
+              <button class="cmd__item" data-go="#/explore"><span>Kham pha</span><span class="muted">Enter</span></button>
+              <button class="cmd__item" data-go="#/settings"><span>Cai dat</span><span class="muted">Enter</span></button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  </footer>
+
+    <!-- Toast -->
+    <div class="toasts" id="toasts" aria-live="polite" aria-atomic="true"></div>
+  </div>
 
   <script src="/assets/app.js"></script>
 </body>
