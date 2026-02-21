@@ -1,5 +1,5 @@
 // apps/web/assets/ui.js
-// Muon Noi UI Shell controller — no libs
+// Muon Noi UI Shell controller — no libs — stable build
 
 (function () {
   "use strict";
@@ -32,6 +32,9 @@
   const themeLabel = $("#themeLabel");
   const toasts = $("#toasts");
 
+  // Optional hero button (if exists in index.html)
+  const btnOpenSearch2 = $("#btnOpenSearch2");
+
   const isDesktop = () => window.matchMedia("(min-width: 960px)").matches;
 
   function showOverlay(on) {
@@ -39,19 +42,59 @@
     overlay.hidden = !on;
   }
 
+  function anyDrawerOpen() {
+    const sOpen = searchDrawer && !searchDrawer.hidden && searchDrawer.classList.contains("is-open");
+    const nOpen = notiDrawer && !notiDrawer.hidden && notiDrawer.classList.contains("is-open");
+    return !!(sOpen || nOpen);
+  }
+
+  function anyFloatingOpen() {
+    const railOpen = !isDesktop() && rail?.classList.contains("is-open");
+    const drawerOpen = anyDrawerOpen();
+    const menuOpen = profileMenu && !profileMenu.hidden;
+    const modalOpen = cmdModal && !cmdModal.hidden;
+    return !!(railOpen || drawerOpen || menuOpen || modalOpen);
+  }
+
+  function closeMenu() {
+    if (!profileMenu) return;
+    profileMenu.hidden = true;
+    btnProfile?.setAttribute("aria-expanded", "false");
+  }
+
+  function closeRail() {
+    if (isDesktop()) return;
+    rail?.classList.remove("is-open");
+    btnOpenRail?.setAttribute("aria-expanded", "false");
+  }
+
+  function closeDrawer(drawer) {
+    if (!drawer) return;
+    drawer.classList.remove("is-open");
+    setTimeout(() => {
+      drawer.hidden = true;
+      if (!anyFloatingOpen()) showOverlay(false);
+      else if (!anyDrawerOpen() && !(!isDesktop() && rail?.classList.contains("is-open")) && (profileMenu?.hidden ?? true) && (cmdModal?.hidden ?? true)) {
+        showOverlay(false);
+      }
+    }, 220);
+  }
+
+  function closeModal(modal) {
+    if (!modal) return;
+    modal.hidden = true;
+    if (!anyFloatingOpen()) showOverlay(false);
+  }
+
   function closeAllFloating() {
-    // rail (mobile only)
-    if (!isDesktop()) rail?.classList.remove("is-open");
+    closeRail();
 
     // drawers
-    searchDrawer?.classList.remove("is-open");
-    notiDrawer?.classList.remove("is-open");
-    if (searchDrawer) searchDrawer.hidden = true;
-    if (notiDrawer) notiDrawer.hidden = true;
+    if (searchDrawer) { searchDrawer.classList.remove("is-open"); searchDrawer.hidden = true; }
+    if (notiDrawer) { notiDrawer.classList.remove("is-open"); notiDrawer.hidden = true; }
 
     // menu
-    if (profileMenu) profileMenu.hidden = true;
-    btnProfile?.setAttribute("aria-expanded", "false");
+    closeMenu();
 
     // modal
     if (cmdModal) cmdModal.hidden = true;
@@ -75,61 +118,53 @@
 
   function openDrawer(drawer) {
     if (!drawer) return;
-    // close other
+
+    // close other drawers
     [searchDrawer, notiDrawer].forEach((d) => {
       if (!d || d === drawer) return;
       d.classList.remove("is-open");
       d.hidden = true;
     });
+
+    // also close profile menu (so it doesn't overlap)
+    closeMenu();
+
     drawer.hidden = false;
-    // next frame for transition
     requestAnimationFrame(() => drawer.classList.add("is-open"));
     showOverlay(true);
   }
 
-  function closeDrawer(drawer) {
-    if (!drawer) return;
-    drawer.classList.remove("is-open");
-    setTimeout(() => {
-      drawer.hidden = true;
-      // if nothing else open, hide overlay
-      if (!anyFloatingOpen()) showOverlay(false);
-    }, 220);
-  }
-
-  function anyFloatingOpen() {
-    const railOpen = !isDesktop() && rail?.classList.contains("is-open");
-    const drawerOpen =
-      (searchDrawer && !searchDrawer.hidden && searchDrawer.classList.contains("is-open")) ||
-      (notiDrawer && !notiDrawer.hidden && notiDrawer.classList.contains("is-open"));
-    const menuOpen = profileMenu && !profileMenu.hidden;
-    const modalOpen = cmdModal && !cmdModal.hidden;
-    return !!(railOpen || drawerOpen || menuOpen || modalOpen);
-  }
-
   function toggleMenu() {
     if (!profileMenu) return;
-    const open = profileMenu.hidden;
-    profileMenu.hidden = !open ? true : false;
-    btnProfile?.setAttribute("aria-expanded", open ? "true" : "false");
-    showOverlay(open);
+    const willOpen = profileMenu.hidden === true;
+
+    // close drawers if opening menu
+    if (willOpen) {
+      if (searchDrawer && !searchDrawer.hidden) closeDrawer(searchDrawer);
+      if (notiDrawer && !notiDrawer.hidden) closeDrawer(notiDrawer);
+    }
+
+    profileMenu.hidden = !willOpen ? true : false;
+    btnProfile?.setAttribute("aria-expanded", willOpen ? "true" : "false");
+    showOverlay(willOpen);
   }
 
   function openModal(modal) {
     if (!modal) return;
+
+    // close drawers + menu for clean focus
+    if (searchDrawer && !searchDrawer.hidden) closeDrawer(searchDrawer);
+    if (notiDrawer && !notiDrawer.hidden) closeDrawer(notiDrawer);
+    closeMenu();
+    closeRail();
+
     modal.hidden = false;
     showOverlay(true);
-    // focus
+
     setTimeout(() => {
       cmdInput?.focus();
       cmdInput?.select?.();
     }, 0);
-  }
-
-  function closeModal(modal) {
-    if (!modal) return;
-    modal.hidden = true;
-    if (!anyFloatingOpen()) showOverlay(false);
   }
 
   function toast(title, desc) {
@@ -143,10 +178,11 @@
     el.querySelector(".toast__t").textContent = title || "Thông báo";
     el.querySelector(".toast__d").textContent = desc || "";
     toasts.appendChild(el);
+
     setTimeout(() => {
       el.style.opacity = "0";
       el.style.transform = "translateY(4px)";
-      setTimeout(() => el.remove(), 220);
+      setTimeout(() => el.remove(), 240);
     }, 2600);
   }
 
@@ -154,18 +190,18 @@
   function applyTheme(theme) {
     const t = theme === "light" ? "light" : "dark";
     app?.setAttribute("data-theme", t);
-    localStorage.setItem("mn_theme", t);
+    try { localStorage.setItem("mn_theme", t); } catch (e) {}
 
     const iconUse = btnTheme?.querySelector("use");
     if (iconUse) iconUse.setAttribute("href", `/assets/icons.svg#${t === "dark" ? "i-moon" : "i-sun"}`);
 
     if (themeLabel) themeLabel.textContent = t === "dark" ? "Tối" : "Sáng";
-    toast("Giao diện", t === "dark" ? "Đã chuyển sang chế độ tối." : "Đã chuyển sang chế độ sáng.");
   }
 
   function toggleTheme() {
     const cur = app?.getAttribute("data-theme") || "dark";
     applyTheme(cur === "dark" ? "light" : "dark");
+    toast("Giao diện", (app?.getAttribute("data-theme") === "dark") ? "Đã chuyển sang chế độ tối." : "Đã chuyển sang chế độ sáng.");
   }
 
   // Router (UI only)
@@ -176,9 +212,7 @@
     messages: { title: "Tin nhắn", sub: "Không ồn. Tập trung vào đối thoại." },
     profile: { title: "Hồ sơ", sub: "Bạn là ai, bạn muốn gì, bạn đang làm gì." },
     settings: { title: "Cài đặt", sub: "Quyền riêng tư, hiển thị, và các tùy chọn." },
-    about: { title: "Giới thiệu", sub: "Muon Noi là một nền tảng xã hội hướng về con người." },
-    privacy: { title: "Quyền riêng tư", sub: "Nguyên tắc dữ liệu tối thiểu, ưu tiên quyền riêng tư." },
-    legal: { title: "Pháp lý", sub: "Điều khoản và các chính sách nền tảng." }
+    about: { title: "Giới thiệu", sub: "Muon Noi là một nền tảng xã hội hướng về con người." }
   };
 
   function setActiveNav(route) {
@@ -196,25 +230,43 @@
     setActiveNav(route);
 
     // close overlays on navigation (mobile)
-    closeAllFloating();
+    if (!isDesktop()) closeAllFloating();
   }
 
   // Events
   btnOpenRail?.addEventListener("click", (e) => { e.preventDefault(); toggleRail(); });
-  overlay?.addEventListener("click", (e) => { e.preventDefault(); closeAllFloating(); });
 
-  btnOpenSearch?.addEventListener("click", (e) => { e.preventDefault(); openDrawer(searchDrawer); });
-  btnOpenNoti?.addEventListener("click", (e) => { e.preventDefault(); openDrawer(notiDrawer); });
+  overlay?.addEventListener("click", (e) => {
+    e.preventDefault();
+    closeAllFloating();
+  });
 
-  // close buttons
+  btnOpenSearch?.addEventListener("click", (e) => {
+    e.preventDefault();
+    openDrawer(searchDrawer);
+  });
+
+  btnOpenSearch2?.addEventListener("click", (e) => {
+    e.preventDefault();
+    openDrawer(searchDrawer);
+  });
+
+  btnOpenNoti?.addEventListener("click", (e) => {
+    e.preventDefault();
+    openDrawer(notiDrawer);
+  });
+
+  // Close buttons by data-close
   $$("[data-close]").forEach((btn) => {
     btn.addEventListener("click", (e) => {
       e.preventDefault();
       const id = btn.getAttribute("data-close");
-      const el = document.getElementById(id);
+      const el = id ? document.getElementById(id) : null;
       if (!el) return;
+
       if (el.classList.contains("drawer")) return closeDrawer(el);
       if (el.classList.contains("modal")) return closeModal(el);
+
       el.hidden = true;
       if (!anyFloatingOpen()) showOverlay(false);
     });
@@ -222,7 +274,11 @@
 
   btnTheme?.addEventListener("click", (e) => { e.preventDefault(); toggleTheme(); });
 
-  btnQuick?.addEventListener("click", (e) => { e.preventDefault(); toast("Tạo mới", "Bước sau sẽ gắn composer và API."); openModal(cmdModal); });
+  btnQuick?.addEventListener("click", (e) => {
+    e.preventDefault();
+    toast("Tạo mới", "Bước sau sẽ gắn composer và API.");
+    openModal(cmdModal);
+  });
 
   btnProfile?.addEventListener("click", (e) => { e.preventDefault(); toggleMenu(); });
 
@@ -235,7 +291,6 @@
   btnCommand?.addEventListener("click", (e) => { e.preventDefault(); openModal(cmdModal); });
 
   cmdModal?.addEventListener("click", (e) => {
-    // click outside panel closes
     if (e.target === cmdModal) closeModal(cmdModal);
   });
 
@@ -243,7 +298,7 @@
     const btn = e.target.closest("[data-go]");
     if (!btn) return;
     const dest = btn.getAttribute("data-go");
-    window.location.hash = dest;
+    if (dest) window.location.hash = dest;
     closeModal(cmdModal);
   });
 
@@ -261,7 +316,6 @@
       closeAllFloating();
       return;
     }
-    // Ctrl/Cmd + K open command
     const isK = e.key.toLowerCase() === "k";
     if (isK && (e.ctrlKey || e.metaKey)) {
       e.preventDefault();
@@ -283,23 +337,24 @@
   });
 
   // Init theme
-  const saved = localStorage.getItem("mn_theme");
-  if (saved) applyTheme(saved);
-  else {
-    // default dark, but respect system if user prefers light
+  (function initTheme() {
+    try {
+      const saved = localStorage.getItem("mn_theme");
+      if (saved) return applyTheme(saved);
+    } catch (e) {}
     const prefersLight = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches;
     applyTheme(prefersLight ? "light" : "dark");
-  }
+  })();
 
   // Init route
   if (!window.location.hash) window.location.hash = "#/home";
   go(window.location.hash);
 
-  // First paint toast (quiet)
+  // First paint toast
   setTimeout(() => {
     toast("Muon Noi", "Khung giao diện đã sẵn sàng. Tiếp theo sẽ gắn nội dung và API.");
-  }, 400);
+  }, 450);
 
-  // Ensure overlay hidden if nothing open
+  // Ensure overlay starts hidden
   closeAllFloating();
 })();
