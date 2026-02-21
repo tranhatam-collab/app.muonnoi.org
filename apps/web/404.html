@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="color-scheme" content="dark light" />
+  <title>Không tìm thấy trang | Muon Noi</title>
+  <meta name="robots" content="noindex,nofollow" />
+  <link rel="stylesheet" href="/assets/ui.css" />
+</head>
+<body>
+  <div class="app" id="app" data-theme="dark">
+    <header class="topbar" role="banner">
+      <div class="topbar__inner">
+        <a class="brand" href="/" aria-label="Muon Noi">
+          <span class="brand__mark" aria-hidden="true"></span>
+          <span class="brand__name">muonnoi</span>
+        </a>
+        <div class="topbar__actions">
+          <button class="btn btn--ghost" id="btnBack" type="button">Quay lại</button>
+          <a class="btn btn--primary" href="/#/" aria-label="Về Trang chủ">Về Trang chủ</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="main" role="main">
+      <section class="panel" style="max-width:860px;margin:18px auto;">
+        <div class="panel__block">
+          <h1 style="margin:0;font-size:20px;">Không tìm thấy trang</h1>
+          <p class="muted" style="margin:10px 0 0 0;line-height:1.5;">
+            Liên kết này không tồn tại hoặc đã được thay đổi. Bạn có thể quay về Trang chủ để tiếp tục.
+          </p>
+        </div>
+
+        <div class="panel__block">
+          <div class="muted" style="font-size:13px;line-height:1.6;">
+            Đường dẫn bạn đang mở:
+            <code id="p" style="display:block;margin-top:8px;padding:10px;border-radius:12px;border:1px solid var(--line2);background:rgba(255,255,255,.04)"></code>
+          </div>
+        </div>
+
+        <div class="panel__block" style="display:flex;gap:10px;flex-wrap:wrap;">
+          <a class="btn btn--primary" href="/#/">Về Trang chủ</a>
+          <a class="btn" href="/#\/explore">Khám phá</a>
+          <a class="btn" href="/#\/settings">Cài đặt</a>
+          <a class="btn btn--ghost" href="/security.txt">Chính sách bảo mật</a>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    (function(){
+      try{
+        document.getElementById('p').textContent = location.href;
+        document.getElementById('btnBack').addEventListener('click', function(){ history.back(); });
+        var saved = localStorage.getItem('mn_theme');
+        if(saved){ document.getElementById('app').setAttribute('data-theme', saved); }
+      }catch(e){}
+    })();
+  </script>
+</body>
+</html>
