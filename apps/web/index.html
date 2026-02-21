@@ -6,11 +6,11 @@
   <meta name="color-scheme" content="dark light" />
 
   <title>Muon Noi | Ứng dụng</title>
-  <meta name="description" content="Muon Noi app. Khung giao diện hoàn thiện, chuẩn mobile tablet desktop." />
+  <meta name="description" content="Muon Noi. Không trung tâm. Không kiểm soát. Chỉ có con người." />
   <link rel="canonical" href="https://app.muonnoi.org/" />
 
   <meta property="og:title" content="Muon Noi | Ứng dụng" />
-  <meta property="og:description" content="Khung giao diện hoàn thiện cho Muon Noi." />
+  <meta property="og:description" content="Không trung tâm. Không kiểm soát. Chỉ có con người." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://app.muonnoi.org/" />
 
@@ -104,15 +104,17 @@
             </div>
             <div class="railCard__d">Không trung tâm. Không kiểm soát. Chỉ có con người.</div>
             <div class="railCard__row">
-              <span class="pill">Giao diện</span>
-              <span class="pill pill--ghost">Chưa có dữ liệu</span>
+              <span class="pill">UI shell</span>
+              <span class="pill pill--ghost">API sắp nối</span>
             </div>
           </div>
 
+          <!-- INTERNAL LINKS (CHỐT) -->
           <div class="rail__links">
-            <a class="link" href="#/about">Giới thiệu</a>
-            <a class="link" href="#/privacy">Quyền riêng tư</a>
-            <a class="link" href="#/legal">Pháp lý</a>
+            <a class="link" href="/legal/terms.html">Điều khoản</a>
+            <a class="link" href="/legal/privacy.html">Quyền riêng tư</a>
+            <a class="link" href="/legal/abuse.html">Chống lạm dụng</a>
+            <a class="link" href="/legal/security.html">Bảo mật</a>
           </div>
         </div>
       </aside>
@@ -122,15 +124,15 @@
         <section class="pageTop" aria-label="Tiêu đề trang">
           <div class="pageTop__left">
             <h1 class="pageTop__title" id="pageTitle">Trang chủ</h1>
-            <p class="pageTop__sub" id="pageSub">Khung giao diện hoàn thiện. Chèn nội dung ở bước sau.</p>
+            <p class="pageTop__sub" id="pageSub">Không trung tâm. Không kiểm soát. Chỉ có con người.</p>
           </div>
 
           <div class="pageTop__right">
-            <button class="btn btn--ghost" id="btnCommand">
+            <button class="btn btn--ghost" id="btnCommand" type="button">
               <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-command"></use></svg>
               <span>Lệnh</span>
             </button>
-            <button class="btn btn--primary" id="btnPrimary">
+            <button class="btn btn--primary" id="btnPrimary" type="button">
               <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-plus"></use></svg>
               <span>Tạo mới</span>
             </button>
@@ -142,84 +144,186 @@
           <section class="panel panel--feed" aria-label="Nội dung">
             <div class="panel__head">
               <div class="tabs" role="tablist" aria-label="Thẻ">
-                <button class="tab is-active" role="tab" aria-selected="true" data-tab="timeline">Dòng thời gian</button>
-                <button class="tab" role="tab" aria-selected="false" data-tab="proof">Bằng chứng</button>
-                <button class="tab" role="tab" aria-selected="false" data-tab="saved">Đã lưu</button>
+                <button class="tab is-active" role="tab" aria-selected="true" data-tab="timeline" type="button">Dòng thời gian</button>
+                <button class="tab" role="tab" aria-selected="false" data-tab="proof" type="button">Bằng chứng</button>
+                <button class="tab" role="tab" aria-selected="false" data-tab="saved" type="button">Đã lưu</button>
               </div>
 
               <div class="panel__headActions">
-                <button class="iconbtn iconbtn--ghost" id="btnFilter" aria-label="Bộ lọc">
+                <button class="iconbtn iconbtn--ghost" id="btnFilter" aria-label="Bộ lọc" type="button">
                   <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-filter"></use></svg>
                 </button>
-                <button class="iconbtn iconbtn--ghost" id="btnRefresh" aria-label="Làm mới">
+                <button class="iconbtn iconbtn--ghost" id="btnRefresh" aria-label="Làm mới" type="button">
                   <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-refresh"></use></svg>
                 </button>
               </div>
             </div>
 
+            <!-- HOME CONTENT (CHỐT) -->
             <div class="feed" id="feed">
-              <article class="post">
+              <!-- HERO / ONBOARDING -->
+              <section class="post" aria-label="Giới thiệu nhanh">
+                <div class="post__meta">
+                  <span class="avatar" aria-hidden="true"></span>
+                  <div class="post__metaText">
+                    <div class="post__name">Muon Noi</div>
+                    <div class="post__time">Bắt đầu</div>
+                  </div>
+                </div>
+
+                <div class="post__body">
+                  <h2 style="margin:0 0 8px 0;font-size:16px;letter-spacing:.2px;">Không trung tâm. Không kiểm soát. Chỉ có con người.</h2>
+                  <p class="muted" style="margin:0;line-height:1.6;">
+                    Trang này là khung giao diện đã khóa bảo mật. Bước tiếp theo sẽ nối API theo nguyên tắc quyền riêng tư tối đa và chống spam nhiều lớp.
+                  </p>
+
+                  <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;">
+                    <a class="btn btn--primary" href="#/create">
+                      <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-plus"></use></svg>
+                      <span>Tạo mới</span>
+                    </a>
+                    <button class="btn" id="btnOpenSearch2" type="button">
+                      <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-search"></use></svg>
+                      <span>Tìm kiếm</span>
+                    </button>
+                    <a class="btn btn--ghost" href="/legal/privacy.html">
+                      <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-lock"></use></svg>
+                      <span>Quyền riêng tư</span>
+                    </a>
+                  </div>
+
+                  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;">
+                    <span class="pill">Không theo dõi</span>
+                    <span class="pill pill--ghost">Không CDN</span>
+                    <span class="pill pill--ghost">CSP nghiêm ngặt</span>
+                    <span class="pill pill--ghost">Bảo mật công bố</span>
+                  </div>
+
+                  <div style="margin-top:12px;border-radius:16px;border:1px solid var(--line2);background:rgba(255,255,255,.04);padding:12px;">
+                    <div class="muted" style="font-size:12px;">3 bước nhanh</div>
+                    <div style="display:grid;gap:8px;margin-top:8px;">
+                      <div style="display:flex;gap:10px;align-items:flex-start;">
+                        <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-edit"></use></svg>
+                        <div>
+                          <div style="font-weight:900;">Tạo</div>
+                          <div class="muted" style="font-size:13px;line-height:1.6;">Viết điều bạn muốn giữ lại. Không cần ồn ào.</div>
+                        </div>
+                      </div>
+                      <div style="display:flex;gap:10px;align-items:flex-start;">
+                        <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-shield"></use></svg>
+                        <div>
+                          <div style="font-weight:900;">Proof</div>
+                          <div class="muted" style="font-size:13px;line-height:1.6;">Bản ghi có dấu thời gian, phục vụ tính toàn vẹn.</div>
+                        </div>
+                      </div>
+                      <div style="display:flex;gap:10px;align-items:flex-start;">
+                        <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-lock"></use></svg>
+                        <div>
+                          <div style="font-weight:900;">Riêng tư</div>
+                          <div class="muted" style="font-size:13px;line-height:1.6;">Dữ liệu tối thiểu. Chống bot và lạm dụng.</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="post__actions">
+                  <button class="chip" type="button" id="chipCreate">
+                    <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-edit"></use></svg><span>Tạo bài</span>
+                  </button>
+                  <button class="chip" type="button" id="chipProof">
+                    <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-shield"></use></svg><span>Tạo Proof</span>
+                  </button>
+                  <a class="chip chip--ghost" href="/legal/abuse.html">
+                    <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-flag"></use></svg><span>Chống lạm dụng</span>
+                  </a>
+                  <a class="chip chip--ghost" href="/legal/security.html">
+                    <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-shield"></use></svg><span>Bảo mật</span>
+                  </a>
+                </div>
+              </section>
+
+              <!-- POST MẪU 1 -->
+              <article class="post" aria-label="Bài mẫu 1">
                 <div class="post__meta">
                   <span class="avatar avatar--a" aria-hidden="true"></span>
                   <div class="post__metaText">
-                    <div class="post__name">Muon Noi</div>
-                    <div class="post__time">Vừa xong</div>
+                    <div class="post__name">Một người dùng</div>
+                    <div class="post__time">Hôm nay</div>
                   </div>
-                  <button class="iconbtn iconbtn--ghost post__more" aria-label="Tùy chọn">
+                  <button class="iconbtn iconbtn--ghost post__more" aria-label="Tùy chọn" type="button">
                     <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-more"></use></svg>
                   </button>
                 </div>
 
                 <div class="post__body">
-                  <div class="skeleton sk-line w-92"></div>
-                  <div class="skeleton sk-line w-84"></div>
-                  <div class="skeleton sk-line w-68"></div>
+                  <p style="margin:0;line-height:1.7;">
+                    Tôi cần một nơi để ghi lại điều mình tin là đúng, không bị bóp méo bởi thuật toán, không bị dẫn dắt bởi đám đông. Tôi muốn điều đó tồn tại đủ lâu để một ngày nào đó, chính tôi quay lại đọc và hiểu mình đã đi qua điều gì.
+                  </p>
+
+                  <div style="margin-top:12px;border-radius:16px;border:1px solid var(--line2);background:rgba(255,255,255,.04);padding:12px;">
+                    <div class="muted" style="font-size:12px;">Gợi ý</div>
+                    <div style="font-weight:900;margin-top:4px;">Tạo Proof cho một cam kết, rồi giữ nó như một mốc sống.</div>
+                    <div class="muted" style="font-size:13px;line-height:1.6;margin-top:6px;">
+                      Xóa sẽ không làm mất lịch sử. Chỉ ẩn khỏi dòng thời gian (theo cấu hình sau này).
+                    </div>
+                  </div>
                 </div>
 
                 <div class="post__actions">
-                  <button class="chip">
+                  <button class="chip" type="button">
                     <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-heart"></use></svg><span>Thích</span>
                   </button>
-                  <button class="chip">
+                  <button class="chip" type="button">
                     <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-reply"></use></svg><span>Trả lời</span>
                   </button>
-                  <button class="chip">
+                  <button class="chip" type="button">
                     <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-repost"></use></svg><span>Chia sẻ</span>
                   </button>
-                  <button class="chip chip--ghost">
+                  <button class="chip chip--ghost" type="button">
                     <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-bookmark"></use></svg><span>Lưu</span>
                   </button>
-                  <button class="chip chip--ghost">
+                  <button class="chip chip--ghost" type="button">
                     <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-link"></use></svg><span>Sao chép liên kết</span>
                   </button>
                 </div>
               </article>
 
-              <article class="post">
+              <!-- POST MẪU 2 -->
+              <article class="post" aria-label="Bài mẫu 2">
                 <div class="post__meta">
                   <span class="avatar avatar--b" aria-hidden="true"></span>
                   <div class="post__metaText">
                     <div class="post__name">Người sáng tạo</div>
                     <div class="post__time">Hôm nay</div>
                   </div>
-                  <button class="iconbtn iconbtn--ghost post__more" aria-label="Tùy chọn">
+                  <button class="iconbtn iconbtn--ghost post__more" aria-label="Tùy chọn" type="button">
                     <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-more"></use></svg>
                   </button>
                 </div>
 
                 <div class="post__body">
-                  <div class="skeleton sk-line w-88"></div>
-                  <div class="skeleton sk-line w-72"></div>
-                  <div class="skeleton sk-block"></div>
+                  <p style="margin:0;line-height:1.7;">
+                    Muon Noi sẽ có cơ chế chống spam nhiều lớp: giới hạn tốc độ, chống bot, kiểm soát liên kết độc hại và nhật ký lạm dụng. Không làm phiền người dùng thật, nhưng không cho bot sống.
+                  </p>
+                  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;">
+                    <span class="pill">Chống bot</span>
+                    <span class="pill pill--ghost">Giới hạn tốc độ</span>
+                    <span class="pill pill--ghost">Lọc liên kết</span>
+                    <span class="pill pill--ghost">Audit</span>
+                  </div>
                 </div>
 
                 <div class="post__actions">
-                  <button class="chip">
-                    <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-shield"></use></svg><span>Bằng chứng</span>
-                  </button>
-                  <button class="chip chip--ghost">
-                    <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-lock"></use></svg><span>Riêng tư</span>
-                  </button>
+                  <a class="chip" href="/legal/abuse.html">
+                    <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-flag"></use></svg><span>Chính sách chống lạm dụng</span>
+                  </a>
+                  <a class="chip chip--ghost" href="/legal/security.html">
+                    <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-shield"></use></svg><span>Chính sách bảo mật</span>
+                  </a>
+                  <a class="chip chip--ghost" href="/.well-known/security.txt">
+                    <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-link"></use></svg><span>security.txt</span>
+                  </a>
                 </div>
               </article>
             </div>
@@ -232,19 +336,31 @@
                 <h2 class="h2">Nhanh</h2>
               </div>
               <div class="quickGrid">
-                <button class="quick"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-edit"></use></svg><span>Tạo bài</span></button>
-                <button class="quick"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-shield"></use></svg><span>Proof</span></button>
-                <button class="quick"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-lock"></use></svg><span>Riêng tư</span></button>
-                <button class="quick"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-link"></use></svg><span>Liên kết</span></button>
+                <button class="quick" id="quickCreate" type="button"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-edit"></use></svg><span>Tạo bài</span></button>
+                <a class="quick" href="/legal/privacy.html"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-lock"></use></svg><span>Quyền riêng tư</span></a>
+                <a class="quick" href="/legal/abuse.html"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-flag"></use></svg><span>Chống lạm dụng</span></a>
+                <a class="quick" href="/legal/security.html"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-shield"></use></svg><span>Bảo mật</span></a>
               </div>
             </div>
 
             <div class="panel__block">
               <h2 class="h2">Trạng thái</h2>
               <div class="status">
-                <div class="status__row"><span class="muted">Chế độ</span><span class="pill">Khung giao diện</span></div>
+                <div class="status__row"><span class="muted">Chế độ</span><span class="pill">UI shell</span></div>
                 <div class="status__row"><span class="muted">Dữ liệu</span><span class="pill pill--ghost">Chưa kết nối</span></div>
                 <div class="status__row"><span class="muted">Giao diện</span><span class="pill pill--ghost" id="themeLabel">Tối</span></div>
+              </div>
+            </div>
+
+            <div class="panel__block">
+              <h2 class="h2">Liên kết nội bộ</h2>
+              <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                <a class="chip chip--ghost" href="/legal/terms.html">Điều khoản</a>
+                <a class="chip chip--ghost" href="/legal/privacy.html">Quyền riêng tư</a>
+                <a class="chip chip--ghost" href="/legal/abuse.html">Chống lạm dụng</a>
+                <a class="chip chip--ghost" href="/legal/security.html">Bảo mật</a>
+                <a class="chip chip--ghost" href="/.well-known/security.txt">security.txt</a>
+                <a class="chip chip--ghost" href="/404.html">404</a>
               </div>
             </div>
           </aside>
@@ -281,7 +397,7 @@
     <section class="drawer" id="searchDrawer" aria-label="Tìm kiếm" hidden>
       <div class="drawer__head">
         <div class="drawer__title">Tìm kiếm</div>
-        <button class="iconbtn iconbtn--ghost" data-close="searchDrawer" aria-label="Đóng">
+        <button class="iconbtn iconbtn--ghost" data-close="searchDrawer" aria-label="Đóng" type="button">
           <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-x"></use></svg>
         </button>
       </div>
@@ -289,11 +405,11 @@
         <div class="searchBox">
           <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-search"></use></svg>
           <input class="searchBox__input" id="searchInput" type="search" placeholder="Nhập từ khóa..." autocomplete="off" />
-          <button class="iconbtn iconbtn--ghost" id="btnClearSearch" aria-label="Xóa">
+          <button class="iconbtn iconbtn--ghost" id="btnClearSearch" aria-label="Xóa" type="button">
             <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-x"></use></svg>
           </button>
         </div>
-        <div class="hint">Gợi ý: sau sẽ kết nối dữ liệu, hiện tại là khung UI.</div>
+        <div class="hint">Giai đoạn này là khung UI. Bước sau sẽ nối dữ liệu và bộ lọc.</div>
       </div>
     </section>
 
@@ -301,7 +417,7 @@
     <section class="drawer" id="notiDrawer" aria-label="Thông báo" hidden>
       <div class="drawer__head">
         <div class="drawer__title">Thông báo</div>
-        <button class="iconbtn iconbtn--ghost" data-close="notiDrawer" aria-label="Đóng">
+        <button class="iconbtn iconbtn--ghost" data-close="notiDrawer" aria-label="Đóng" type="button">
           <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-x"></use></svg>
         </button>
       </div>
@@ -310,7 +426,7 @@
           <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-spark"></use></svg>
           <div>
             <div class="notiItem__t">Khung giao diện đã sẵn sàng</div>
-            <div class="notiItem__d">Tiếp theo sẽ gắn nội dung và API.</div>
+            <div class="notiItem__d">Tiếp theo sẽ gắn API, chống spam và lưu trữ.</div>
           </div>
         </div>
       </div>
@@ -328,7 +444,7 @@
         <span>Cài đặt</span>
         <svg class="icon menu__chev" aria-hidden="true"><use href="/assets/icons.svg#i-chev"></use></svg>
       </a>
-      <button class="menu__item" role="menuitem" id="btnLogout">
+      <button class="menu__item" role="menuitem" id="btnLogout" type="button">
         <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-logout"></use></svg>
         <span>Đăng xuất</span>
         <svg class="icon menu__chev" aria-hidden="true"><use href="/assets/icons.svg#i-chev"></use></svg>
@@ -340,16 +456,16 @@
       <div class="modal__panel">
         <div class="modal__head">
           <div class="modal__title">Lệnh</div>
-          <button class="iconbtn iconbtn--ghost" data-close="cmdModal" aria-label="Đóng">
+          <button class="iconbtn iconbtn--ghost" data-close="cmdModal" aria-label="Đóng" type="button">
             <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-x"></use></svg>
           </button>
         </div>
         <div class="modal__body">
           <input class="input" id="cmdInput" placeholder="Gõ để tìm nhanh: tạo, khám phá, cài đặt..." />
           <div class="cmdList" id="cmdList">
-            <button class="cmdList__item" data-go="#/create"><span>Tạo mới</span><span class="muted">Enter</span></button>
-            <button class="cmdList__item" data-go="#/explore"><span>Khám phá</span><span class="muted">Enter</span></button>
-            <button class="cmdList__item" data-go="#/settings"><span>Cài đặt</span><span class="muted">Enter</span></button>
+            <button class="cmdList__item" data-go="#/create" type="button"><span>Tạo mới</span><span class="muted">Enter</span></button>
+            <button class="cmdList__item" data-go="#/explore" type="button"><span>Khám phá</span><span class="muted">Enter</span></button>
+            <button class="cmdList__item" data-go="#/settings" type="button"><span>Cài đặt</span><span class="muted">Enter</span></button>
           </div>
         </div>
       </div>
