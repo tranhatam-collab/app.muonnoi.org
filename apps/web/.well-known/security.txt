@@ -1,0 +1,6 @@
+Contact: mailto:security@muonnoi.org
+Expires: 2027-01-01T00:00:00.000Z
+Preferred-Languages: vi, en
+Policy: https://app.muonnoi.org/#/security
+Acknowledgments: https://app.muonnoi.org/#/security
+Hiring: https://muonnoi.org
