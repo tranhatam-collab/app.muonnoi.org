@@ -3,262 +3,350 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#070a0b" />
   <meta name="color-scheme" content="dark light" />
 
-  <title>Muon Noi App | Social Operating Space</title>
-  <meta name="description" content="Muon Noi App: Work, earn, trade, learn, livestream, message, call, pay — privacy-first, no tracking, clean share links." />
+  <title>Muon Noi — Social Operating Space</title>
+  <meta name="description" content="Muon Noi is an all-in-one social operating space: work, earn, trade, learn, video, live, message, call, pay — privacy-first, no tracking." />
+  <meta name="robots" content="index,follow" />
 
+  <!-- Canonical (ui.js will update on route change) -->
   <link rel="canonical" href="https://app.muonnoi.org/" />
+
+  <!-- hreflang -->
   <link rel="alternate" hreflang="en" href="https://app.muonnoi.org/" />
   <link rel="alternate" hreflang="vi" href="https://app.muonnoi.org/" />
+  <link rel="alternate" hreflang="x-default" href="https://app.muonnoi.org/" />
+
+  <!-- Open Graph -->
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Muon Noi App" />
-  <meta property="og:description" content="An all-in-one Social Operating Space. Privacy-first. No tracking." />
+  <meta property="og:site_name" content="Muon Noi" />
+  <meta property="og:title" content="Muon Noi — Social Operating Space" />
+  <meta property="og:description" content="Work, earn, trade, learn, video, live, message, call, pay — privacy-first, no tracking." />
   <meta property="og:url" content="https://app.muonnoi.org/" />
-  <meta property="og:image" content="https://app.muonnoi.org/assets/og.png" />
+
+  <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Muon Noi — Social Operating Space" />
+  <meta name="twitter:description" content="Work, earn, trade, learn, video, live, message, call, pay — privacy-first, no tracking." />
 
-  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+  <!-- PWA -->
   <link rel="manifest" href="/manifest.json" />
+  <link rel="icon" href="/favicon.ico" />
 
-  <link rel="preload" href="/assets/ui.css" as="style" />
+  <!-- App CSS -->
   <link rel="stylesheet" href="/assets/ui.css" />
 
+  <!-- JSON-LD -->
   <script type="application/ld+json">
   {
     "@context":"https://schema.org",
     "@type":"WebApplication",
-    "name":"Muon Noi App",
-    "url":"https://app.muonnoi.org/",
-    "applicationCategory":"BusinessApplication",
+    "name":"Muon Noi",
+    "applicationCategory":"SocialNetworkingApplication",
     "operatingSystem":"Web",
-    "description":"Work, earn, trade, learn, livestream, message, call, pay — privacy-first, no tracking, clean share links."
+    "url":"https://app.muonnoi.org/",
+    "description":"All-in-one social operating space: work, earn, trade, learn, video, live, message, call, pay — privacy-first, no tracking."
   }
   </script>
+
+  <style>
+    /* Minimal critical: avoid flash + better safe-area */
+    .sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+    .safe-bot{padding-bottom:env(safe-area-inset-bottom,0px)}
+  </style>
 </head>
 
 <body>
+  <!-- SVG icons sprite -->
+  <div aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden">
+    <!-- If you inline icons.svg contents, paste here. Otherwise keep external <use href="#..."> requires inline symbols.
+         BEST: inline /assets/icons.svg content in this block at build time.
+         For now: we assume you inline icons.svg into index.html or serve as <svg><use href="#id"> works only if symbols are in DOM.
+    -->
+    <!-- RECOMMENDED: Paste full /assets/icons.svg symbols here later.
+         If you already inline it elsewhere, remove this note. -->
+  </div>
+
+  <!-- APP ROOT -->
   <div class="app" data-theme="dark">
-    <!-- Topbar -->
-    <header class="topbar" role="banner">
+    <!-- TOPBAR -->
+    <header class="topbar">
       <div class="topbar__left">
-        <button id="btnMenu" class="iconBtn" type="button" aria-label="Menu" data-action="menu">
-          <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-menu"></use></svg>
+        <button class="iconBtn" id="btnMenu" type="button" aria-label="Menu" data-action="menu">
+          <svg class="icon" aria-hidden="true"><use href="#i-menu"></use></svg>
         </button>
 
-        <a class="brand" href="/" aria-label="Muon Noi">
-          <span class="brand__mark" aria-hidden="true">
-            <span class="orb"></span>
-          </span>
-          <span class="brand__name">muonnoi</span>
+        <a class="brand" href="/" data-nav="/">
+          <span class="brand__mark" aria-hidden="true"><span class="orb"></span></span>
+          <span class="brand__name">Muon Noi</span>
         </a>
 
-        <div class="pillRow hide-sm">
-          <span class="pill">Web3 Ready</span>
-          <span class="pill">No Tracking</span>
-          <span class="pill">Privacy First</span>
+        <div class="pillRow hide-sm" aria-hidden="true">
+          <span class="pill">Work</span>
+          <span class="pill">Commerce</span>
+          <span class="pill">Media</span>
         </div>
       </div>
 
-      <div class="topbar__mid hide-sm">
-        <div class="searchBar" role="search">
-          <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-search"></use></svg>
-          <input class="searchBar__input" type="search" placeholder="Search / Tìm kiếm" aria-label="Search" />
-          <button id="btnCommand" class="chipBtn" type="button" data-action="command" aria-label="Command">
-            ⌘K
-          </button>
-        </div>
+      <div class="topbar__mid">
+        <label class="searchBar" aria-label="Search">
+          <svg class="icon" aria-hidden="true"><use href="#i-search"></use></svg>
+          <input class="searchBar__input" type="search" placeholder="Search…" aria-label="Search input" />
+          <button class="chipBtn" id="btnSearch" type="button" data-action="search" aria-label="Open search drawer">⌘K</button>
+        </label>
       </div>
 
       <div class="topbar__right">
-        <button id="btnSearch" class="iconBtn hide-md" type="button" aria-label="Search" data-action="search">
-          <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-search"></use></svg>
+        <button class="iconBtn hide-sm" id="btnNoti" type="button" aria-label="Notifications" data-action="noti">
+          <svg class="icon" aria-hidden="true"><use href="#i-bell"></use></svg>
         </button>
 
-        <button id="btnNoti" class="iconBtn" type="button" aria-label="Notifications" data-action="noti">
-          <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-chat"></use></svg>
+        <button class="iconBtn hide-sm" id="btnCommand" type="button" aria-label="Command" data-action="command">
+          <svg class="icon" aria-hidden="true"><use href="#i-bolt"></use></svg>
         </button>
 
-        <button id="btnTheme" class="iconBtn" type="button" aria-label="Theme" data-action="theme">
-          <svg class="icon" aria-hidden="true"><use id="themeIconUse" href="/assets/icons.svg#i-sun"></use></svg>
+        <button class="iconBtn" id="btnTheme" type="button" aria-label="Theme" data-action="theme">
+          <svg class="icon" aria-hidden="true"><use id="themeIconUse" href="#i-sun"></use></svg>
         </button>
 
-        <button id="btnLang" class="langBtn" type="button" data-action="lang" aria-label="Language">
-          <span id="flagA" class="flag" aria-hidden="true">🇺🇸</span>
-          <span id="flagB" class="flag" aria-hidden="true">🇻🇳</span>
-          <span id="langCode" class="langCode">EN</span>
+        <button class="langBtn" id="btnLang" type="button" aria-label="Language" data-action="lang">
+          <span class="flag" id="flagA" aria-hidden="true">🇺🇸</span>
+          <span class="flag" id="flagB" aria-hidden="true">🇻🇳</span>
+          <span class="langCode" id="langCode">EN</span>
         </button>
 
-        <a class="btn btn--ghost hide-sm" href="/login" data-nav="/login">Sign In</a>
+        <button class="iconBtn" id="btnProfile" type="button" aria-label="Profile" data-action="profile">
+          <svg class="icon" aria-hidden="true"><use href="#i-user"></use></svg>
+        </button>
       </div>
     </header>
 
-    <!-- Rail / Drawer Menu -->
-    <aside id="rail" class="rail" aria-label="Navigation">
+    <!-- LEFT RAIL -->
+    <aside class="rail" id="rail" aria-label="Navigation">
       <div class="rail__head">
         <div class="rail__brand">
           <span class="orb orb--mini" aria-hidden="true"></span>
           <div>
             <div class="rail__title">Muon Noi</div>
-            <div class="rail__sub">Social Operating Space</div>
+            <div class="rail__sub">Operating Space</div>
           </div>
         </div>
         <button class="iconBtn" type="button" aria-label="Close" data-close="drawer">
-          <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-x"></use></svg>
+          <svg class="icon" aria-hidden="true"><use href="#i-x"></use></svg>
         </button>
       </div>
 
       <nav class="rail__nav">
         <a class="navItem" href="/" data-nav="/">
-          <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-home"></use></svg>
+          <svg class="icon" aria-hidden="true"><use href="#i-home"></use></svg>
           <span>Home</span>
         </a>
         <a class="navItem" href="/explore" data-nav="/explore">
-          <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-compass"></use></svg>
+          <svg class="icon" aria-hidden="true"><use href="#i-compass"></use></svg>
           <span>Explore</span>
         </a>
         <a class="navItem" href="/create" data-nav="/create">
-          <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-edit"></use></svg>
+          <svg class="icon" aria-hidden="true"><use href="#i-edit"></use></svg>
           <span>Create</span>
+          <span class="badge">New</span>
         </a>
         <a class="navItem" href="/inbox" data-nav="/inbox">
-          <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-chat"></use></svg>
+          <svg class="icon" aria-hidden="true"><use href="#i-chat"></use></svg>
           <span>Inbox</span>
-          <span class="badge" aria-label="Unread">3</span>
         </a>
         <a class="navItem" href="/wallet" data-nav="/wallet">
-          <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-settings"></use></svg>
+          <svg class="icon" aria-hidden="true"><use href="#i-lock"></use></svg>
           <span>Wallet</span>
         </a>
         <a class="navItem" href="/settings" data-nav="/settings">
-          <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-settings"></use></svg>
+          <svg class="icon" aria-hidden="true"><use href="#i-settings"></use></svg>
           <span>Settings</span>
         </a>
 
         <div class="rail__sep"></div>
 
-        <a class="navItem" href="https://muonnoi.org/" rel="noopener">
-          <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-home"></use></svg>
-          <span>muonnoi.org</span>
+        <a class="navItem" href="/signin" data-nav="/signin">
+          <svg class="icon" aria-hidden="true"><use href="#i-key"></use></svg>
+          <span>Sign In</span>
         </a>
-        <a class="navItem" href="https://docs.muonnoi.org/" rel="noopener">
-          <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-compass"></use></svg>
-          <span>docs.muonnoi.org</span>
+        <a class="navItem" href="/signup" data-nav="/signup">
+          <svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg>
+          <span>Create Account</span>
+        </a>
+
+        <div class="rail__sep"></div>
+
+        <a class="navItem" href="/docs" data-nav="/docs">
+          <svg class="icon" aria-hidden="true"><use href="#i-doc"></use></svg>
+          <span>Docs</span>
+        </a>
+        <a class="navItem" href="https://muonnoi.org/" rel="noopener">
+          <svg class="icon" aria-hidden="true"><use href="#i-external"></use></svg>
+          <span>muonnoi.org</span>
         </a>
       </nav>
 
       <div class="rail__foot">
-        <a class="btn btn--primary w100" href="/signup" data-nav="/signup">Create Account</a>
-        <div class="tiny muted" style="margin-top:10px">
-          No tracking. Privacy-first. Clean share links.
-        </div>
+        <div class="tiny muted">No tracking. Privacy-first.</div>
       </div>
     </aside>
 
-    <!-- Drawers -->
-    <aside id="searchDrawer" class="drawer" data-drawer="search" aria-label="Search Drawer">
+    <!-- RIGHT DRAWER: SEARCH -->
+    <aside class="drawer" id="searchDrawer" data-drawer="search" aria-label="Search drawer">
       <div class="drawer__head">
         <div class="drawer__title">Search</div>
         <button class="iconBtn" type="button" aria-label="Close" data-close="drawer">
-          <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-x"></use></svg>
+          <svg class="icon" aria-hidden="true"><use href="#i-x"></use></svg>
         </button>
       </div>
       <div class="drawer__body">
-        <input class="input" type="search" placeholder="Type to search…" aria-label="Search input" />
+        <input class="input" type="search" placeholder="Type to search…" aria-label="Search" />
         <div class="drawerList">
-          <button class="rowBtn" type="button" data-go="/create">Create</button>
-          <button class="rowBtn" type="button" data-go="/explore">Explore</button>
-          <button class="rowBtn" type="button" data-go="/settings">Settings</button>
+          <div class="noteCard">
+            <div class="noteCard__title">Clean links</div>
+            <div class="noteCard__text">Try opening /p/&lt;id&gt; /u/&lt;handle&gt; /v/&lt;id&gt; …</div>
+          </div>
+          <button class="rowBtn" type="button" data-route="/explore">Explore</button>
+          <button class="rowBtn" type="button" data-route="/create">Create</button>
+          <button class="rowBtn" type="button" data-route="/inbox">Inbox</button>
         </div>
       </div>
     </aside>
 
-    <aside id="notiDrawer" class="drawer" data-drawer="noti" aria-label="Notifications Drawer">
+    <!-- RIGHT DRAWER: NOTIFICATIONS -->
+    <aside class="drawer" id="notiDrawer" data-drawer="noti" aria-label="Notifications drawer">
       <div class="drawer__head">
-        <div class="drawer__title">Inbox</div>
+        <div class="drawer__title">Notifications</div>
         <button class="iconBtn" type="button" aria-label="Close" data-close="drawer">
-          <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-x"></use></svg>
+          <svg class="icon" aria-hidden="true"><use href="#i-x"></use></svg>
         </button>
       </div>
       <div class="drawer__body">
-        <div class="hint">This is a placeholder drawer. Messages module will plug in later.</div>
+        <div class="noteCard">
+          <div class="noteCard__title">Coming soon</div>
+          <div class="noteCard__text">This module will be enabled with privacy-first events.</div>
+        </div>
         <div class="drawerList">
-          <div class="noteCard">
-            <div class="noteCard__title">System</div>
-            <div class="noteCard__text">Welcome. Clean links are enabled. No hashes.</div>
-          </div>
-          <div class="noteCard">
-            <div class="noteCard__title">Next</div>
-            <div class="noteCard__text">Auth + Wallet + Market + Live modules will be wired per roadmap.</div>
-          </div>
+          <button class="rowBtn" type="button" data-route="/signin">Sign In</button>
+          <button class="rowBtn" type="button" data-route="/settings">Settings</button>
         </div>
       </div>
     </aside>
 
-    <!-- Command Modal -->
-    <div id="commandModal" class="modal" hidden>
-      <div class="modal__card" role="dialog" aria-modal="true" aria-label="Command">
-        <div class="modal__head">
-          <div class="modal__title">Command</div>
-          <button class="iconBtn" type="button" aria-label="Close" data-close="modal">
-            <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-x"></use></svg>
+    <!-- PROFILE MENU (simple dropdown-like panel, controlled by ui.js) -->
+    <div class="menu" id="profileMenu" hidden style="display:none; position:fixed; top:72px; right:12px; z-index:2300; width:min(360px, 92vw);">
+      <div class="panel" style="overflow:hidden">
+        <div class="panel__head">
+          <div class="panel__titleRow">
+            <span class="orb orb--mini" aria-hidden="true"></span>
+            <div class="h2">Account</div>
+          </div>
+          <button class="iconBtn" type="button" aria-label="Close" data-close="drawer">
+            <svg class="icon" aria-hidden="true"><use href="#i-x"></use></svg>
           </button>
         </div>
-        <div class="modal__body">
-          <input class="input" type="text" placeholder="Type: create / explore / login …" aria-label="Command input" />
-          <div class="cmdList">
-            <button class="cmdItem" type="button" data-go="/create"><span>Create</span><span class="kbd">Enter</span></button>
-            <button class="cmdItem" type="button" data-go="/explore"><span>Explore</span><span class="kbd">Enter</span></button>
-            <button class="cmdItem" type="button" data-go="/login"><span>Sign In</span><span class="kbd">Enter</span></button>
+        <div class="panel__block">
+          <div class="hint">Sign in to sync across devices. No tracking.</div>
+          <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px">
+            <a class="btn btn--primary" href="/signin" data-nav="/signin">Sign In</a>
+            <a class="btn btn--ghost" href="/signup" data-nav="/signup">Create</a>
+            <a class="btn btn--ghost" href="/settings" data-nav="/settings">Settings</a>
           </div>
-          <div class="hint" style="margin-top:12px">Tip: Press ESC to close. Ctrl/⌘ + K to open.</div>
         </div>
       </div>
     </div>
 
-    <!-- Main -->
+    <!-- MAIN -->
     <main class="main" role="main">
       <div class="pageHead">
         <div>
-          <div id="pageTitle" class="pageTitle">Muon Noi</div>
-          <div id="pageSub" class="pageSub">Not a feed. A social operating space.</div>
+          <div class="pageTitle" id="pageTitle">Muon Noi</div>
+          <div class="pageSub" id="pageSub">Not a feed. An operating space.</div>
         </div>
         <div class="pageHead__actions">
-          <button class="btn btn--primary" type="button" data-go="/create">Create</button>
-          <button class="btn btn--ghost" type="button" data-go="/explore">Explore</button>
-          <a class="btn btn--ghost" href="/login" data-nav="/login">Sign In</a>
+          <a class="btn btn--ghost" href="/docs" data-nav="/docs">
+            <svg class="icon" aria-hidden="true"><use href="#i-doc"></use></svg>
+            Docs
+          </a>
+          <a class="btn btn--ghost" href="https://muonnoi.org/" rel="noopener">
+            <svg class="icon" aria-hidden="true"><use href="#i-external"></use></svg>
+            muonnoi.org
+          </a>
         </div>
       </div>
 
-      <div id="view" class="view">
-        <!-- ui.js renders here -->
-      </div>
+      <!-- SPA VIEW -->
+      <section class="view" id="view" aria-live="polite"></section>
     </main>
 
-    <!-- Bottom Tabbar (mobile) -->
-    <nav class="tabbar" aria-label="Tab Bar">
+    <!-- COMMAND MODAL -->
+    <section class="modal" id="commandModal" hidden aria-label="Command modal">
+      <div class="modal__card" role="dialog" aria-modal="true" aria-labelledby="cmdTitle">
+        <div class="modal__head">
+          <div class="modal__title" id="cmdTitle">Command</div>
+          <button class="iconBtn" type="button" aria-label="Close" data-close="modal">
+            <svg class="icon" aria-hidden="true"><use href="#i-x"></use></svg>
+          </button>
+        </div>
+        <div class="modal__body">
+          <input class="input" type="search" placeholder="Type a command…" aria-label="Command input" />
+          <div class="cmdList">
+            <button class="cmdItem" type="button" data-route="/create">
+              <span>Create</span><span class="kbd">C</span>
+            </button>
+            <button class="cmdItem" type="button" data-route="/explore">
+              <span>Explore</span><span class="kbd">E</span>
+            </button>
+            <button class="cmdItem" type="button" data-route="/signin">
+              <span>Sign In</span><span class="kbd">S</span>
+            </button>
+          </div>
+          <div class="tiny muted" style="margin-top:12px">ESC to close.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TABBAR (mobile) -->
+    <nav class="tabbar safe-bot" aria-label="Tab bar">
       <a class="tab" href="/" data-tab="/">
-        <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-home"></use></svg>
+        <svg class="icon" aria-hidden="true"><use href="#i-home"></use></svg>
         <span>Home</span>
       </a>
       <a class="tab" href="/explore" data-tab="/explore">
-        <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-compass"></use></svg>
+        <svg class="icon" aria-hidden="true"><use href="#i-compass"></use></svg>
         <span>Explore</span>
       </a>
+
       <a class="tab tab--center" href="/create" data-tab="/create" aria-label="Create">
         <span class="tabPlus" aria-hidden="true">+</span>
       </a>
+
       <a class="tab" href="/inbox" data-tab="/inbox">
-        <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-chat"></use></svg>
+        <svg class="icon" aria-hidden="true"><use href="#i-chat"></use></svg>
         <span>Inbox</span>
       </a>
       <a class="tab" href="/settings" data-tab="/settings">
-        <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-settings"></use></svg>
+        <svg class="icon" aria-hidden="true"><use href="#i-settings"></use></svg>
         <span>Settings</span>
       </a>
     </nav>
   </div>
 
+  <!-- App JS -->
   <script src="/assets/ui.js" defer></script>
+
+  <script>
+    // Route click helpers for buttons inside drawers/modals without <a>
+    document.addEventListener("click", (e) => {
+      const el = e.target && e.target.closest ? e.target.closest("[data-route]") : null;
+      if (!el) return;
+      const path = el.getAttribute("data-route");
+      if (!path) return;
+      e.preventDefault();
+      if (window.MN && typeof window.MN.navigate === "function") window.MN.navigate(path);
+      else window.location.href = path;
+    }, { passive:false });
+  </script>
 </body>
 </html>
