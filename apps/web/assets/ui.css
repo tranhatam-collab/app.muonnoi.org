@@ -367,3 +367,118 @@ body{
   .grid3{grid-template-columns:repeat(3,1fr)}
   .tabbar{display:none}
 }
+/* ==========================================================
+   Web3 Glow + Glass Depth + 60fps Optimizations (ADD-ON)
+========================================================== */
+
+/* Performance helpers */
+.hero, .panel, .heroCard{
+  contain: layout paint style;
+}
+
+@supports (content-visibility: auto){
+  .panel{ content-visibility:auto; contain-intrinsic-size: 1px 480px; }
+}
+
+/* Subtle animated glow (transform-only for 60fps) */
+.glowWrap{
+  position:relative;
+  isolation:isolate;
+}
+.glowWrap::before,
+.glowWrap::after{
+  content:"";
+  position:absolute;
+  inset:-40px;
+  z-index:-1;
+  border-radius:inherit;
+  pointer-events:none;
+  opacity:.28;
+  filter:blur(26px);
+  transform:translate3d(0,0,0);
+  will-change:transform, opacity;
+}
+
+.glowWrap::before{
+  background:
+    radial-gradient(520px 240px at 20% 30%, rgba(120,255,220,.35), transparent 60%),
+    radial-gradient(520px 240px at 80% 30%, rgba(120,200,255,.32), transparent 60%),
+    radial-gradient(520px 240px at 40% 80%, rgba(160,120,255,.26), transparent 65%);
+  animation:mnGlowA 10s ease-in-out infinite;
+}
+
+.glowWrap::after{
+  background:
+    radial-gradient(520px 240px at 70% 70%, rgba(120,255,220,.22), transparent 60%),
+    radial-gradient(520px 240px at 30% 70%, rgba(120,200,255,.18), transparent 60%);
+  animation:mnGlowB 14s ease-in-out infinite;
+}
+
+@keyframes mnGlowA{
+  0%{ transform:translate3d(-10px,-8px,0) scale(1); opacity:.24 }
+  50%{ transform:translate3d(12px,10px,0) scale(1.02); opacity:.32 }
+  100%{ transform:translate3d(-10px,-8px,0) scale(1); opacity:.24 }
+}
+@keyframes mnGlowB{
+  0%{ transform:translate3d(14px,-6px,0) scale(1.01); opacity:.18 }
+  50%{ transform:translate3d(-12px,10px,0) scale(1.03); opacity:.26 }
+  100%{ transform:translate3d(14px,-6px,0) scale(1.01); opacity:.18 }
+}
+
+/* Reduce motion */
+@media (prefers-reduced-motion: reduce){
+  .glowWrap::before,
+  .glowWrap::after{ animation:none; }
+}
+
+/* Glass depth (3 layers) */
+.glass1{
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.10);
+  box-shadow:var(--shadow2);
+}
+.glass2{
+  background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+  border:1px solid rgba(255,255,255,.12);
+  box-shadow:0 16px 60px rgba(0,0,0,.45);
+}
+.glass3{
+  background:
+    radial-gradient(900px 420px at 20% 0%, rgba(120,255,220,.08), transparent 55%),
+    radial-gradient(800px 420px at 90% 20%, rgba(120,200,255,.09), transparent 60%),
+    rgba(0,0,0,.18);
+  border:1px solid rgba(255,255,255,.14);
+  box-shadow:0 20px 70px rgba(0,0,0,.55);
+}
+
+/* Backdrop-filter safe */
+@supports (backdrop-filter: blur(1px)){
+  .glass1, .glass2, .glass3{
+    backdrop-filter: blur(16px);
+  }
+}
+
+/* If device is weak, reduce blur cost */
+@media (max-width: 420px){
+  .glass1, .glass2, .glass3{ backdrop-filter: blur(12px); }
+  .glowWrap::before, .glowWrap::after{ filter:blur(22px); }
+}
+
+/* Glow emphasis on hero */
+.hero{
+  position:relative;
+}
+.hero.glowWrap{
+  border-color:rgba(120,255,220,.18);
+}
+.hero.glowWrap:hover::before{
+  opacity:.36;
+}
+
+/* Micro-interactions without heavy paint */
+.btn, .iconBtn, .navItem, .rowBtn, .cmdItem{
+  will-change:transform;
+}
+.btn:active, .iconBtn:active{
+  transform:translate3d(0,1px,0);
+}
