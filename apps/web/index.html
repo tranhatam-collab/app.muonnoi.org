@@ -1,369 +1,264 @@
 <!doctype html>
-<html lang="en" data-app="muonnoi">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta http-equiv="x-ua-compatible" content="ie=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <meta name="color-scheme" content="dark light" />
 
-  <title>Muon Noi — Social Operating Space (Work, Trade, Learn, Live)</title>
-  <meta name="description" content="Muon Noi is an all-in-one social operating space for work, earning, commerce, learning, video, livestream, messaging, calling and payments — privacy-first, no tracking." />
-  <meta name="robots" content="index,follow,max-image-preview:large" />
+  <title>Muon Noi App | Social Operating Space</title>
+  <meta name="description" content="Muon Noi App: Work, earn, trade, learn, livestream, message, call, pay — privacy-first, no tracking, clean share links." />
 
-  <!-- Canonical + hreflang -->
   <link rel="canonical" href="https://app.muonnoi.org/" />
   <link rel="alternate" hreflang="en" href="https://app.muonnoi.org/" />
   <link rel="alternate" hreflang="vi" href="https://app.muonnoi.org/" />
-  <link rel="alternate" hreflang="x-default" href="https://app.muonnoi.org/" />
-
-  <!-- Open Graph -->
   <meta property="og:type" content="website" />
-  <meta property="og:site_name" content="Muon Noi" />
-  <meta property="og:title" content="Muon Noi — Social Operating Space" />
-  <meta property="og:description" content="Work, trade, learn, live, message, call, pay. Privacy-first. No tracking." />
+  <meta property="og:title" content="Muon Noi App" />
+  <meta property="og:description" content="An all-in-one Social Operating Space. Privacy-first. No tracking." />
   <meta property="og:url" content="https://app.muonnoi.org/" />
   <meta property="og:image" content="https://app.muonnoi.org/assets/og.png" />
-
-  <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Muon Noi — Social Operating Space" />
-  <meta name="twitter:description" content="Work, trade, learn, live, message, call, pay. Privacy-first. No tracking." />
-  <meta name="twitter:image" content="https://app.muonnoi.org/assets/og.png" />
 
-  <!-- PWA (optional) -->
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
   <link rel="manifest" href="/manifest.json" />
-  <meta name="theme-color" content="#0b0f0c" />
 
-  <!-- Icons -->
-  <link rel="icon" href="/assets/favicon.ico" />
-  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
-
-  <!-- CSS -->
   <link rel="preload" href="/assets/ui.css" as="style" />
   <link rel="stylesheet" href="/assets/ui.css" />
 
-  <!-- JSON-LD -->
-  <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@type":"WebSite",
-    "name":"Muon Noi",
-    "url":"https://app.muonnoi.org/",
-    "potentialAction":{
-      "@type":"SearchAction",
-      "target":"https://app.muonnoi.org/explore?q={search_term_string}",
-      "query-input":"required name=search_term_string"
-    }
-  }
-  </script>
   <script type="application/ld+json">
   {
     "@context":"https://schema.org",
     "@type":"WebApplication",
-    "name":"Muon Noi",
+    "name":"Muon Noi App",
     "url":"https://app.muonnoi.org/",
-    "applicationCategory":"SocialNetworkingApplication",
+    "applicationCategory":"BusinessApplication",
     "operatingSystem":"Web",
-    "offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},
-    "description":"An all-in-one social operating space: work, earn, trade, learn, video, livestream, message, call and pay — privacy-first, no tracking."
+    "description":"Work, earn, trade, learn, livestream, message, call, pay — privacy-first, no tracking, clean share links."
   }
   </script>
-
-  <noscript>
-    <style>
-      body{font-family:system-ui;margin:0;padding:20px;background:#0b0f0c;color:#fff}
-      .ns{max-width:720px;margin:0 auto}
-      .ns h1{font-size:22px}
-      .ns p{opacity:.9;line-height:1.6}
-    </style>
-    <div class="ns">
-      <h1>Muon Noi</h1>
-      <p>This app requires JavaScript to run (SPA). Please enable JavaScript and reload.</p>
-      <p>Ứng dụng cần JavaScript để chạy. Vui lòng bật JavaScript và tải lại.</p>
-    </div>
-  </noscript>
 </head>
 
 <body>
-  <!-- App Root -->
-  <div class="app" id="app" data-theme="dark">
+  <div class="app" data-theme="dark">
     <!-- Topbar -->
     <header class="topbar" role="banner">
       <div class="topbar__left">
-        <button class="iconbtn" id="btnMenu" type="button" aria-label="Menu" data-action="menu">
+        <button id="btnMenu" class="iconBtn" type="button" aria-label="Menu" data-action="menu">
           <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-menu"></use></svg>
         </button>
 
-        <a class="brand" href="/" aria-label="Muon Noi Home" data-nav="/">
+        <a class="brand" href="/" aria-label="Muon Noi">
           <span class="brand__mark" aria-hidden="true">
-            <span class="mn">mn</span>
+            <span class="orb"></span>
           </span>
           <span class="brand__name">muonnoi</span>
         </a>
 
-        <div class="topbar__hint" aria-hidden="true">
-          <span class="pill pill--ghost">Web3 Ready</span>
-          <span class="pill pill--ghost">No Tracking</span>
-          <span class="pill pill--ghost">Privacy First</span>
+        <div class="pillRow hide-sm">
+          <span class="pill">Web3 Ready</span>
+          <span class="pill">No Tracking</span>
+          <span class="pill">Privacy First</span>
         </div>
       </div>
 
-      <div class="topbar__center">
-        <div class="searchMini" role="search">
-          <button class="iconbtn" id="btnSearch" type="button" aria-label="Open Search" data-action="search">
-            <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-search"></use></svg>
-          </button>
-          <input class="searchMini__input" type="search" placeholder="Search / Tìm kiếm" aria-label="Search" disabled />
-          <button class="iconbtn" id="btnCommand" type="button" aria-label="Command" data-action="command">
-            <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-plus"></use></svg>
+      <div class="topbar__mid hide-sm">
+        <div class="searchBar" role="search">
+          <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-search"></use></svg>
+          <input class="searchBar__input" type="search" placeholder="Search / Tìm kiếm" aria-label="Search" />
+          <button id="btnCommand" class="chipBtn" type="button" data-action="command" aria-label="Command">
+            ⌘K
           </button>
         </div>
       </div>
 
       <div class="topbar__right">
-        <button class="iconbtn" id="btnNoti" type="button" aria-label="Notifications" data-action="noti">
+        <button id="btnSearch" class="iconBtn hide-md" type="button" aria-label="Search" data-action="search">
+          <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-search"></use></svg>
+        </button>
+
+        <button id="btnNoti" class="iconBtn" type="button" aria-label="Notifications" data-action="noti">
           <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-chat"></use></svg>
         </button>
 
-        <button class="iconbtn" id="btnTheme" type="button" aria-label="Theme" data-action="theme">
-          <svg class="icon" aria-hidden="true"><use id="themeIconUse" href="/assets/icons.svg#i-moon"></use></svg>
+        <button id="btnTheme" class="iconBtn" type="button" aria-label="Theme" data-action="theme">
+          <svg class="icon" aria-hidden="true"><use id="themeIconUse" href="/assets/icons.svg#i-sun"></use></svg>
         </button>
 
-        <button class="langbtn" id="btnLang" type="button" aria-label="Language" data-action="lang">
-          <span class="langbtn__flags" aria-hidden="true">
-            <span id="flagA">🇺🇸</span><span id="flagB">🇻🇳</span>
-          </span>
-          <span class="langbtn__code" id="langCode">EN</span>
+        <button id="btnLang" class="langBtn" type="button" data-action="lang" aria-label="Language">
+          <span id="flagA" class="flag" aria-hidden="true">🇺🇸</span>
+          <span id="flagB" class="flag" aria-hidden="true">🇻🇳</span>
+          <span id="langCode" class="langCode">EN</span>
         </button>
 
-        <button class="btn btn--ghost btn--auth" type="button" data-auth="open" aria-label="Sign In">
-          <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-user"></use></svg>
-          <span class="hideSm">Sign In</span>
-        </button>
+        <a class="btn btn--ghost hide-sm" href="/login" data-nav="/login">Sign In</a>
       </div>
     </header>
 
-    <!-- Layout -->
-    <div class="layout">
-      <!-- Rail (Left Drawer / Sidebar) -->
-      <aside class="rail" id="rail" aria-label="Primary Navigation">
-        <div class="rail__head">
-          <div class="rail__title">Muon Noi</div>
-          <div class="rail__sub">Social Operating Space</div>
-        </div>
-
-        <nav class="rail__nav">
-          <a class="rail__link" href="/" data-nav="/" aria-label="Home">
-            <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-home"></use></svg>
-            <span>Home</span>
-          </a>
-          <a class="rail__link" href="/explore" data-nav="/explore" aria-label="Explore">
-            <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-compass"></use></svg>
-            <span>Explore</span>
-          </a>
-          <a class="rail__link" href="/create" data-nav="/create" aria-label="Create">
-            <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-edit"></use></svg>
-            <span>Create</span>
-          </a>
-          <a class="rail__link" href="/inbox" data-nav="/inbox" aria-label="Inbox">
-            <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-chat"></use></svg>
-            <span>Inbox</span>
-          </a>
-          <a class="rail__link" href="/wallet" data-nav="/wallet" aria-label="Wallet">
-            <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-settings"></use></svg>
-            <span>Wallet</span>
-          </a>
-          <a class="rail__link" href="/settings" data-nav="/settings" aria-label="Settings">
-            <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-settings"></use></svg>
-            <span>Settings</span>
-          </a>
-        </nav>
-
-        <div class="rail__divider"></div>
-
-        <div class="rail__links">
-          <a class="rail__link rail__link--soft" href="https://muonnoi.org/" rel="noopener">muonnoi.org</a>
-          <a class="rail__link rail__link--soft" href="https://docs.muonnoi.org/" rel="noopener">docs.muonnoi.org</a>
-          <a class="rail__link rail__link--soft" href="/login" data-nav="/login">Sign In</a>
-          <a class="rail__link rail__link--soft" href="/signup" data-nav="/signup">Create Account</a>
-        </div>
-
-        <div class="rail__foot">
-          <div class="muted">© <span id="y"></span> Muon Noi</div>
-        </div>
-      </aside>
-
-      <!-- Main -->
-      <main class="main" role="main" aria-label="Content">
-        <div class="pageHead">
-          <div class="pageHead__text">
-            <div class="pageHead__title" id="pageTitle">Muon Noi</div>
-            <div class="pageHead__sub" id="pageSub">Not a feed. A social operating space: work, market, learn, live, message, pay.</div>
-          </div>
-          <div class="pageHead__actions">
-            <button class="btn btn--primary" type="button" data-go="/create">
-              <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-plus"></use></svg>
-              <span>Create</span>
-            </button>
-            <button class="btn btn--ghost" type="button" data-go="/explore">
-              <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-compass"></use></svg>
-              <span>Explore</span>
-            </button>
+    <!-- Rail / Drawer Menu -->
+    <aside id="rail" class="rail" aria-label="Navigation">
+      <div class="rail__head">
+        <div class="rail__brand">
+          <span class="orb orb--mini" aria-hidden="true"></span>
+          <div>
+            <div class="rail__title">Muon Noi</div>
+            <div class="rail__sub">Social Operating Space</div>
           </div>
         </div>
+        <button class="iconBtn" type="button" aria-label="Close" data-close="drawer">
+          <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-x"></use></svg>
+        </button>
+      </div>
 
-        <!-- SPA View Container -->
-        <div id="view" class="view" aria-live="polite"></div>
+      <nav class="rail__nav">
+        <a class="navItem" href="/" data-nav="/">
+          <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-home"></use></svg>
+          <span>Home</span>
+        </a>
+        <a class="navItem" href="/explore" data-nav="/explore">
+          <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-compass"></use></svg>
+          <span>Explore</span>
+        </a>
+        <a class="navItem" href="/create" data-nav="/create">
+          <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-edit"></use></svg>
+          <span>Create</span>
+        </a>
+        <a class="navItem" href="/inbox" data-nav="/inbox">
+          <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-chat"></use></svg>
+          <span>Inbox</span>
+          <span class="badge" aria-label="Unread">3</span>
+        </a>
+        <a class="navItem" href="/wallet" data-nav="/wallet">
+          <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-settings"></use></svg>
+          <span>Wallet</span>
+        </a>
+        <a class="navItem" href="/settings" data-nav="/settings">
+          <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-settings"></use></svg>
+          <span>Settings</span>
+        </a>
 
-        <footer class="foot">
-          <div class="foot__links">
-            <a class="link" href="https://muonnoi.org/" rel="noopener">Home</a>
-            <a class="link" href="https://docs.muonnoi.org/" rel="noopener">Docs</a>
-            <a class="link" href="/settings" data-nav="/settings">Settings</a>
-            <a class="link" href="/login" data-nav="/login">Sign In</a>
-            <a class="link" href="/signup" data-nav="/signup">Create Account</a>
-            <a class="link" href="/legal/privacy.html">Privacy</a>
-            <a class="link" href="/legal/terms.html">Terms</a>
+        <div class="rail__sep"></div>
+
+        <a class="navItem" href="https://muonnoi.org/" rel="noopener">
+          <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-home"></use></svg>
+          <span>muonnoi.org</span>
+        </a>
+        <a class="navItem" href="https://docs.muonnoi.org/" rel="noopener">
+          <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-compass"></use></svg>
+          <span>docs.muonnoi.org</span>
+        </a>
+      </nav>
+
+      <div class="rail__foot">
+        <a class="btn btn--primary w100" href="/signup" data-nav="/signup">Create Account</a>
+        <div class="tiny muted" style="margin-top:10px">
+          No tracking. Privacy-first. Clean share links.
+        </div>
+      </div>
+    </aside>
+
+    <!-- Drawers -->
+    <aside id="searchDrawer" class="drawer" data-drawer="search" aria-label="Search Drawer">
+      <div class="drawer__head">
+        <div class="drawer__title">Search</div>
+        <button class="iconBtn" type="button" aria-label="Close" data-close="drawer">
+          <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-x"></use></svg>
+        </button>
+      </div>
+      <div class="drawer__body">
+        <input class="input" type="search" placeholder="Type to search…" aria-label="Search input" />
+        <div class="drawerList">
+          <button class="rowBtn" type="button" data-go="/create">Create</button>
+          <button class="rowBtn" type="button" data-go="/explore">Explore</button>
+          <button class="rowBtn" type="button" data-go="/settings">Settings</button>
+        </div>
+      </div>
+    </aside>
+
+    <aside id="notiDrawer" class="drawer" data-drawer="noti" aria-label="Notifications Drawer">
+      <div class="drawer__head">
+        <div class="drawer__title">Inbox</div>
+        <button class="iconBtn" type="button" aria-label="Close" data-close="drawer">
+          <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-x"></use></svg>
+        </button>
+      </div>
+      <div class="drawer__body">
+        <div class="hint">This is a placeholder drawer. Messages module will plug in later.</div>
+        <div class="drawerList">
+          <div class="noteCard">
+            <div class="noteCard__title">System</div>
+            <div class="noteCard__text">Welcome. Clean links are enabled. No hashes.</div>
           </div>
-          <div class="muted">No tracking. No analytics. Privacy-first by design.</div>
-        </footer>
-      </main>
+          <div class="noteCard">
+            <div class="noteCard__title">Next</div>
+            <div class="noteCard__text">Auth + Wallet + Market + Live modules will be wired per roadmap.</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Command Modal -->
+    <div id="commandModal" class="modal" hidden>
+      <div class="modal__card" role="dialog" aria-modal="true" aria-label="Command">
+        <div class="modal__head">
+          <div class="modal__title">Command</div>
+          <button class="iconBtn" type="button" aria-label="Close" data-close="modal">
+            <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-x"></use></svg>
+          </button>
+        </div>
+        <div class="modal__body">
+          <input class="input" type="text" placeholder="Type: create / explore / login …" aria-label="Command input" />
+          <div class="cmdList">
+            <button class="cmdItem" type="button" data-go="/create"><span>Create</span><span class="kbd">Enter</span></button>
+            <button class="cmdItem" type="button" data-go="/explore"><span>Explore</span><span class="kbd">Enter</span></button>
+            <button class="cmdItem" type="button" data-go="/login"><span>Sign In</span><span class="kbd">Enter</span></button>
+          </div>
+          <div class="hint" style="margin-top:12px">Tip: Press ESC to close. Ctrl/⌘ + K to open.</div>
+        </div>
+      </div>
     </div>
 
-    <!-- Bottom Tabbar (Mobile) -->
-    <nav class="tabbar" aria-label="Bottom Navigation">
-      <a class="tabbar__a" href="/" data-tab="/" aria-label="Home">
+    <!-- Main -->
+    <main class="main" role="main">
+      <div class="pageHead">
+        <div>
+          <div id="pageTitle" class="pageTitle">Muon Noi</div>
+          <div id="pageSub" class="pageSub">Not a feed. A social operating space.</div>
+        </div>
+        <div class="pageHead__actions">
+          <button class="btn btn--primary" type="button" data-go="/create">Create</button>
+          <button class="btn btn--ghost" type="button" data-go="/explore">Explore</button>
+          <a class="btn btn--ghost" href="/login" data-nav="/login">Sign In</a>
+        </div>
+      </div>
+
+      <div id="view" class="view">
+        <!-- ui.js renders here -->
+      </div>
+    </main>
+
+    <!-- Bottom Tabbar (mobile) -->
+    <nav class="tabbar" aria-label="Tab Bar">
+      <a class="tab" href="/" data-tab="/">
         <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-home"></use></svg>
         <span>Home</span>
       </a>
-      <a class="tabbar__a" href="/explore" data-tab="/explore" aria-label="Explore">
+      <a class="tab" href="/explore" data-tab="/explore">
         <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-compass"></use></svg>
         <span>Explore</span>
       </a>
-      <a class="tabbar__a tabbar__a--plus" href="/create" data-tab="/create" aria-label="Create">
-        <span class="tabbar__plus">
-          <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-plus"></use></svg>
-        </span>
-        <span>Create</span>
+      <a class="tab tab--center" href="/create" data-tab="/create" aria-label="Create">
+        <span class="tabPlus" aria-hidden="true">+</span>
       </a>
-      <a class="tabbar__a" href="/inbox" data-tab="/inbox" aria-label="Inbox">
+      <a class="tab" href="/inbox" data-tab="/inbox">
         <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-chat"></use></svg>
         <span>Inbox</span>
       </a>
-      <a class="tabbar__a" href="/settings" data-tab="/settings" aria-label="Settings">
+      <a class="tab" href="/settings" data-tab="/settings">
         <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-settings"></use></svg>
         <span>Settings</span>
       </a>
     </nav>
-
-    <!-- Search Drawer -->
-    <aside class="drawer" id="searchDrawer" data-drawer="search" aria-label="Search Drawer" aria-hidden="true">
-      <div class="drawer__head">
-        <div class="drawer__title">Search</div>
-        <button class="iconbtn" type="button" data-close="drawer" aria-label="Close">
-          <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-x"></use></svg>
-        </button>
-      </div>
-      <div class="drawer__body">
-        <div class="field">
-          <label class="label">Search</label>
-          <input class="input" type="search" placeholder="Search posts, people, markets…" />
-          <div class="hint">Tip: /explore?q=keyword</div>
-        </div>
-
-        <div class="drawer__section">
-          <div class="h2">Quick Links</div>
-          <div class="grid2">
-            <button class="btn btn--ghost" type="button" data-go="/explore">Explore</button>
-            <button class="btn btn--ghost" type="button" data-go="/create">Create</button>
-            <button class="btn btn--ghost" type="button" data-go="/wallet">Wallet</button>
-            <button class="btn btn--ghost" type="button" data-go="/login">Sign In</button>
-          </div>
-        </div>
-      </div>
-    </aside>
-
-    <!-- Notifications Drawer -->
-    <aside class="drawer" id="notiDrawer" data-drawer="noti" aria-label="Notifications Drawer" aria-hidden="true">
-      <div class="drawer__head">
-        <div class="drawer__title">Notifications</div>
-        <button class="iconbtn" type="button" data-close="drawer" aria-label="Close">
-          <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-x"></use></svg>
-        </button>
-      </div>
-      <div class="drawer__body">
-        <div class="empty">
-          <div class="empty__icon" aria-hidden="true">◎</div>
-          <div class="empty__title">No notifications yet</div>
-          <div class="empty__sub">This is a calm space. No likes. No noisy feeds.</div>
-          <button class="btn btn--primary" type="button" data-go="/create">Create a post</button>
-        </div>
-      </div>
-    </aside>
-
-    <!-- Profile Menu -->
-    <div class="menu" id="profileMenu" hidden>
-      <div class="menu__card">
-        <div class="menu__head">
-          <div class="menu__title">Account</div>
-          <button class="iconbtn" type="button" data-close="drawer" aria-label="Close">
-            <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-x"></use></svg>
-          </button>
-        </div>
-        <div class="menu__body">
-          <a class="menu__item" href="/login" data-nav="/login">
-            <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-user"></use></svg>
-            <span>Sign In</span>
-          </a>
-          <a class="menu__item" href="/signup" data-nav="/signup">
-            <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-plus"></use></svg>
-            <span>Create Account</span>
-          </a>
-          <div class="menu__sep"></div>
-          <a class="menu__item" href="/settings" data-nav="/settings">
-            <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-settings"></use></svg>
-            <span>Settings</span>
-          </a>
-          <a class="menu__item" href="https://docs.muonnoi.org/" rel="noopener">
-            <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-compass"></use></svg>
-            <span>Docs</span>
-          </a>
-        </div>
-      </div>
-    </div>
-
-    <!-- Command Modal -->
-    <div class="modal" id="commandModal" hidden aria-hidden="true" role="dialog" aria-modal="true">
-      <div class="modal__card" role="document">
-        <div class="modal__head">
-          <div class="modal__title">Command</div>
-          <button class="iconbtn" type="button" data-close="modal" aria-label="Close">
-            <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-x"></use></svg>
-          </button>
-        </div>
-
-        <div class="modal__body">
-          <div class="field">
-            <label class="label">Quick Action</label>
-            <input class="input" type="text" placeholder="Type: create / explore / login …" />
-            <div class="hint">Shortcut: Ctrl/Cmd + K</div>
-          </div>
-
-          <div class="grid2">
-            <button class="btn btn--primary" type="button" data-go="/create">Create</button>
-            <button class="btn btn--ghost" type="button" data-go="/explore">Explore</button>
-            <button class="btn btn--ghost" type="button" data-go="/login">Sign In</button>
-            <button class="btn btn--ghost" type="button" data-go="/signup">Sign Up</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Toast container (ui.js will create if missing, but we include to avoid layout jump) -->
-    <div class="toasts" aria-live="polite" aria-atomic="true"></div>
   </div>
 
-  <!-- JS -->
   <script src="/assets/ui.js" defer></script>
 </body>
 </html>
