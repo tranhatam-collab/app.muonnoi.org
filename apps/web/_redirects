@@ -1,3 +1,16 @@
-/assets/* /assets/:splat 200
-/legal/*  /legal/:splat 200
-/*        /index.html 200
+# MUON NOI — SPA history routing (no hash)
+# Always serve index.html for app routes so share links never die.
+
+# Assets should be served directly
+/assets/*  /assets/:splat  200
+/manifest.json  /manifest.json  200
+/favicon.ico    /favicon.ico    200
+/robots.txt     /robots.txt     200
+/sitemap.xml    /sitemap.xml    200
+
+# Optional: canonical doc host redirect
+/docs           https://docs.muonnoi.org/  302
+/help           https://docs.muonnoi.org/  302
+
+# SPA fallback (must be last)
+/*  /index.html  200
