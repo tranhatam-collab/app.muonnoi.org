@@ -3,7 +3,7 @@
    - Drawer/Menu/Modal stable (always closable)
    - Clean internal links (/p/:id etc.)
    - Language: EN default, VI by browser, toggle with flags
-   - Theme: dark/light + system (simple)
+   - Theme: dark/light (simple)
    - SEO: canonical + title + og:url updates on route
    - No libs, no tracking
 */
@@ -16,7 +16,6 @@
   // -----------------------------
   const $ = (s, el = document) => el.querySelector(s);
   const $$ = (s, el = document) => Array.from(el.querySelectorAll(s));
-  const now = () => Date.now();
 
   function escapeHTML(s) {
     return String(s ?? "")
@@ -27,14 +26,8 @@
       .replaceAll("'", "&#39;");
   }
 
-  function safeJSONParse(s, fallback = null) {
-    try { return JSON.parse(s); } catch { return fallback; }
-  }
-
-  function setText(el, txt) { if (el) el.textContent = txt; }
-
-  function prefersReducedMotion() {
-    return window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function setText(el, txt) {
+    if (el) el.textContent = String(txt ?? "");
   }
 
   function copyToClipboard(text) {
@@ -59,12 +52,23 @@
     }
   }
 
-  function debounce(fn, ms) {
-    let t = null;
-    return (...args) => {
-      if (t) clearTimeout(t);
-      t = setTimeout(() => fn(...args), ms);
-    };
+  function parseQuery(search) {
+    const q = {};
+    const s = (search || "").replace(/^\?/, "");
+    if (!s) return q;
+    for (const part of s.split("&")) {
+      if (!part) continue;
+      const [k, v] = part.split("=");
+      const key = decodeURIComponent(k || "").trim();
+      if (!key) continue;
+      q[key] = decodeURIComponent(v || "").trim();
+    }
+    return q;
+  }
+
+  function canonicalUrl(pathname, search = "") {
+    const base = `${location.protocol}//${location.host}`;
+    return `${base}${pathname}${search || ""}`;
   }
 
   // -----------------------------
@@ -73,9 +77,9 @@
   const State = {
     theme: "dark",          // 'dark'|'light'
     lang: "en",             // 'en'|'vi'
-    i18n: null,             // loaded json (optional)
+    i18n: null,             // optional json
     route: { path: "/", params: {}, query: {} },
-    overlays: { overlayEl: null, modalOverlayEl: null }
+    overlays: { drawer: null, modal: null }
   };
 
   // -----------------------------
@@ -103,20 +107,6 @@
     { name: "help", path: /^\/help\/?$/, external: "https://docs.muonnoi.org/" }
   ];
 
-  function parseQuery(search) {
-    const q = {};
-    const s = (search || "").replace(/^\?/, "");
-    if (!s) return q;
-    for (const part of s.split("&")) {
-      if (!part) continue;
-      const [k, v] = part.split("=");
-      const key = decodeURIComponent(k || "").trim();
-      if (!key) continue;
-      q[key] = decodeURIComponent(v || "").trim();
-    }
-    return q;
-  }
-
   function matchRoute(pathname) {
     for (const r of Routes) {
       const m = pathname.match(r.path);
@@ -128,11 +118,6 @@
       return { ...r, params };
     }
     return { name: "home", view: "home", params: {} };
-  }
-
-  function canonicalUrl(pathname, search = "") {
-    const base = `${location.protocol}//${location.host}`;
-    return `${base}${pathname}${search || ""}`;
   }
 
   // -----------------------------
@@ -160,12 +145,9 @@
   };
 
   // -----------------------------
-  // ID Generator (share links “bền” + chain-like)
-  // NOTE: đây là “chain-id style” (không phải blockchain thật).
-  // Tạo slug có timestamp + random + checksum nhẹ -> share URL sạch.
-  // Sau này backend có thể map ID -> record trong D1/IPFS/etc.
+  // “Chain-like” ID (không phải blockchain thật)
   // -----------------------------
-  function base36(n) { return Math.max(0, n >>> 0).toString(36); }
+  function base36u32(n) { return Math.max(0, (n >>> 0)).toString(36); }
 
   function checksum36(str) {
     let h = 2166136261;
@@ -173,7 +155,7 @@
       h ^= str.charCodeAt(i);
       h = Math.imul(h, 16777619);
     }
-    return base36(h >>> 0).padStart(6, "0").slice(0, 6);
+    return base36u32(h >>> 0).padStart(6, "0").slice(0, 6);
   }
 
   function chainId(prefix = "mn") {
@@ -181,7 +163,7 @@
     const r = Math.floor(Math.random() * 1e9);
     const raw = `${prefix}.${t}.${r}`;
     const c = checksum36(raw);
-    return `${prefix}_${base36(t)}_${base36(r)}_${c}`; // mn_k3x... style
+    return `${prefix}_${base36u32(t)}_${base36u32(r)}_${c}`;
   }
 
   // -----------------------------
@@ -230,7 +212,7 @@
     UI.menu = $("#profileMenu") || $(".menu");
     UI.modal = $("#commandModal") || $(".modal");
 
-    UI.view = $("#view") || $("#mainView") || $(".main");
+    UI.view = $("#view") || $("#mainView") || $(".view") || $(".main");
     UI.pageTitle = $("#pageTitle");
     UI.pageSub = $("#pageSub");
 
@@ -239,37 +221,51 @@
   }
 
   // -----------------------------
+  // Hash → Path migration (kills #/home forever)
+  // Must run BEFORE first render.
+  // -----------------------------
+  function migrateHashToPath() {
+    const h = location.hash || "";
+    if (!h || !h.startsWith("#/")) return;
+
+    // #/home -> /
+    let path = h.slice(1); // "/home"
+    if (path === "/home") path = "/";
+
+    // keep query string from URL (already in location.search)
+    history.replaceState({}, "", path + location.search);
+    try { location.hash = ""; } catch {}
+  }
+
+  // -----------------------------
   // Overlay Manager (fix “kẹt không đóng được”)
   // -----------------------------
   function ensureOverlay(kind) {
     // kind: 'drawer' | 'modal'
-    const z = (kind === "modal") ? 3100 : 2000;
+    const key = kind === "modal" ? "modal" : "drawer";
+    const z = kind === "modal" ? 3100 : 2000;
 
-    let el = (kind === "modal") ? State.overlays.modalOverlayEl : State.overlays.overlayEl;
+    let el = State.overlays[key];
     if (el && el.isConnected) return el;
 
     el = document.createElement("div");
     el.className = "overlay";
     el.style.zIndex = String(z);
-    el.setAttribute("data-overlay", kind);
     el.hidden = true;
     el.style.display = "none";
+    el.setAttribute("data-overlay", key);
+
     el.addEventListener("click", () => {
-      if (kind === "modal") closeModal();
+      if (key === "modal") closeModal();
       else closeAllDrawersAndMenus();
     });
 
     document.body.appendChild(el);
-
-    if (kind === "modal") State.overlays.modalOverlayEl = el;
-    else State.overlays.overlayEl = el;
-
+    State.overlays[key] = el;
     return el;
   }
 
-  function lockScroll() {
-    document.documentElement.style.overflow = "hidden";
-  }
+  function lockScroll() { document.documentElement.style.overflow = "hidden"; }
   function unlockScrollIfSafe() {
     if (!isAnyLayerOpen()) document.documentElement.style.overflow = "";
   }
@@ -282,7 +278,8 @@
   }
 
   function hideOverlay(kind) {
-    const el = (kind === "modal") ? State.overlays.modalOverlayEl : State.overlays.overlayEl;
+    const key = kind === "modal" ? "modal" : "drawer";
+    const el = State.overlays[key];
     if (!el) return;
     el.style.display = "none";
     el.hidden = true;
@@ -294,15 +291,37 @@
       (UI.rail && UI.rail.classList.contains("is-open")) ||
       (UI.drawerSearch && UI.drawerSearch.classList.contains("is-open")) ||
       (UI.drawerNoti && UI.drawerNoti.classList.contains("is-open")) ||
-      (UI.menu && !UI.menu.hidden) ||
-      (UI.modal && !UI.modal.hidden)
+      (UI.menu && !UI.menu.hidden && UI.menu.style.display !== "none") ||
+      (UI.modal && !UI.modal.hidden && UI.modal.style.display !== "none")
     );
   }
 
   // -----------------------------
-  // Drawer/Menu/Modal controls
+  // Drawer/Menu/Modal
   // -----------------------------
   function closeRail() { if (UI.rail) UI.rail.classList.remove("is-open"); }
+  function closeDrawers() {
+    if (UI.drawerSearch) UI.drawerSearch.classList.remove("is-open");
+    if (UI.drawerNoti) UI.drawerNoti.classList.remove("is-open");
+  }
+  function closeMenu() {
+    if (!UI.menu) return;
+    UI.menu.hidden = true;
+    UI.menu.style.display = "none";
+  }
+  function closeModal() {
+    if (!UI.modal) return;
+    UI.modal.hidden = true;
+    UI.modal.style.display = "none";
+    hideOverlay("modal");
+  }
+
+  function closeAllDrawersAndMenus() {
+    closeRail();
+    closeDrawers();
+    closeMenu();
+    hideOverlay("drawer");
+  }
 
   function openRail() {
     if (!UI.rail) return;
@@ -317,24 +336,24 @@
     if (!UI.rail) return;
     if (UI.rail.classList.contains("is-open")) {
       closeRail();
-      hideOverlay("drawer");
-    } else {
-      openRail();
-    }
-  }
-
-  function closeDrawers() {
-    if (UI.drawerSearch) UI.drawerSearch.classList.remove("is-open");
-    if (UI.drawerNoti) UI.drawerNoti.classList.remove("is-open");
+      // only hide overlay if no other drawer/menu open
+      if (!isAnyLayerOpen()) hideOverlay("drawer");
+      else hideOverlay("drawer"); // re-evaluated by state below
+      if ((UI.drawerSearch && UI.drawerSearch.classList.contains("is-open")) ||
+          (UI.drawerNoti && UI.drawerNoti.classList.contains("is-open")) ||
+          (UI.menu && !UI.menu.hidden && UI.menu.style.display !== "none")) {
+        showOverlay("drawer");
+      } else {
+        hideOverlay("drawer");
+      }
+    } else openRail();
   }
 
   function openDrawer(which) {
     closeRail();
     closeMenu();
     closeModal();
-
-    // close other drawers
-    [UI.drawerSearch, UI.drawerNoti].filter(Boolean).forEach(d => d.classList.remove("is-open"));
+    closeDrawers();
 
     const target = (which === "search") ? UI.drawerSearch : UI.drawerNoti;
     if (!target) return;
@@ -355,11 +374,10 @@
     const open = target.classList.contains("is-open");
     if (open) {
       target.classList.remove("is-open");
-      // if rail still open, keep overlay
-      if (UI.rail && UI.rail.classList.contains("is-open")) showOverlay("drawer");
-      else if ((UI.drawerSearch && UI.drawerSearch.classList.contains("is-open")) ||
-               (UI.drawerNoti && UI.drawerNoti.classList.contains("is-open")) ||
-               (UI.menu && !UI.menu.hidden)) {
+      if ((UI.rail && UI.rail.classList.contains("is-open")) ||
+          (UI.drawerSearch && UI.drawerSearch.classList.contains("is-open")) ||
+          (UI.drawerNoti && UI.drawerNoti.classList.contains("is-open")) ||
+          (UI.menu && !UI.menu.hidden && UI.menu.style.display !== "none")) {
         showOverlay("drawer");
       } else {
         hideOverlay("drawer");
@@ -377,19 +395,13 @@
     showOverlay("drawer");
   }
 
-  function closeMenu() {
-    if (!UI.menu) return;
-    UI.menu.hidden = true;
-    UI.menu.style.display = "none";
-  }
-
   function toggleMenu() {
     if (!UI.menu) return;
-    if (UI.menu.hidden || UI.menu.style.display === "none") openMenu();
-    else {
+    const open = (!UI.menu.hidden && UI.menu.style.display !== "none");
+    if (open) {
       closeMenu();
       if (!isAnyLayerOpen()) hideOverlay("drawer");
-    }
+    } else openMenu();
   }
 
   function openModal() {
@@ -404,24 +416,11 @@
     if (inp) setTimeout(() => inp.focus(), 60);
   }
 
-  function closeModal() {
-    if (!UI.modal) return;
-    UI.modal.hidden = true;
-    UI.modal.style.display = "none";
-    hideOverlay("modal");
-  }
-
   function toggleModal() {
     if (!UI.modal) return;
-    if (UI.modal.hidden || UI.modal.style.display === "none") openModal();
-    else closeModal();
-  }
-
-  function closeAllDrawersAndMenus() {
-    closeRail();
-    closeDrawers();
-    closeMenu();
-    hideOverlay("drawer");
+    const open = (!UI.modal.hidden && UI.modal.style.display !== "none");
+    if (open) closeModal();
+    else openModal();
   }
 
   // -----------------------------
@@ -433,7 +432,7 @@
       if (saved === "vi" || saved === "en") return saved;
     } catch {}
     const nav = (navigator.language || "en").toLowerCase();
-    // rule: EN default, VI if browser is vi
+    // EN default, VI if browser vi
     return nav.startsWith("vi") ? "vi" : "en";
   }
 
@@ -446,8 +445,6 @@
   }
 
   async function loadI18nOptional() {
-    // Optional: if you have /assets/i18n.json
-    // If missing, app still works with built-in text in views.
     try {
       const res = await fetch("/assets/i18n.json", { cache: "no-store" });
       if (!res.ok) return;
@@ -470,19 +467,16 @@
     const flagA = $("#flagA");
     const flagB = $("#flagB");
     if (langCode) langCode.textContent = State.lang.toUpperCase();
-    if (flagA && flagB) {
-      flagA.textContent = "🇺🇸";
-      flagB.textContent = "🇻🇳";
-    }
+    if (flagA) flagA.textContent = "🇺🇸";
+    if (flagB) flagB.textContent = "🇻🇳";
 
-    // apply i18n-marked nodes (if any)
     $$("[data-i18n]").forEach((el) => {
       const k = el.getAttribute("data-i18n");
       if (!k) return;
       el.textContent = t(k, el.textContent);
     });
 
-    onRouteChange({ replace: true }); // rerender
+    onRouteChange({ replace: true, rerender: true });
   }
 
   function toggleLang() {
@@ -510,7 +504,6 @@
   function navigate(path, { replace = false, closeLayers = true } = {}) {
     if (!path) return;
 
-    // external routes
     const purePath = String(path).split("?")[0];
     const matched = matchRoute(purePath);
     if (matched.external) {
@@ -540,7 +533,11 @@
 
     // SEO canonical
     let can = $('link[rel="canonical"]');
-    if (!can) { can = document.createElement("link"); can.rel = "canonical"; document.head.appendChild(can); }
+    if (!can) {
+      can = document.createElement("link");
+      can.rel = "canonical";
+      document.head.appendChild(can);
+    }
     can.href = canonicalUrl(pathname, search);
 
     // OG url update
@@ -552,7 +549,8 @@
 
     renderRoute(pathname, r.params || {}, query);
     setActiveNav(pathname);
-    if (opts.replace) return;
+
+    if (opts.replace && !opts.rerender) return;
   }
 
   function setActiveNav(pathname) {
@@ -577,7 +575,7 @@
     });
   }
 
-  // Intercept all internal links (a href="/...") to prevent full reload
+  // Intercept <a href="/..."> to prevent full reload
   function isInternalHref(href) {
     if (!href) return false;
     if (href.startsWith("#")) return false;
@@ -595,18 +593,29 @@
     document.addEventListener("click", (e) => {
       const a = e.target && e.target.closest ? e.target.closest("a") : null;
       if (!a) return;
-
-      // allow new tab
       if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+
       const href = a.getAttribute("href");
       if (!isInternalHref(href)) return;
-
-      // if download/external rel
       if (a.hasAttribute("download")) return;
 
       e.preventDefault();
       navigate(href);
     }, { passive: false });
+  }
+
+  // Bind all elements with data-route (buttons/divs)
+  function bindDataRouteClicks(root = document) {
+    $$("[data-route]", root).forEach((el) => {
+      if (el.__mnBound) return;
+      el.__mnBound = true;
+      el.addEventListener("click", (e) => {
+        e.preventDefault();
+        const p = el.getAttribute("data-route") || "";
+        if (!p) return;
+        navigate(p);
+      });
+    });
   }
 
   // -----------------------------
@@ -616,17 +625,17 @@
     const L = State.lang;
     const base = "Muon Noi";
     const map = {
-      home: L === "vi" ? "Muon Noi — Không Gian Vận Hành Xã Hội" : "Muon Noi — Social Operating Space",
-      explore: L === "vi" ? "Khám Phá — Muon Noi" : "Explore — Muon Noi",
-      create: L === "vi" ? "Tạo — Muon Noi" : "Create — Muon Noi",
-      inbox: L === "vi" ? "Tin Nhắn — Muon Noi" : "Inbox — Muon Noi",
-      wallet: L === "vi" ? "Ví — Muon Noi" : "Wallet — Muon Noi",
-      settings: L === "vi" ? "Cài Đặt — Muon Noi" : "Settings — Muon Noi",
-      signin: L === "vi" ? "Đăng Nhập — Muon Noi" : "Sign In — Muon Noi",
-      signup: L === "vi" ? "Đăng Ký — Muon Noi" : "Sign Up — Muon Noi"
+      home: L === "vi" ? "Muon Noi. Không Gian Vận Hành Xã Hội" : "Muon Noi. Social Operating Space",
+      explore: L === "vi" ? "Khám Phá. Muon Noi" : "Explore. Muon Noi",
+      create: L === "vi" ? "Tạo. Muon Noi" : "Create. Muon Noi",
+      inbox: L === "vi" ? "Tin Nhắn. Muon Noi" : "Inbox. Muon Noi",
+      wallet: L === "vi" ? "Ví. Muon Noi" : "Wallet. Muon Noi",
+      settings: L === "vi" ? "Cài Đặt. Muon Noi" : "Settings. Muon Noi",
+      signin: L === "vi" ? "Đăng Nhập. Muon Noi" : "Sign In. Muon Noi",
+      signup: L === "vi" ? "Đăng Ký. Muon Noi" : "Sign Up. Muon Noi"
     };
-    if (view === "post") return `${base} — ${L === "vi" ? "Bài" : "Post"} ${params?.id ? params.id : ""}`.trim();
-    if (view === "user") return `${base} — ${L === "vi" ? "Hồ Sơ" : "Profile"} ${params?.handle ? params.handle : ""}`.trim();
+    if (view === "post") return `${base}. ${L === "vi" ? "Bài" : "Post"} ${params?.id ? params.id : ""}`.trim();
+    if (view === "user") return `${base}. ${L === "vi" ? "Hồ Sơ" : "Profile"} ${params?.handle ? params.handle : ""}`.trim();
     return map[view] || map.home;
   }
 
@@ -665,14 +674,14 @@
   function pageSubFor(view) {
     const L = State.lang;
     if (L === "vi") {
-      if (view === "home") return "Không phải bảng tin. Là không gian vận hành: làm việc, mua bán, học, live, nhắn tin, thanh toán.";
-      if (view === "signin") return "Đăng nhập nhanh, bảo mật, không theo dõi.";
-      if (view === "signup") return "Tạo tài khoản, giữ quyền riêng tư.";
+      if (view === "home") return "Không phải bảng tin. Là không gian vận hành. Làm việc, mua bán, học, live, nhắn tin, thanh toán.";
+      if (view === "signin") return "Đăng nhập nhanh. Không theo dõi. Bảo mật.";
+      if (view === "signup") return "Tạo tài khoản với quyền riêng tư là mặc định.";
       return "Module đang hoàn thiện theo lộ trình.";
     }
-    if (view === "home") return "Not a feed. A social operating space: work, market, learn, live, message, pay.";
-    if (view === "signin") return "Fast sign-in. Secure. No tracking.";
-    if (view === "signup") return "Create account with privacy by default.";
+    if (view === "home") return "Not a feed. A social operating space. Work, market, learn, live, message, pay.";
+    if (view === "signin") return "Fast sign-in. No tracking. Secure.";
+    if (view === "signup") return "Create an account with privacy by default.";
     return "Module is being finalized per roadmap.";
   }
 
@@ -687,23 +696,42 @@
 
     if (view === "home") {
       UI.view.innerHTML = homeHTML();
+      bindDataRouteClicks(UI.view);
       bindHomeActions();
       return;
     }
-    if (view === "signin") {
+        if (view === "signin") {
       UI.view.innerHTML = signinHTML();
+      bindDataRouteClicks(UI.view);
       bindAuthActions("signin");
       return;
     }
     if (view === "signup") {
       UI.view.innerHTML = signupHTML();
+      bindDataRouteClicks(UI.view);
       bindAuthActions("signup");
       return;
     }
 
     // shells
     UI.view.innerHTML = shellHTML(view, params);
-    bindShellActions();
+    bindDataRouteClicks(UI.view);
+    bindShellActions(view, params);
+  }
+
+  // Bind click for any element having data-route (buttons/divs)
+  function bindDataRouteClicks(rootEl = document) {
+    const nodes = rootEl.querySelectorAll("[data-route]");
+    nodes.forEach((el) => {
+      if (el.__mnBound) return;
+      el.__mnBound = true;
+      el.addEventListener("click", (e) => {
+        e.preventDefault();
+        const to = el.getAttribute("data-route");
+        if (!to) return;
+        navigate(to);
+      });
+    });
   }
 
   function shellHTML(view, params) {
@@ -749,12 +777,12 @@
   }
 
   // -----------------------------
-  // HOME (đã chốt + phần privacy tiếp)
+  // HOME
   // -----------------------------
   function homeHTML() {
     const L = State.lang;
 
-    const kicker = (L === "vi") ? "Social Operating Space" : "Social Operating Space";
+    const kicker = "Social Operating Space";
     const title = "Muon Noi";
 
     const lead = (L === "vi")
@@ -762,13 +790,13 @@
       : "An all-in-one Social Operating Space. Work, earn, trade, business, learn, video, livestream, message, call, pay.";
 
     const ctaA = (L === "vi") ? "Bắt Đầu Tạo" : "Start Creating";
-    const ctaB = (L === "vi") ? "Mở Chợ" : "Open Market";
-    const ctaC = (L === "vi") ? "Mở Docs" : "Open Docs";
+    const ctaB = (L === "vi") ? "Khám Phá" : "Explore";
+    const ctaC = (L === "vi") ? "Đăng Nhập" : "Sign In";
 
     const privacyTitle = (L === "vi") ? "Bảo Mật Và Quyền Riêng Tư" : "Privacy & Security";
     const privacyText = (L === "vi")
       ? "Không thu thập dữ liệu hành vi. Không pixel theo dõi. Liên kết sạch. Thiết kế hướng tới mã hóa đầu cuối cho liên lạc, giao dịch và dữ liệu cá nhân."
-      : "No behavioral tracking. No pixels. Clean links. Designed toward end-to-end encryption for communication, transactions and personal data.";
+      : "No behavioral tracking. No pixels. Clean links. Designed toward end-to-end encryption for communication, transactions, and personal data.";
 
     const privacyPoints = (L === "vi")
       ? ["Không bán dữ liệu người dùng", "Không SDK bên thứ ba", "Không quảng cáo hành vi", "Kiến trúc hướng Web3 tương lai"]
@@ -796,12 +824,12 @@
 
             <button class="btn btn--ghost" type="button" data-route="/explore">
               <svg class="icon" aria-hidden="true"><use href="#i-compass"></use></svg>
-              <span>${escapeHTML(L === "vi" ? "Khám Phá" : "Explore")}</span>
+              <span>${escapeHTML(ctaB)}</span>
             </button>
 
-            <button class="btn btn--ghost" type="button" data-route="/inbox">
-              <svg class="icon" aria-hidden="true"><use href="#i-chat"></use></svg>
-              <span>${escapeHTML(L === "vi" ? "Tin Nhắn" : "Inbox")}</span>
+            <button class="btn btn--ghost" type="button" data-route="/signin">
+              <svg class="icon" aria-hidden="true"><use href="#i-key"></use></svg>
+              <span>${escapeHTML(ctaC)}</span>
             </button>
           </div>
 
@@ -921,6 +949,8 @@
   }
 
   function bindHomeActions() {
+    bindDataRouteClicks(UI.view);
+
     const btnCopy = $("#btnCopySample");
     const btnOpen = $("#btnOpenSample");
     const code = $("#sampleLink");
@@ -928,13 +958,13 @@
       btnCopy.addEventListener("click", async () => {
         const ok = await copyToClipboard(code.textContent || "");
         btnCopy.blur();
-        btnCopy.querySelector("span") && (btnCopy.querySelector("span").textContent = State.lang === "vi"
-          ? (ok ? "Đã Sao Chép" : "Không Sao Chép Được")
-          : (ok ? "Copied" : "Copy Failed"));
-        setTimeout(() => {
-          const span = btnCopy.querySelector("span");
-          if (span) span.textContent = State.lang === "vi" ? "Sao Chép" : "Copy";
-        }, 1200);
+        const span = btnCopy.querySelector("span");
+        if (span) {
+          span.textContent = State.lang === "vi"
+            ? (ok ? "Đã Sao Chép" : "Không Sao Chép Được")
+            : (ok ? "Copied" : "Copy Failed");
+          setTimeout(() => { span.textContent = State.lang === "vi" ? "Sao Chép" : "Copy"; }, 1200);
+        }
       });
     }
     if (btnOpen && code) {
@@ -982,17 +1012,6 @@
               <svg class="icon" aria-hidden="true"><use href="#i-mail"></use></svg>
               <span>${escapeHTML(L === "vi" ? "Gửi Magic Link" : "Send Magic Link")}</span>
             </button>
-
-            <div class="status">
-              <div class="status__row">
-                <span class="muted">${escapeHTML(L === "vi" ? "OAuth" : "OAuth")}</span>
-                <span class="pillInline">Google</span>
-              </div>
-              <div class="status__row">
-                <span class="muted">${escapeHTML(L === "vi" ? "Trạng thái" : "Status")}</span>
-                <span class="pillInline">${escapeHTML(L === "vi" ? "Chưa kết nối API" : "API not connected")}</span>
-              </div>
-            </div>
 
             <button class="btn btn--ghost w100" type="button" id="btnGoogleSignIn">
               <svg class="icon" aria-hidden="true"><use href="#i-google"></use></svg>
@@ -1063,7 +1082,7 @@
     const btnMagic = $("#btnMagicLink");
     if (btnMagic) {
       btnMagic.addEventListener("click", () => {
-        const email = ($("#authEmail")?.value || "").trim();
+        const email = ($("#authEmail")?.value || $("#signupEmail")?.value || "").trim();
         if (!email) {
           alert(L === "vi" ? "Vui lòng nhập email." : "Please enter your email.");
           return;
@@ -1093,15 +1112,14 @@
     }
   }
 
-  function bindShellActions() {
-    // currently none
+  function bindShellActions(view, params) {
+    // reserve
   }
 
   // -----------------------------
   // Global bindings (close on ESC etc.)
   // -----------------------------
   function bindControls() {
-    // Buttons
     UI.btnMenu && UI.btnMenu.addEventListener("click", toggleRail);
     UI.btnSearch && UI.btnSearch.addEventListener("click", () => toggleDrawer("search"));
     UI.btnNoti && UI.btnNoti.addEventListener("click", () => toggleDrawer("noti"));
@@ -1110,7 +1128,6 @@
     UI.btnLang && UI.btnLang.addEventListener("click", toggleLang);
     UI.btnProfile && UI.btnProfile.addEventListener("click", toggleMenu);
 
-    // Close buttons (drawers/modals)
     document.addEventListener("click", (e) => {
       const closeBtn = e.target && e.target.closest ? e.target.closest("[data-close]") : null;
       if (!closeBtn) return;
@@ -1119,38 +1136,42 @@
       else closeAllDrawersAndMenus();
     });
 
-    // Keyboard: ESC closes everything
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape") {
         closeModal();
         closeAllDrawersAndMenus();
       }
-      // Command palette shortcut: Ctrl/Cmd + K
       if ((e.ctrlKey || e.metaKey) && (e.key.toLowerCase() === "k")) {
         e.preventDefault();
         toggleDrawer("search");
       }
     });
 
-    // History
     window.addEventListener("popstate", () => onRouteChange());
+  }
 
-    // Click outside menu: handled by overlay click; but if menu open without overlay, close anyway
-    document.addEventListener("click", (e) => {
-      if (!UI.menu || UI.menu.hidden) return;
-      const inside = e.target.closest && e.target.closest("#profileMenu");
-      const trigger = e.target.closest && e.target.closest("#btnProfile");
-      if (!inside && !trigger) {
-        closeMenu();
-        hideOverlay("drawer");
-      }
-    });
+  // -----------------------------
+  // Hash → Path migration (kills #/home forever)
+  // -----------------------------
+  function migrateHashToPath() {
+    const h = location.hash || "";
+    if (!h.startsWith("#/")) return;
+
+    let path = h.slice(1); // "/home" etc.
+    if (path === "/home") path = "/";
+    if (!path.startsWith("/")) path = "/";
+
+    // keep search
+    history.replaceState({}, "", path + location.search);
+    try { location.hash = ""; } catch {}
   }
 
   // -----------------------------
   // Init
   // -----------------------------
   async function init() {
+    migrateHashToPath();
+
     resolveUI();
     ensureOverlay("drawer");
     ensureOverlay("modal");
@@ -1163,19 +1184,14 @@
     bindGlobalLinkInterceptor();
     bindControls();
 
-    // initial route render
     onRouteChange({ replace: true });
 
-    // expose minimal API for inline helpers
-    window.MN = {
-      navigate,
-      Link,
-      chainId,
-      get state() { return State; }
-    };
+    // Important: after first render, bind data-route clicks inside view
+    bindDataRouteClicks(document);
+
+    window.MN = { navigate, Link, chainId, get state() { return State; } };
   }
 
-  // Start
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
   else init();
 
