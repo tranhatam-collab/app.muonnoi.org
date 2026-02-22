@@ -1,7 +1,29 @@
+# apps/web/_headers
+
 /*
   X-Content-Type-Options: nosniff
-  Referrer-Policy: no-referrer
-  Permissions-Policy: geolocation=(), microphone=(), camera=(), payment=(), usb=()
   X-Frame-Options: DENY
+  Referrer-Policy: no-referrer
+  Permissions-Policy: accelerometer=(), ambient-light-sensor=(), autoplay=(), battery=(), bluetooth=(), camera=(), clipboard-read=(), clipboard-write=(), display-capture=(), document-domain=(), encrypted-media=(), fullscreen=(self), gamepad=(), geolocation=(), gyroscope=(), hid=(), identity-credentials-get=(), idle-detection=(), local-fonts=(), magnetometer=(), microphone=(), midi=(), payment=(self), picture-in-picture=(), publickey-credentials-get=(self), screen-wake-lock=(), serial=(), usb=(), web-share=(self)
+  Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Resource-Policy: same-origin
+  Cross-Origin-Embedder-Policy: require-corp
   Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
-  Content-Security-Policy: default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; img-src 'self' data:; style-src 'self'; script-src 'self'; connect-src 'self'; upgrade-insecure-requests
+
+  # CSP (High-security baseline, SPA friendly, no inline scripts)
+  Content-Security-Policy: default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; img-src 'self' data: blob:; media-src 'self' blob:; font-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self' https://api.muonnoi.org https://api.app.muonnoi.org; manifest-src 'self'; worker-src 'self' blob:; upgrade-insecure-requests; block-all-mixed-content
+
+# Static assets: cache long
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# HTML: no cache (to ensure fast updates)
+/
+/index.html
+/404.html
+  Cache-Control: no-store
+
+# Optional: prevent indexing app shell if you want
+# (Remove if you WANT app indexed)
+# /index.html
+#   X-Robots-Tag: noindex, nofollow
