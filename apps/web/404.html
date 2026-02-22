@@ -1,63 +1,76 @@
+<!-- apps/web/404.html -->
 <!doctype html>
-<html lang="vi">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <meta name="color-scheme" content="dark light" />
-  <title>Không tìm thấy trang | Muon Noi</title>
-  <meta name="robots" content="noindex,nofollow" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>404 • Muon Noi</title>
+  <meta name="description" content="This page does not exist. Return to Muon Noi home." />
+  <link rel="icon" href="/assets/favicon.svg" />
   <link rel="stylesheet" href="/assets/ui.css" />
 </head>
 <body>
-  <div class="app" id="app" data-theme="dark">
-    <header class="topbar" role="banner">
-      <div class="topbar__inner">
-        <a class="brand" href="/" aria-label="Muon Noi">
-          <span class="brand__mark" aria-hidden="true"></span>
-          <span class="brand__name">muonnoi</span>
+  <div class="app" data-theme="dark">
+    <header class="topbar">
+      <div class="topbar__left">
+        <a class="brand" href="/" aria-label="Muon Noi Home">
+          <span class="brand__mark"><span class="orb" aria-hidden="true"></span></span>
+          <span class="brand__name">Muon Noi</span>
         </a>
-        <div class="topbar__actions">
-          <button class="btn btn--ghost" id="btnBack" type="button">Quay lại</button>
-          <a class="btn btn--primary" href="/#/" aria-label="Về Trang chủ">Về Trang chủ</a>
-        </div>
+      </div>
+      <div class="topbar__right">
+        <a class="btn btn--ghost" href="https://muonnoi.org/" rel="noopener">muonnoi.org</a>
+        <a class="btn btn--primary" href="https://docs.muonnoi.org/" rel="noopener">Docs</a>
       </div>
     </header>
 
-    <main class="main" role="main">
-      <section class="panel" style="max-width:860px;margin:18px auto;">
-        <div class="panel__block">
-          <h1 style="margin:0;font-size:20px;">Không tìm thấy trang</h1>
-          <p class="muted" style="margin:10px 0 0 0;line-height:1.5;">
-            Liên kết này không tồn tại hoặc đã được thay đổi. Bạn có thể quay về Trang chủ để tiếp tục.
+    <main class="main" style="max-width:920px">
+      <section class="hero">
+        <div>
+          <div class="kicker">404</div>
+          <h1>Page Not Found</h1>
+          <p class="lead">
+            The link you opened does not exist, or it was moved. If you expected a post/video/course link,
+            return to the app and search by ID.
           </p>
-        </div>
+          <div class="hero__actions">
+            <a class="btn btn--primary" href="/">Go Home</a>
+            <a class="btn" href="/explore">Explore</a>
+            <a class="btn btn--ghost" href="https://docs.muonnoi.org/" rel="noopener">Open Docs</a>
+          </div>
 
-        <div class="panel__block">
-          <div class="muted" style="font-size:13px;line-height:1.6;">
-            Đường dẫn bạn đang mở:
-            <code id="p" style="display:block;margin-top:8px;padding:10px;border-radius:12px;border:1px solid var(--line2);background:rgba(255,255,255,.04)"></code>
+          <div class="heroSample">
+            <div class="heroSample__label">Tip</div>
+            <div class="hint">
+              Clean links look like: <span class="pillInline">/p/&lt;id&gt;</span>,
+              <span class="pillInline">/v/&lt;id&gt;</span>, <span class="pillInline">/u/&lt;handle&gt;</span>.
+            </div>
           </div>
         </div>
 
-        <div class="panel__block" style="display:flex;gap:10px;flex-wrap:wrap;">
-          <a class="btn btn--primary" href="/#/">Về Trang chủ</a>
-          <a class="btn" href="/#\/explore">Khám phá</a>
-          <a class="btn" href="/#\/settings">Cài đặt</a>
-          <a class="btn btn--ghost" href="/security.txt">Chính sách bảo mật</a>
+        <div class="hero__visual">
+          <div class="heroCard glass3">
+            <div class="heroCard__top">
+              <div class="dots">
+                <span class="dot dot--g"></span>
+                <span class="dot dot--y"></span>
+                <span class="dot dot--r"></span>
+              </div>
+              <span class="heroCard__tag">Muon Noi Protocol</span>
+            </div>
+            <div class="heroCard__body">
+              <h3>Routing First</h3>
+              <p>
+                If you use Cloudflare Pages with SPA redirects, internal links will not “die”.
+                Ensure your <span class="pillInline">_redirects</span> routes all app paths to <span class="pillInline">/index.html</span>.
+              </p>
+            </div>
+          </div>
         </div>
+
       </section>
     </main>
   </div>
-
-  <script>
-    (function(){
-      try{
-        document.getElementById('p').textContent = location.href;
-        document.getElementById('btnBack').addEventListener('click', function(){ history.back(); });
-        var saved = localStorage.getItem('mn_theme');
-        if(saved){ document.getElementById('app').setAttribute('data-theme', saved); }
-      }catch(e){}
-    })();
-  </script>
 </body>
 </html>
