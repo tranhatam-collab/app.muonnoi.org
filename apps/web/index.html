@@ -1,1703 +1,290 @@
 <!doctype html>
-<html lang="vi">
+<html lang="vi" data-theme="auto">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="color-scheme" content="dark" />
-  <meta name="theme-color" content="#0b0f14" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="color-scheme" content="dark light" />
+  <meta name="referrer" content="no-referrer" />
+  <meta name="theme-color" content="#0b0f0c" />
 
-  <title>Muonnoi App · Social Operating System</title>
-  <meta name="description" content="Muonnoi App là không gian vận hành: làm việc, kiếm tiền, giao dịch, học, xuất bản, nhắn tin, thanh toán. Không theo dõi. Không thao túng. Không khai thác dữ liệu." />
+  <title>MN App – Muôn Nơi • Muốn nói</title>
+  <meta name="description" content="MN App – Social-first, Security-first. Tự do tuyệt đối từ bên trong, trách nhiệm rõ ràng trong đời sống muôn nơi." />
   <link rel="canonical" href="https://app.muonnoi.org/" />
 
-  <link rel="alternate" hreflang="vi" href="https://app.muonnoi.org/" />
-  <link rel="alternate" hreflang="en" href="https://app.muonnoi.org/en/" />
-  <link rel="alternate" hreflang="x-default" href="https://app.muonnoi.org/" />
-
+  <meta property="og:title" content="MN App – Muôn Nơi • Muốn nói" />
+  <meta property="og:description" content="Social-first. Security-first. Module-first. Không tracking. Không xây nghiện." />
   <meta property="og:type" content="website" />
-  <meta property="og:site_name" content="Muonnoi" />
-  <meta property="og:title" content="Muonnoi App · Social Operating System" />
-  <meta property="og:description" content="Work · Earn · Trade · Learn · Publish · Message · Pay. Không tracking. Không quảng cáo hành vi." />
   <meta property="og:url" content="https://app.muonnoi.org/" />
+  <meta property="og:image" content="/og.png" />
 
-  <style>
-    :root{
-      --bg:#0b0f14;
-      --panel:#0f1724;
-      --panel2:#0b1220;
-      --text:#e9f0fb;
-      --muted:#a6b4c6;
-      --line:rgba(255,255,255,.10);
-      --line2:rgba(255,255,255,.16);
-      --accent:#7fe7c4;
-      --accent2:#8ab4ff;
-      --warn:#ffd08a;
-      --danger:#ff8aa0;
-      --shadow: 0 18px 80px rgba(0,0,0,.58);
-      --r:18px;
-      --r2:26px;
-      --max:1180px;
-      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      --sans: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family:var(--sans);
-      color:var(--text);
-      background:
-        radial-gradient(900px 520px at 16% 12%, rgba(127,231,196,.16), transparent 60%),
-        radial-gradient(900px 520px at 86% 16%, rgba(138,180,255,.14), transparent 62%),
-        radial-gradient(900px 520px at 55% 92%, rgba(255,208,138,.08), transparent 60%),
-        var(--bg);
-      line-height:1.55;
-      overflow-x:hidden;
-    }
-    a{color:inherit; text-decoration:none}
-    button, input, select, textarea{font:inherit}
-    .wrap{max-width:var(--max); margin:0 auto; padding:18px}
-    .glow{
-      position:fixed; inset:-140px;
-      pointer-events:none;
-      background: radial-gradient(520px 340px at var(--mx, 50%) var(--my, 18%), rgba(127,231,196,.10), transparent 62%),
-                  radial-gradient(620px 420px at calc(var(--mx, 50%) + 10%) calc(var(--my, 18%) + 12%), rgba(138,180,255,.10), transparent 64%);
-      opacity:.95;
-      filter: blur(6px);
-      z-index:0;
-    }
-    main{position:relative; z-index:1}
+  <link rel="icon" href="/assets/brand/mn.svg" />
+  <link rel="manifest" href="/manifest.json" />
 
-    .skip{
-      position:absolute; left:-999px; top:auto; width:1px; height:1px; overflow:hidden;
-    }
-    .skip:focus{
-      left:18px; top:12px; width:auto; height:auto; padding:10px 12px;
-      border-radius:12px; background:rgba(255,255,255,.08); border:1px solid var(--line2);
-      z-index:9999;
-    }
-
-    .topbar{
-      position:sticky; top:0; z-index:60;
-      background:rgba(11,15,20,.74);
-      backdrop-filter: blur(10px);
-      border-bottom:1px solid var(--line);
-    }
-    .topbar .row{
-      max-width:var(--max);
-      margin:0 auto;
-      padding:12px 18px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-    }
-    .brand{
-      display:flex; align-items:center; gap:10px;
-      min-width: 240px;
-    }
-    .logo{
-      width:38px; height:38px; border-radius:14px;
-      background:
-        radial-gradient(18px 18px at 30% 35%, rgba(127,231,196,.95), rgba(127,231,196,.10)),
-        radial-gradient(18px 18px at 70% 65%, rgba(138,180,255,.92), rgba(138,180,255,.08));
-      border:1px solid rgba(255,255,255,.14);
-      box-shadow: 0 10px 30px rgba(0,0,0,.35);
-      flex:0 0 auto;
-    }
-    .brandTitle{font-weight:900; letter-spacing:.2px}
-    .brandSub{color:var(--muted); font-size:12px}
-
-    .nav{
-      display:flex; gap:10px; flex-wrap:wrap; align-items:center; justify-content:center;
-    }
-
-    .right{
-      display:flex; gap:10px; align-items:center; justify-content:flex-end;
-      min-width: 240px;
-    }
-
-    .btn{
-      display:inline-flex; align-items:center; justify-content:center;
-      padding:10px 12px;
-      border-radius:999px;
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.04);
-      color:var(--text);
-      font-weight:780;
-      letter-spacing:.2px;
-      transition: transform .15s ease, border-color .15s ease, background .15s ease;
-      user-select:none;
-      white-space:nowrap;
-      cursor:pointer;
-    }
-    .btn:hover{transform: translateY(-1px); border-color:var(--line2); background:rgba(255,255,255,.06)}
-    .btn.primary{
-      border-color: rgba(127,231,196,.46);
-      background: rgba(127,231,196,.12);
-    }
-    .btn.primary:hover{border-color: rgba(127,231,196,.72)}
-    .btn.ghost{background:transparent}
-    .btn.small{padding:8px 10px; font-size:13px}
-    .btn.danger{
-      border-color: rgba(255,138,160,.32);
-      background: rgba(255,138,160,.08);
-    }
-    .btn.danger:hover{border-color: rgba(255,138,160,.55)}
-
-    .langWrap{
-      display:inline-flex; align-items:center; gap:8px;
-      padding:6px 10px;
-      border-radius:999px;
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.03);
-    }
-    .langLabel{
-      font-family:var(--mono);
-      font-size:12px;
-      color:rgba(233,240,251,.80);
-    }
-    select.lang{
-      appearance:none;
-      border:0;
-      outline:none;
-      background:transparent;
-      color:var(--text);
-      font-weight:850;
-      cursor:pointer;
-      padding:6px 28px 6px 8px;
-      border-radius:999px;
-    }
-    .chev{
-      width:10px; height:10px;
-      border-right:2px solid rgba(233,240,251,.7);
-      border-bottom:2px solid rgba(233,240,251,.7);
-      transform: rotate(45deg);
-      margin-left:-18px;
-      pointer-events:none;
-    }
-
-    .burger{
-      display:none;
-      width:42px; height:42px;
-      border-radius:14px;
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.04);
-      align-items:center;
-      justify-content:center;
-      cursor:pointer;
-    }
-    .burger:focus{outline:2px solid rgba(138,180,255,.45); outline-offset:2px}
-    .burgerIcon{width:18px; height:12px; position:relative}
-    .burgerIcon span{
-      position:absolute; left:0; right:0; height:2px; border-radius:99px;
-      background:rgba(233,240,251,.9);
-    }
-    .burgerIcon span:nth-child(1){top:0}
-    .burgerIcon span:nth-child(2){top:5px; opacity:.9}
-    .burgerIcon span:nth-child(3){bottom:0; opacity:.85}
-
-    @media (max-width: 980px){
-      .nav{display:none}
-      .brand{min-width:auto}
-      .right{min-width:auto}
-      .burger{display:inline-flex}
-      .desktopOnly{display:none}
-    }
-
-    .drawerBackdrop{
-      position:fixed; inset:0;
-      background: rgba(0,0,0,.55);
-      display:none;
-      z-index:80;
-    }
-    .drawer{
-      position:fixed; top:0; right:0; height:100%; width:min(420px, 92vw);
-      background: linear-gradient(180deg, rgba(15,23,36,.96), rgba(11,18,32,.92));
-      border-left:1px solid var(--line);
-      box-shadow: var(--shadow);
-      transform: translateX(110%);
-      transition: transform .18s ease;
-      z-index:90;
-      display:flex; flex-direction:column;
-    }
-    .drawerHeader{
-      display:flex; align-items:center; justify-content:space-between;
-      padding:14px 14px 10px;
-      border-bottom:1px solid var(--line);
-    }
-    .drawerTitle{font-weight:900}
-    .closeBtn{
-      width:42px; height:42px; border-radius:14px;
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.04);
-      cursor:pointer;
-      color:var(--text);
-      font-size:20px;
-      line-height:1;
-    }
-    .drawerBody{padding:12px 14px; display:grid; gap:10px}
-    .drawerBody .btn{width:100%}
-    .drawerMeta{
-      padding:12px 14px;
-      border-top:1px solid var(--line);
-      margin-top:auto;
-      color:var(--muted);
-      font-size:12px;
-      font-family:var(--mono);
-    }
-    .isOpen .drawerBackdrop{display:block}
-    .isOpen .drawer{transform: translateX(0)}
-
-    .grid{
-      display:grid;
-      grid-template-columns: 1.08fr .92fr;
-      gap:16px;
-      align-items:start;
-    }
-    @media (max-width: 980px){
-      .grid{grid-template-columns:1fr}
-    }
-
-    .card{
-      border:1px solid var(--line);
-      border-radius: var(--r2);
-      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
-      box-shadow: var(--shadow);
-      overflow:hidden;
-    }
-    .pad{padding:18px}
-    .panel{
-      border-top:1px solid var(--line);
-      background: linear-gradient(180deg, rgba(15,23,36,.55), rgba(11,18,32,.35));
-    }
-    .tag{
-      display:inline-flex;
-      font-family:var(--mono);
-      font-size:12px;
-      padding:6px 8px;
-      border-radius:10px;
-      border:1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.04);
-      color:rgba(233,240,251,.86);
-    }
-    h1{
-      margin:12px 0 10px;
-      font-size:36px;
-      letter-spacing:-.6px;
-      line-height:1.10;
-    }
-    @media (max-width: 520px){
-      h1{font-size:30px}
-    }
-    h2{
-      margin:0 0 8px;
-      font-size:18px;
-      letter-spacing:-.2px;
-    }
-    .muted{color:var(--muted)}
-    .mono{font-family:var(--mono)}
-    .hr{height:1px; background:var(--line); margin:14px 0}
-
-    .row2{display:grid; grid-template-columns:1fr 1fr; gap:12px}
-    @media (max-width: 980px){ .row2{grid-template-columns:1fr} }
-
-    .tileGrid{display:grid; grid-template-columns:repeat(3,1fr); gap:12px}
-    @media (max-width: 980px){ .tileGrid{grid-template-columns:1fr} }
-
-    .tile{
-      border:1px solid var(--line);
-      border-radius: var(--r);
-      background: rgba(255,255,255,.03);
-      padding:14px;
-      cursor:pointer;
-      transition: transform .14s ease, border-color .14s ease, background .14s ease;
-      min-height: 108px;
-    }
-    .tile:hover{transform: translateY(-1px); border-color:var(--line2); background:rgba(255,255,255,.05)}
-    .tileTitle{font-weight:900; margin-top:10px}
-    .tileDesc{color:var(--muted); font-size:13px; margin-top:6px}
-    .tileMeta{margin-top:10px; color:rgba(166,180,198,.9); font-size:12px; font-family:var(--mono)}
-
-    .formRow{display:flex; gap:10px; flex-wrap:wrap}
-    .input, .textarea{
-      width:100%;
-      border:1px solid var(--line);
-      background: rgba(0,0,0,.18);
-      color: var(--text);
-      border-radius: 14px;
-      padding:12px 12px;
-      font-size:15px;
-      outline:none;
-    }
-    .textarea{min-height:96px; resize:vertical}
-    .input:focus, .textarea:focus{border-color: rgba(138,180,255,.45); box-shadow: 0 0 0 6px rgba(138,180,255,.12)}
-    .help{color:rgba(169,182,199,.92); font-size:12px; font-family:var(--mono); margin-top:8px}
-
-    .list{display:grid; gap:10px; margin-top:10px}
-    .item{
-      border:1px solid var(--line);
-      border-radius: 16px;
-      background: rgba(0,0,0,.18);
-      padding:12px;
-    }
-    .itemTop{display:flex; align-items:center; justify-content:space-between; gap:10px}
-    .badge{
-      display:inline-flex; align-items:center; gap:8px;
-      font-family:var(--mono);
-      font-size:12px;
-      padding:6px 8px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.04);
-      color:rgba(233,240,251,.86);
-      white-space:nowrap;
-    }
-    .badge.ok{border-color: rgba(127,231,196,.28); background: rgba(127,231,196,.08)}
-    .badge.warn{border-color: rgba(255,208,138,.28); background: rgba(255,208,138,.08)}
-    .badge.danger{border-color: rgba(255,138,160,.28); background: rgba(255,138,160,.08)}
-    .itemTitle{font-weight:900; margin-top:8px}
-    .itemBody{color:var(--muted); font-size:13px; margin-top:6px}
-
-    .footer{
-      margin:22px 0 10px;
-      border-top:1px solid var(--line);
-      padding-top:14px;
-      color:var(--muted);
-      font-size:12px;
-      text-align:center;
-      font-family:var(--mono);
-    }
-
-    .toast{
-      position:fixed;
-      left:50%;
-      bottom:18px;
-      transform: translateX(-50%);
-      background: rgba(15,23,36,.92);
-      border:1px solid var(--line2);
-      border-radius: 16px;
-      box-shadow: var(--shadow);
-      padding:10px 12px;
-      color: rgba(233,240,251,.92);
-      font-family: var(--mono);
-      font-size:12px;
-      z-index:120;
-      opacity:0;
-      pointer-events:none;
-      transition: opacity .18s ease, transform .18s ease;
-      max-width: min(740px, 92vw);
-    }
-    .toast.show{
-      opacity:1;
-      transform: translateX(-50%) translateY(-2px);
-    }
-
-    .routePill{
-      display:flex; align-items:center; justify-content:space-between;
-      gap:10px;
-      border:1px solid var(--line);
-      border-radius: 16px;
-      background: rgba(0,0,0,.18);
-      padding:10px 12px;
-      margin-top:10px;
-      cursor:pointer;
-    }
-    .routeText{
-      font-family: var(--mono);
-      font-size:14px;
-      color: rgba(233,240,251,.82);
-      letter-spacing:.2px;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-    }
-    .routeHint{
-      font-family: var(--mono);
-      font-size:12px;
-      color: rgba(166,180,198,.85);
-      white-space:nowrap;
-    }
-
-    .kbd{
-      font-family:var(--mono);
-      font-size:12px;
-      padding:2px 6px;
-      border-radius:8px;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.04);
-      color: rgba(233,240,251,.85);
-    }
-
-    .hidden{display:none !important}
-  </style>
+  <!-- IMPORTANT: these must exist under apps/web/assets/ -->
+  <link rel="preload" href="/assets/ui.css" as="style" />
+  <link rel="stylesheet" href="/assets/ui.css" />
 </head>
 
-<body>
-  <div class="glow" aria-hidden="true"></div>
-  <a class="skip" href="#content">Đi tới nội dung</a>
+<body class="mn-body">
+  <!-- 4D mirror background -->
+  <div class="mn-bg" aria-hidden="true">
+    <div class="mn-bg__grid"></div>
+    <div class="mn-bg__glow"></div>
+    <div class="mn-bg__sweep"></div>
+    <div class="mn-bg__noise"></div>
+  </div>
 
-  <header class="topbar" role="banner">
-    <div class="row">
-      <div class="brand" role="img" aria-label="Muonnoi App">
-        <div class="logo" aria-hidden="true"></div>
-        <div>
-          <div class="brandTitle">app.muonnoi.org</div>
-          <div class="brandSub">Social Operating System. Không feed. Không tracking.</div>
-        </div>
-      </div>
+  <!-- TOP NAV (pill + strong) -->
+  <header class="mn-top mn-top--pill" role="banner">
+    <div class="mn-top__inner">
+      <a class="mn-brand mn-brand--mono" href="/" aria-label="MN App">
+        <span class="mn-mark" aria-hidden="true">MN</span>
+        <span class="mn-brand__stack">
+          <span class="mn-brand__title">Muôn Nơi</span>
+          <span class="mn-brand__sub">Muốn nói</span>
+        </span>
+      </a>
 
-      <nav class="nav" aria-label="Điều hướng">
-        <button class="btn small ghost" type="button" data-nav="/">Trang vận hành</button>
-        <button class="btn small ghost" type="button" data-nav="/u/me">Hồ sơ</button>
-        <button class="btn small ghost" type="button" data-nav="/admin">Quản trị</button>
+      <nav class="mn-nav mn-nav--pills" aria-label="Primary">
+        <a class="mn-pill is-active" href="/">Trang chủ</a>
+        <a class="mn-pill" href="/join/">Vào ứng dụng</a>
+        <a class="mn-pill" href="/ecosystem/">Hệ sinh thái</a>
+        <a class="mn-pill" href="/roadmap/">Lộ trình</a>
+        <a class="mn-pill" href="/security/">Bảo mật</a>
+        <a class="mn-pill" href="https://docs.muonnoi.org/" rel="noopener">Hướng dẫn</a>
+        <a class="mn-pill mn-pill--ghost" href="/admin/">Admin</a>
       </nav>
 
-      <div class="right">
-        <div class="langWrap" aria-label="Ngôn ngữ">
-          <span class="langLabel">LANG</span>
-          <select class="lang" id="langSelect" aria-label="Chọn ngôn ngữ">
-            <option value="/" selected>VI</option>
-            <option value="/en/">EN</option>
-            <option value="/fr/">FR</option>
-            <option value="/ja/">JA</option>
-          </select>
-          <span class="chev" aria-hidden="true"></span>
-        </div>
-
-        <button class="btn small ghost desktopOnly" type="button" data-nav="/u/me">Tài khoản</button>
-        <button class="btn small primary desktopOnly" type="button" data-nav="/">Mở hệ</button>
-
-        <button class="burger" type="button" aria-label="Mở menu" aria-controls="drawer" aria-expanded="false" id="burgerBtn">
-          <span class="burgerIcon" aria-hidden="true"><span></span><span></span><span></span></span>
+      <div class="mn-top__actions">
+        <a class="mn-btn mn-btn--primary" href="/join/">Mở hệ</a>
+        <button class="mn-btn mn-btn--ghost" id="themeBtn" type="button" aria-label="Theme">◐</button>
+        <button class="mn-btn mn-btn--ghost" id="langBtn" type="button" aria-label="Language">VI</button>
+        <button class="mn-burger" id="mnBurger" type="button" aria-label="Menu">
+          <span></span><span></span><span></span>
         </button>
       </div>
     </div>
+
+    <!-- Mobile drawer -->
+    <div class="mn-mobile" id="mnMobile" hidden>
+      <a class="mn-mobile__item mn-mobile__item--primary" href="/join/">Vào ứng dụng</a>
+      <a class="mn-mobile__item" href="/ecosystem/">Hệ sinh thái</a>
+      <a class="mn-mobile__item" href="/roadmap/">Lộ trình</a>
+      <a class="mn-mobile__item" href="/security/">Bảo mật</a>
+      <a class="mn-mobile__item" href="/feed/">Bảng tin</a>
+      <a class="mn-mobile__item" href="/verify/">Xác minh</a>
+      <a class="mn-mobile__item" href="/commit/">Cam kết</a>
+      <a class="mn-mobile__item" href="/complaints/">Khiếu nại</a>
+      <a class="mn-mobile__item" href="/legal/">Pháp lý</a>
+      <a class="mn-mobile__item" href="/admin/">Admin</a>
+      <a class="mn-mobile__item" href="https://muonnoi.org/" rel="noopener">muonnoi.org</a>
+    </div>
   </header>
 
-  <div class="drawerBackdrop" id="backdrop" aria-hidden="true"></div>
-  <aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Menu">
-    <div class="drawerHeader">
-      <div class="drawerTitle">Menu</div>
-      <button class="closeBtn" type="button" aria-label="Đóng menu" id="closeBtn">×</button>
-    </div>
-    <div class="drawerBody">
-      <button class="btn" type="button" data-nav="/">Trang vận hành</button>
-      <button class="btn" type="button" data-nav="/u/me">Hồ sơ</button>
-      <button class="btn" type="button" data-nav="/admin">Quản trị</button>
-      <div class="drawerMeta">No tracking. No analytics. Privacy-first.</div>
-    </div>
-  </aside>
+  <main class="mn-main" role="main">
+    <section class="mn-section">
+      <div class="mn-wrap">
 
-  <main class="wrap" id="content" role="main">
-    <div id="app"></div>
-    <div class="footer">Muonnoi App. Useful by design. Safe by default. Not built to addict you.</div>
+        <!-- HERO -->
+        <div class="mn-glass mn-hero" style="padding:18px;border-radius:28px;">
+          <div class="mn-hero__top">
+            <span class="mn-chip">MN • social-first</span>
+            <span class="mn-chip mn-chip--soft">privacy-first</span>
+            <span class="mn-chip mn-chip--soft">module-first</span>
+          </div>
+
+          <h1 class="mn-h1" style="margin-top:10px;">
+            Tự Do Tuyệt Đối Từ Bên Trong<br />
+            Trách Nhiệm Rõ Ràng Trong Đời Sống Muôn Nơi.
+          </h1>
+
+          <p class="mn-sub" style="max-width:1000px;">
+            Muôn Nơi là nền tảng để sống, học, làm, kinh doanh, đầu tư và chia sẻ giá trị thật.
+            Giai đoạn đầu tập trung “social-first” miễn phí, bảo mật cao, mượt và sạch.
+            Khi đủ quy mô, hệ sinh thái sẽ mở rộng theo mô-đun subdomain để tăng trưởng nhanh nhưng không phá nền tảng.
+          </p>
+
+          <div class="mn-hero__cta">
+            <a class="mn-btn mn-btn--primary" href="/join/">Vào ứng dụng</a>
+            <a class="mn-btn mn-btn--ghost" href="/ecosystem/">Xem hệ sinh thái</a>
+            <a class="mn-btn mn-btn--ghost" href="https://docs.muonnoi.org/" rel="noopener">Hướng dẫn</a>
+          </div>
+
+          <div class="mn-grid" style="margin-top:14px;grid-template-columns:1fr 1fr 1fr;gap:12px;">
+            <div class="mn-glass" style="padding:14px;border-radius:22px;">
+              <div class="mn-muted">Khóa</div>
+              <div class="mn-h3" style="margin-top:6px;">Tự do từ bên trong</div>
+              <div class="mn-sub">Tự do thật không phải vô trách nhiệm. MN thiết kế để rõ luật, rõ chuẩn, rõ an toàn.</div>
+            </div>
+            <div class="mn-glass" style="padding:14px;border-radius:22px;">
+              <div class="mn-muted">Mục tiêu</div>
+              <div class="mn-h3" style="margin-top:6px;">1.000.000 tài khoản</div>
+              <div class="mn-sub">Social-first ổn định rồi mới mở rộng hệ sinh thái tốc độ cao.</div>
+            </div>
+            <div class="mn-glass" style="padding:14px;border-radius:22px;">
+              <div class="mn-muted">Hướng đi</div>
+              <div class="mn-h3" style="margin-top:6px;">All-in-one bằng mô-đun</div>
+              <div class="mn-sub">Không làm 1 khối nặng dễ lỗi. Mỗi mô-đun là 1 app độc lập, liên kết về MN core.</div>
+            </div>
+          </div>
+
+          <div class="mn-grid" style="margin-top:12px;grid-template-columns:repeat(3,1fr);gap:12px;">
+            <a class="mn-glass mn-linkcard" href="/feed/" style="padding:14px;border-radius:22px;text-decoration:none;">
+              <div class="mn-h3">Ứng dụng</div>
+              <div class="mn-sub">Social core</div>
+            </a>
+            <a class="mn-glass mn-linkcard" href="/ecosystem/" style="padding:14px;border-radius:22px;text-decoration:none;">
+              <div class="mn-h3">Hệ sinh thái</div>
+              <div class="mn-sub">Modules map</div>
+            </a>
+            <a class="mn-glass mn-linkcard" href="/roadmap/" style="padding:14px;border-radius:22px;text-decoration:none;">
+              <div class="mn-h3">Lộ trình</div>
+              <div class="mn-sub">Phased plan</div>
+            </a>
+
+            <a class="mn-glass mn-linkcard" href="/security/" style="padding:14px;border-radius:22px;text-decoration:none;">
+              <div class="mn-h3">Bảo mật</div>
+              <div class="mn-sub">Trust & safety</div>
+            </a>
+            <a class="mn-glass mn-linkcard" href="/status/" style="padding:14px;border-radius:22px;text-decoration:none;">
+              <div class="mn-h3">Trạng thái</div>
+              <div class="mn-sub">System status</div>
+            </a>
+            <a class="mn-glass mn-linkcard" href="/verify/" style="padding:14px;border-radius:22px;text-decoration:none;">
+              <div class="mn-h3">Xác minh</div>
+              <div class="mn-sub">Verification</div>
+            </a>
+          </div>
+        </div>
+
+        <div style="height:12px;"></div>
+
+        <!-- “Đi nhanh theo đường đúng” cards -->
+        <div class="mn-glass" style="padding:16px;border-radius:26px;">
+          <h2 class="mn-h2" style="margin:0 0 8px;">Đi nhanh theo đường đúng</h2>
+          <p class="mn-sub" style="max-width:980px;margin-top:0;">
+            Trang chủ là bản đồ điều hướng. Mọi nội dung dài đã được tách thành trang riêng để cập nhật dần không phá hệ thống.
+          </p>
+
+          <div class="mn-grid" style="grid-template-columns:repeat(4,1fr);gap:12px;">
+            <div class="mn-glass" style="padding:14px;border-radius:22px;">
+              <div class="mn-h3">Hệ sinh thái</div>
+              <div class="mn-sub">Sơ đồ modules và subdomain, mục đích từng phần, nguyên tắc mở rộng.</div>
+              <div style="height:10px;"></div>
+              <a class="mn-btn mn-btn--ghost" href="/ecosystem/">Mở trang</a>
+            </div>
+
+            <div class="mn-glass" style="padding:14px;border-radius:22px;">
+              <div class="mn-h3">Lộ trình</div>
+              <div class="mn-sub">Social-first đến 1M user, rồi mở marketplace, chat/call, và hệ sinh thái.</div>
+              <div style="height:10px;"></div>
+              <a class="mn-btn mn-btn--ghost" href="/roadmap/">Mở trang</a>
+            </div>
+
+            <div class="mn-glass" style="padding:14px;border-radius:22px;">
+              <div class="mn-h3">Bảo mật</div>
+              <div class="mn-sub">CSP, session HttpOnly, rate-limit, anti-bot, audit log, nguyên tắc dữ liệu tối thiểu.</div>
+              <div style="height:10px;"></div>
+              <a class="mn-btn mn-btn--ghost" href="/security/">Mở trang</a>
+            </div>
+
+            <div class="mn-glass" style="padding:14px;border-radius:22px;">
+              <div class="mn-h3">Hướng dẫn</div>
+              <div class="mn-sub">Bắt đầu, quy tắc, các trang chính, sạch, FAQ, hướng dẫn sử dụng.</div>
+              <div style="height:10px;"></div>
+              <a class="mn-btn mn-btn--ghost" href="https://docs.muonnoi.org/" rel="noopener">Mở trang</a>
+            </div>
+          </div>
+
+          <div style="height:12px;"></div>
+
+          <div class="mn-glass" style="padding:14px;border-radius:22px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+            <div>
+              <div class="mn-h3" style="margin:0;">Vào Social Core ngay</div>
+              <div class="mn-sub" style="margin:6px 0 0;">
+                Đi thẳng tới app.muonnoi.org — UI sạch, link đúng, mở rộng không phá nền.
+              </div>
+            </div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <a class="mn-btn mn-btn--primary" href="/join/">Vào ứng dụng</a>
+              <a class="mn-btn mn-btn--ghost" href="https://docs.muonnoi.org/" rel="noopener">Hướng dẫn</a>
+            </div>
+          </div>
+        </div>
+
+        <div style="height:14px;"></div>
+
+        <!-- Footer quick links -->
+        <h3 class="mn-h3">Liên kết nhanh</h3>
+        <div class="mn-footlinks mn-glass" style="padding:12px;border-radius:24px;">
+          <a class="mn-footlinks__a" href="/join/">Vào ứng dụng</a>
+          <a class="mn-footlinks__a" href="/feed/">Bảng tin</a>
+          <a class="mn-footlinks__a" href="/verify/">Xác minh</a>
+          <a class="mn-footlinks__a" href="/commit/">Cam kết</a>
+          <a class="mn-footlinks__a" href="/complaints/">Khiếu nại</a>
+          <a class="mn-footlinks__a" href="/security/">Bảo mật</a>
+          <a class="mn-footlinks__a" href="/legal/">Pháp lý</a>
+        </div>
+
+      </div>
+    </section>
   </main>
 
-  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <footer class="mn-footer" role="contentinfo">
+    <div class="mn-wrap mn-footer__inner">
+      <div class="mn-footer__left">
+        <div class="mn-footer__brand">
+          <span class="mn-mark mn-mark--sm" aria-hidden="true">MN</span>
+          <div>
+            <div class="mn-footer__name">Muôn Nơi • Muốn nói</div>
+            <div class="mn-footer__tag">social-first • privacy-first • module-first</div>
+          </div>
+        </div>
+        <div class="mn-muted" style="margin-top:8px;">© <span id="year"></span> muonnoi.org</div>
+      </div>
 
+      <div class="mn-footer__right">
+        <a class="mn-footer__link" href="/join/">Ứng dụng</a>
+        <a class="mn-footer__link" href="https://docs.muonnoi.org/" rel="noopener">Hướng dẫn</a>
+        <a class="mn-footer__link" href="/security/">Bảo mật</a>
+        <a class="mn-footer__link" href="/legal/">Pháp lý</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- IMPORTANT: must exist under apps/web/assets/ -->
+  <script src="/assets/ui.js" defer></script>
+
+  <!-- minimal page logic -->
   <script>
-    (function(){
-      "use strict";
+  (function(){
+    "use strict";
+    var y = document.getElementById("year");
+    if (y) y.textContent = String(new Date().getFullYear());
 
-      // Pointer glow
-      const root = document.documentElement;
-      window.addEventListener("pointermove", (e)=>{
-        const x = Math.round((e.clientX / window.innerWidth) * 100);
-        const y = Math.round((e.clientY / window.innerHeight) * 100);
-        root.style.setProperty("--mx", x + "%");
-        root.style.setProperty("--my", y + "%");
-      }, {passive:true});
+    // Soft toast if future pages not yet created (still no hash)
+    function toast(msg){
+      var t = document.createElement("div");
+      t.className = "mn-toast";
+      t.textContent = msg;
+      document.body.appendChild(t);
+      setTimeout(function(){ t.classList.add("is-on"); }, 10);
+      setTimeout(function(){ t.classList.remove("is-on"); }, 2600);
+      setTimeout(function(){ try{t.remove();}catch(e){} }, 3200);
+    }
 
-      // Helpers
-      const $ = (s, el=document) => el.querySelector(s);
-      const $$ = (s, el=document) => Array.from(el.querySelectorAll(s));
-      const now = () => Date.now();
-
-      function toast(msg){
-        const t = $("#toast");
-        t.textContent = msg;
-        t.classList.add("show");
-        clearTimeout(toast._tm);
-        toast._tm = setTimeout(()=>t.classList.remove("show"), 1800);
+    // if a route folder not exists yet, ui.js may still navigate and show 404.html.
+    // We keep it simple: no blocking navigation; only message for new routes.
+    var maybeNew = ["/ecosystem/","/roadmap/","/status/"];
+    document.addEventListener("click", function(e){
+      var a = e.target && e.target.closest ? e.target.closest("a") : null;
+      if (!a) return;
+      var href = a.getAttribute("href") || "";
+      if (maybeNew.indexOf(href) !== -1){
+        toast("Trang này sẽ được mở dần theo giai đoạn. Nếu chưa có, vui lòng quay lại sau.");
       }
-
-      // Storage model (privacy-first demo)
-      // No network, no tracking. Local-only until backend exists.
-      const store = {
-        get(key, fallback){
-          try{
-            const raw = localStorage.getItem(key);
-            return raw ? JSON.parse(raw) : fallback;
-          }catch(e){ return fallback; }
-        },
-        set(key, val){
-          try{ localStorage.setItem(key, JSON.stringify(val)); }catch(e){}
-        }
-      };
-
-      // Minimal identity (demo)
-      // In production: magic email + session token via Worker.
-      const SESSION_KEY = "mn_session_v1";
-      const ADMIN_KEY   = "mn_admin_v1";
-      const PROFILE_KEY = "mn_profile_v1";
-      const DB_KEY      = "mn_db_v1";
-
-      function initDB(){
-        const db = store.get(DB_KEY, null);
-        if(db) return;
-
-        const seed = {
-          projects: [
-            { id:"p_6f12", title:"Dự án vận hành nhóm nhỏ", body:"Không feed. Không tranh cãi. Chỉ việc cần làm và kết quả.", owner:"me", status:"active", created_at: now()-86400000*7 },
-            { id:"p_77aa", title:"Hồ sơ năng lực theo đóng góp", body:"Reputation không dựa like. Dựa vào dự án thật.", owner:"me", status:"draft", created_at: now()-86400000*2 }
-          ],
-          listings: [
-            { id:"m_18c9", title:"Gói dịch vụ minh bạch", body:"Giao dịch có biên nhận và lộ trình rõ.", owner:"me", status:"pending", created_at: now()-86400000*1 }
-          ],
-          media: [
-            { id:"v_2c11", title:"Video giới thiệu hệ vận hành", body:"Không thuật toán gây nghiện. Nội dung sống bền.", owner:"me", status:"published", created_at: now()-86400000*10 }
-          ],
-          receipts: [
-            { id:"r_a910", title:"Biên nhận thử nghiệm", body:"Receipt hash dành cho giao dịch có bằng chứng.", owner:"me", status:"issued", created_at: now()-86400000*3, hash:"sha256:demo_hash_placeholder" }
-          ],
-          adminQueue: {
-            profiles: [
-              { id:"u_9f10", handle:"minhtri", note:"Xin mở hồ sơ năng lực. Có 2 dự án thực tế.", created_at: now()-86400000*1, status:"pending" }
-            ],
-            projects: [
-              { id:"p_1b2c", title:"Tuyển cộng tác theo dự án", note:"Không yêu cầu like. Chỉ yêu cầu kết quả.", created_at: now()-86400000*1, status:"pending" }
-            ],
-            listings: [
-              { id:"m_3a90", title:"Sản phẩm số có link bền", note:"Không phụ thuộc reach.", created_at: now()-86400000*2, status:"pending" }
-            ],
-            media: [
-              { id:"v_99d1", title:"Chuỗi học tập không gây nghiện", note:"Chỉ mục tiêu rõ, không câu kéo.", created_at: now()-86400000*4, status:"pending" }
-            ]
-          },
-          audit: [
-            { id:"a_1001", actor:"system", action:"seed_db", at: now()-86400000*10 }
-          ]
-        };
-
-        store.set(DB_KEY, seed);
-      }
-
-      function db(){
-        return store.get(DB_KEY, {projects:[], listings:[], media:[], receipts:[], adminQueue:{profiles:[],projects:[],listings:[],media:[]}, audit:[]});
-      }
-      function saveDB(next){
-        store.set(DB_KEY, next);
-      }
-      function audit(actor, action, meta){
-        const d = db();
-        d.audit.unshift({ id:"a_"+Math.random().toString(16).slice(2,8), actor, action, meta: meta||null, at: now() });
-        saveDB(d);
-      }
-
-      function session(){
-        return store.get(SESSION_KEY, { ok:false, handle:null });
-      }
-      function setSession(s){
-        store.set(SESSION_KEY, s);
-      }
-
-      function profile(){
-        return store.get(PROFILE_KEY, {
-          handle: "me",
-          display_name: "Người Dùng",
-          headline: "Vận hành theo dự án thực, không theo feed.",
-          bio: "Muonnoi là nơi làm việc, kiếm tiền, học và giao dịch mà không bị khai thác dữ liệu.",
-          location: "Việt Nam",
-          skills: ["Work Layer", "Commerce Layer", "Media Layer"],
-          links: []
-        });
-      }
-      function setProfile(p){
-        store.set(PROFILE_KEY, p);
-      }
-
-      // Routing
-      function parsePath(pathname){
-        const p = pathname.replace(/\/+$/,"") || "/";
-        const parts = p.split("/").filter(Boolean);
-        return { raw:p, parts };
-      }
-
-      function nav(to){
-        history.pushState({}, "", to);
-        render();
-      }
-
-      window.addEventListener("popstate", render);
-
-      // UI primitives
-      function esc(s){ return String(s).replace(/[&<>"']/g, m=>({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[m])); }
-      function fmtTime(ts){
-        const d = new Date(ts);
-        const pad = (n)=> String(n).padStart(2,"0");
-        return pad(d.getDate())+"/"+pad(d.getMonth()+1)+"/"+d.getFullYear()+" "+pad(d.getHours())+":"+pad(d.getMinutes());
-      }
-
-      function shell(title, subtitle, leftHTML, rightHTML){
-        return `
-          <div class="grid">
-            <section class="card">
-              <div class="pad">
-                <span class="tag">Operating</span>
-                <h1>${esc(title)}</h1>
-                <div class="muted">${esc(subtitle)}</div>
-              </div>
-              <div class="pad panel">
-                ${leftHTML}
-              </div>
-            </section>
-
-            <aside class="card">
-              <div class="pad">
-                <span class="tag">Status</span>
-                ${rightHTML}
-              </div>
-            </aside>
-          </div>
-        `;
-      }
-
-      // Pages
-      function pageHome(){
-        const s = session();
-        const p = profile();
-        const d = db();
-
-        const counts = {
-          projects: d.projects.filter(x=>x.owner==="me").length,
-          listings: d.listings.filter(x=>x.owner==="me").length,
-          media: d.media.filter(x=>x.owner==="me").length,
-          receipts: d.receipts.filter(x=>x.owner==="me").length
-        };
-
-        const left = `
-          <div class="row2">
-            <div>
-              <h2>Hệ vận hành, không phải feed</h2>
-              <div class="muted">
-                Bạn dùng Muonnoi để làm việc, kiếm tiền, giao dịch, học tập, xuất bản, nhắn tin và thanh toán.
-                Mọi thứ ưu tiên link bền, cấu trúc rõ, và sự an toàn. Không tối ưu gây nghiện. Không thu hoạch hành vi.
-              </div>
-              <div class="hr"></div>
-
-              <div class="tileGrid">
-                <div class="tile" data-nav="/work">
-                  <span class="tag">Work Layer</span>
-                  <div class="tileTitle">Làm việc và hợp tác</div>
-                  <div class="tileDesc">Hồ sơ năng lực, dự án, tuyển cộng tác, reputation theo đóng góp.</div>
-                  <div class="tileMeta">/work · /p/:id · /u/:handle</div>
-                </div>
-
-                <div class="tile" data-nav="/commerce">
-                  <span class="tag">Commerce Layer</span>
-                  <div class="tileTitle">Giao thương minh bạch</div>
-                  <div class="tileDesc">Đăng sản phẩm, nhận đơn, lộ trình giao dịch, escrow-ready.</div>
-                  <div class="tileMeta">/commerce · /m/:id</div>
-                </div>
-
-                <div class="tile" data-nav="/media">
-                  <span class="tag">Media · Learn</span>
-                  <div class="tileTitle">Xuất bản và học</div>
-                  <div class="tileDesc">Video, tài liệu, khóa học. Không bóp reach, không algorithm gây nghiện.</div>
-                  <div class="tileMeta">/media · /v/:id</div>
-                </div>
-
-                <div class="tile" data-nav="/messages">
-                  <span class="tag">Communication</span>
-                  <div class="tileTitle">Nhắn tin và đối thoại</div>
-                  <div class="tileDesc">Không gian trao đổi riêng tư. Metadata tối thiểu theo nhu cầu vận hành.</div>
-                  <div class="tileMeta">/messages</div>
-                </div>
-
-                <div class="tile" data-nav="/pay">
-                  <span class="tag">Payments</span>
-                  <div class="tileTitle">Thanh toán và biên nhận</div>
-                  <div class="tileDesc">Receipt hash, bằng chứng giao dịch. Web3-ready nhưng không hype.</div>
-                  <div class="tileMeta">/pay · /r/:id</div>
-                </div>
-
-                <div class="tile" data-nav="/u/me">
-                  <span class="tag">Profile</span>
-                  <div class="tileTitle">Hồ sơ bền</div>
-                  <div class="tileDesc">Hồ sơ là tài sản. Không bị reset vì thuật toán.</div>
-                  <div class="tileMeta">/u/me</div>
-                </div>
-              </div>
-            </div>
-
-            <div>
-              <h2>Quick actions</h2>
-              <div class="muted">Tạo nội dung vận hành theo cấu trúc, không theo xu hướng.</div>
-              <div class="hr"></div>
-
-              <div class="list">
-                <div class="item">
-                  <div class="itemTop">
-                    <div class="badge ok">Tạo dự án</div>
-                    <button class="btn small primary" type="button" data-open="createProject">Mở</button>
-                  </div>
-                  <div class="itemTitle">Dự án là đơn vị sự thật</div>
-                  <div class="itemBody">Reputation dựa vào dự án và kết quả, không dựa vào like.</div>
-                </div>
-
-                <div class="item">
-                  <div class="itemTop">
-                    <div class="badge warn">Đăng sản phẩm</div>
-                    <button class="btn small" type="button" data-open="createListing">Mở</button>
-                  </div>
-                  <div class="itemTitle">Giao dịch minh bạch</div>
-                  <div class="itemBody">Mỗi giao dịch có lộ trình rõ. Chuẩn bị cho escrow.</div>
-                </div>
-
-                <div class="item">
-                  <div class="itemTop">
-                    <div class="badge">Xuất bản video</div>
-                    <button class="btn small" type="button" data-open="createMedia">Mở</button>
-                  </div>
-                  <div class="itemTitle">Không algorithm gây nghiện</div>
-                  <div class="itemBody">Nội dung sống bền theo cấu trúc, không theo vòng lặp kéo người xem.</div>
-                </div>
-
-                <div class="item">
-                  <div class="itemTop">
-                    <div class="badge">Tạo receipt</div>
-                    <button class="btn small" type="button" data-open="createReceipt">Mở</button>
-                  </div>
-                  <div class="itemTitle">Bằng chứng giao dịch</div>
-                  <div class="itemBody">Receipt hash để đối chiếu. Tạo tài sản số bền.</div>
-                </div>
-              </div>
-
-              <div class="hr"></div>
-
-              <h2>Link bền</h2>
-              <div class="muted">Click để điều hướng. Không hiển thị anchor href. Toàn bộ điều hướng chạy bằng router.</div>
-
-              <div class="routePill" data-nav="/p/p_6f12">
-                <div class="routeText">/p/p_6f12</div>
-                <div class="routeHint">project</div>
-              </div>
-
-              <div class="routePill" data-nav="/u/me">
-                <div class="routeText">/u/me</div>
-                <div class="routeHint">profile</div>
-              </div>
-
-              <div class="routePill" data-nav="/v/v_2c11">
-                <div class="routeText">/v/v_2c11</div>
-                <div class="routeHint">video</div>
-              </div>
-
-              <div class="routePill" data-nav="/m/m_18c9">
-                <div class="routeText">/m/m_18c9</div>
-                <div class="routeHint">commerce</div>
-              </div>
-            </div>
-          </div>
-
-          ${modalCreateProject()}
-          ${modalCreateListing()}
-          ${modalCreateMedia()}
-          ${modalCreateReceipt()}
-        `;
-
-        const right = `
-          <h2>Người dùng</h2>
-          <div class="muted">Trạng thái local demo. Khi có backend, thay session bằng magic email.</div>
-          <div class="hr"></div>
-
-          <div class="item">
-            <div class="itemTop">
-              <div class="badge ok">Handle</div>
-              <div class="mono">${esc(p.handle)}</div>
-            </div>
-            <div class="itemTitle">${esc(p.display_name)}</div>
-            <div class="itemBody">${esc(p.headline)}</div>
-          </div>
-
-          <div class="list">
-            <div class="item">
-              <div class="itemTop"><div class="badge">Projects</div><div class="mono">${counts.projects}</div></div>
-              <div class="itemBody">Dự án là đơn vị đóng góp.</div>
-            </div>
-            <div class="item">
-              <div class="itemTop"><div class="badge">Listings</div><div class="mono">${counts.listings}</div></div>
-              <div class="itemBody">Giao dịch không phụ thuộc reach.</div>
-            </div>
-            <div class="item">
-              <div class="itemTop"><div class="badge">Media</div><div class="mono">${counts.media}</div></div>
-              <div class="itemBody">Xuất bản không bị bóp.</div>
-            </div>
-            <div class="item">
-              <div class="itemTop"><div class="badge">Receipts</div><div class="mono">${counts.receipts}</div></div>
-              <div class="itemBody">Bằng chứng để tin cậy.</div>
-            </div>
-          </div>
-
-          <div class="hr"></div>
-
-          <div class="muted">
-            Phím tắt
-            <span class="kbd">G</span> mở bảng điều hướng
-            <span class="kbd">/</span> tìm nhanh
-          </div>
-        `;
-
-        return shell(
-          "Trang vận hành",
-          "Một nơi để làm việc và trao đổi thật, không bị khai thác dữ liệu.",
-          left,
-          right
-        );
-      }
-
-      function pageUser(handle){
-        const p = profile();
-        const d = db();
-        const me = (handle === "me" || handle === p.handle);
-        const who = me ? p : {
-          handle: handle,
-          display_name: "Người Dùng",
-          headline: "Hồ sơ bền theo đóng góp.",
-          bio: "Hồ sơ công khai tối thiểu. Không thu hoạch dữ liệu.",
-          location: "Unknown",
-          skills: ["Work Layer"],
-          links: []
-        };
-
-        const projects = d.projects.filter(x=> (me ? x.owner==="me" : true)).slice(0,6);
-        const listings = d.listings.filter(x=> (me ? x.owner==="me" : true)).slice(0,6);
-        const media = d.media.filter(x=> (me ? x.owner==="me" : true)).slice(0,6);
-        const receipts = d.receipts.filter(x=> (me ? x.owner==="me" : true)).slice(0,6);
-
-        const left = `
-          <div class="row2">
-            <div>
-              <h2>Hồ sơ là tài sản số bền</h2>
-              <div class="muted">
-                Hồ sơ trên Muonnoi không tồn tại để “được thấy nhiều”.
-                Hồ sơ tồn tại để bạn làm việc, hợp tác, giao dịch, và xuất bản theo cấu trúc rõ ràng.
-              </div>
-
-              <div class="hr"></div>
-
-              <div class="item">
-                <div class="itemTop">
-                  <div class="badge ok">/u/${esc(who.handle)}</div>
-                  ${me ? `<button class="btn small" type="button" data-open="editProfile">Sửa</button>` : `<div class="badge">public</div>`}
-                </div>
-                <div class="itemTitle">${esc(who.display_name)}</div>
-                <div class="itemBody">${esc(who.headline)}</div>
-                <div class="help">${esc(who.bio)}</div>
-                <div class="help">Vị trí: ${esc(who.location)}</div>
-                <div class="help">Kỹ năng: ${esc(who.skills.join(", "))}</div>
-              </div>
-
-              ${me ? modalEditProfile() : ""}
-
-              <div class="hr"></div>
-
-              <h2>Work Layer</h2>
-              <div class="muted">Dự án và kết quả. Không like. Không thuật toán.</div>
-
-              <div class="list">
-                ${projects.map(x=>`
-                  <div class="item" data-nav="/p/${esc(x.id)}">
-                    <div class="itemTop">
-                      <div class="badge">${esc(x.id)}</div>
-                      <div class="badge ${x.status==="active"?"ok":"warn"}">${esc(x.status)}</div>
-                    </div>
-                    <div class="itemTitle">${esc(x.title)}</div>
-                    <div class="itemBody">${esc(x.body)}</div>
-                    <div class="help">Tạo lúc: ${fmtTime(x.created_at)}</div>
-                  </div>
-                `).join("") || `<div class="item"><div class="itemBody">Chưa có dự án.</div></div>`}
-              </div>
-            </div>
-
-            <div>
-              <h2>Commerce Layer</h2>
-              <div class="muted">Người bán sở hữu link. Không phụ thuộc reach.</div>
-
-              <div class="list">
-                ${listings.map(x=>`
-                  <div class="item" data-nav="/m/${esc(x.id)}">
-                    <div class="itemTop">
-                      <div class="badge">${esc(x.id)}</div>
-                      <div class="badge ${x.status==="pending"?"warn":"ok"}">${esc(x.status)}</div>
-                    </div>
-                    <div class="itemTitle">${esc(x.title)}</div>
-                    <div class="itemBody">${esc(x.body)}</div>
-                  </div>
-                `).join("") || `<div class="item"><div class="itemBody">Chưa có listing.</div></div>`}
-              </div>
-
-              <div class="hr"></div>
-
-              <h2>Media · Learn</h2>
-              <div class="muted">Nội dung sống bền. Không bị bóp reach bởi thuật toán.</div>
-
-              <div class="list">
-                ${media.map(x=>`
-                  <div class="item" data-nav="/v/${esc(x.id)}">
-                    <div class="itemTop">
-                      <div class="badge">${esc(x.id)}</div>
-                      <div class="badge ${x.status==="published"?"ok":"warn"}">${esc(x.status)}</div>
-                    </div>
-                    <div class="itemTitle">${esc(x.title)}</div>
-                    <div class="itemBody">${esc(x.body)}</div>
-                  </div>
-                `).join("") || `<div class="item"><div class="itemBody">Chưa có media.</div></div>`}
-              </div>
-
-              <div class="hr"></div>
-
-              <h2>Receipts</h2>
-              <div class="muted">Bằng chứng giao dịch. Chuẩn bị cho Trust OS.</div>
-
-              <div class="list">
-                ${receipts.map(x=>`
-                  <div class="item" data-nav="/r/${esc(x.id)}">
-                    <div class="itemTop">
-                      <div class="badge">${esc(x.id)}</div>
-                      <div class="badge ok">${esc(x.status)}</div>
-                    </div>
-                    <div class="itemTitle">${esc(x.title)}</div>
-                    <div class="itemBody">${esc(x.body)}</div>
-                    <div class="help">${esc(x.hash)}</div>
-                  </div>
-                `).join("") || `<div class="item"><div class="itemBody">Chưa có receipt.</div></div>`}
-              </div>
-            </div>
-          </div>
-        `;
-
-        const right = `
-          <h2>Nguyên tắc hồ sơ</h2>
-          <div class="muted">Hồ sơ không phải sân khấu. Hồ sơ là bảng điều khiển đóng góp.</div>
-          <div class="hr"></div>
-
-          <div class="item">
-            <div class="itemTop">
-              <div class="badge">Link bền</div>
-              <div class="badge ok">/u/${esc(who.handle)}</div>
-            </div>
-            <div class="itemBody">Link không chết. Không reset vì thuật toán.</div>
-          </div>
-
-          <div class="list">
-            <div class="item">
-              <div class="itemTop"><div class="badge">Work</div><div class="badge">Projects</div></div>
-              <div class="itemBody">Reputation dựa vào dự án và kết quả.</div>
-            </div>
-            <div class="item">
-              <div class="itemTop"><div class="badge">Trade</div><div class="badge">Listings</div></div>
-              <div class="itemBody">Giao thương minh bạch, escrow-ready.</div>
-            </div>
-            <div class="item">
-              <div class="itemTop"><div class="badge">Learn</div><div class="badge">Media</div></div>
-              <div class="itemBody">Xuất bản không bị bóp reach.</div>
-            </div>
-            <div class="item">
-              <div class="itemTop"><div class="badge">Trust</div><div class="badge">Receipts</div></div>
-              <div class="itemBody">Bằng chứng tạo tin cậy.</div>
-            </div>
-          </div>
-        `;
-
-        return shell(
-          "Hồ sơ người dùng",
-          "Tài sản số bền theo đóng góp, không theo feed.",
-          left,
-          right
-        );
-      }
-
-      function pageEntity(kind, id){
-        const d = db();
-        let item = null;
-        if(kind === "p") item = d.projects.find(x=>x.id===id);
-        if(kind === "m") item = d.listings.find(x=>x.id===id);
-        if(kind === "v") item = d.media.find(x=>x.id===id);
-        if(kind === "r") item = d.receipts.find(x=>x.id===id);
-
-        const titleMap = { p:"Project", m:"Commerce", v:"Media", r:"Receipt" };
-        const tagMap   = { p:"Work Layer", m:"Commerce Layer", v:"Media · Learn", r:"Payments" };
-
-        const left = item ? `
-          <div class="item">
-            <div class="itemTop">
-              <div class="badge ok">${esc("/"+kind+"/"+id)}</div>
-              <div class="badge">${esc(tagMap[kind])}</div>
-            </div>
-            <div class="itemTitle">${esc(item.title)}</div>
-            <div class="itemBody">${esc(item.body)}</div>
-            <div class="help">ID: ${esc(item.id)} · Tạo lúc: ${fmtTime(item.created_at)}</div>
-            ${kind==="r" ? `<div class="help">${esc(item.hash || "")}</div>` : ""}
-          </div>
-          <div class="hr"></div>
-          <div class="muted">
-            Trang này được thiết kế để sống bền theo ID, không phụ thuộc thuật toán.
-            Khi có backend, bạn có thể gắn proof, chữ ký số, và verifiable credentials.
-          </div>
-        ` : `
-          <div class="item">
-            <div class="itemTop">
-              <div class="badge warn">Không tìm thấy</div>
-              <button class="btn small" type="button" data-nav="/">Về trang vận hành</button>
-            </div>
-            <div class="itemTitle">Mục này chưa tồn tại hoặc chưa được tạo.</div>
-            <div class="itemBody">Khi hệ thống có dữ liệu thật từ backend, link sẽ tự sống.</div>
-          </div>
-        `;
-
-        const right = `
-          <h2>${esc(titleMap[kind])} link bền</h2>
-          <div class="muted">Thiết kế để chia sẻ, lưu trữ, và truy hồi.</div>
-          <div class="hr"></div>
-
-          <div class="routePill" data-nav="/${esc(kind)}/${esc(id)}">
-            <div class="routeText">/${esc(kind)}/${esc(id)}</div>
-            <div class="routeHint">stable</div>
-          </div>
-
-          <div class="routePill" data-nav="/u/me">
-            <div class="routeText">/u/me</div>
-            <div class="routeHint">owner</div>
-          </div>
-
-          <div class="hr"></div>
-          <div class="muted mono">
-            Hint: Pages history routing cần rewrite về /index.html để link bền không bị 404.
-          </div>
-        `;
-
-        return shell(
-          "Chi tiết nội dung",
-          "Một mục vận hành trong hệ Social Operating System.",
-          left,
-          right
-        );
-      }
-
-      function pageAdmin(){
-        const a = store.get(ADMIN_KEY, { ok:false, owner_email:null, created_at:null });
-        const d = db();
-
-        if(!a.ok){
-          const left = `
-            <h2>Quản trị không phải để kiểm duyệt câu chuyện</h2>
-            <div class="muted">
-              Quản trị trên Muonnoi là để bảo vệ vận hành: chống lạm dụng, chống spam, giữ an toàn, và đảm bảo link bền hoạt động.
-              Không build cơ chế thao túng nội dung.
-            </div>
-
-            <div class="hr"></div>
-
-            <div class="item">
-              <div class="itemTop">
-                <div class="badge warn">Chưa đăng nhập</div>
-              </div>
-              <div class="itemTitle">Đăng nhập quản trị (local demo)</div>
-              <div class="itemBody">
-                Đây là chế độ local. Khi có backend, thay bằng owner bootstrap + magic email + session.
-              </div>
-            </div>
-
-            <div class="hr"></div>
-
-            <div class="formRow">
-              <div style="flex:1 1 240px">
-                <input class="input" id="adminEmail" type="email" autocomplete="email" placeholder="Owner email" />
-                <div class="help">Email chỉ lưu local demo. Không gửi đi đâu.</div>
-              </div>
-              <div style="flex:1 1 240px">
-                <input class="input" id="adminPass" type="password" autocomplete="current-password" placeholder="Passphrase" />
-                <div class="help">Gợi ý: dùng passphrase dài. Demo chỉ kiểm tra tối thiểu.</div>
-              </div>
-              <div style="flex:1 1 160px; display:flex; align-items:flex-end">
-                <button class="btn primary" type="button" data-admin="login">Đăng nhập</button>
-              </div>
-            </div>
-
-            <div class="callout" style="margin-top:12px">
-              <strong>Nguyên tắc quản trị:</strong> giảm thiểu dữ liệu, chống lạm dụng, ưu tiên an toàn, và minh bạch hành động.
-            </div>
-          `;
-
-          const right = `
-            <h2>Admin Console</h2>
-            <div class="muted">Trạng thái: locked</div>
-            <div class="hr"></div>
-
-            <div class="item">
-              <div class="itemTop">
-                <div class="badge">Queue</div>
-                <div class="badge warn">${d.adminQueue.profiles.length + d.adminQueue.projects.length + d.adminQueue.listings.length + d.adminQueue.media.length}</div>
-              </div>
-              <div class="itemBody">Có mục pending trong hàng đợi.</div>
-            </div>
-
-            <div class="item" style="margin-top:10px">
-              <div class="itemTop">
-                <div class="badge">Audit</div>
-                <div class="badge">${d.audit.length}</div>
-              </div>
-              <div class="itemBody">Audit log ghi lại thao tác quản trị.</div>
-            </div>
-          `;
-
-          return shell(
-            "Trang quản trị",
-            "Bảo vệ vận hành. Không thao túng nội dung.",
-            left,
-            right
-          );
-        }
-
-        const q = d.adminQueue;
-        const totalQ = q.profiles.length + q.projects.length + q.listings.length + q.media.length;
-
-        const left = `
-          <div class="item">
-            <div class="itemTop">
-              <div class="badge ok">Đã đăng nhập</div>
-              <button class="btn small danger" type="button" data-admin="logout">Đăng xuất</button>
-            </div>
-            <div class="itemTitle">Owner: ${esc(a.owner_email || "owner")}</div>
-            <div class="itemBody">
-              Quản trị là để giữ hệ sạch: chống lạm dụng, chống spam, đảm bảo link bền, và minh bạch hoạt động.
-            </div>
-            <div class="help">Session local demo. Khi có backend, thay bằng token + TTL + D1.</div>
-          </div>
-
-          <div class="hr"></div>
-
-          <h2>Queue vận hành</h2>
-          <div class="muted">Phê duyệt là hành vi quản trị. Mọi thay đổi nên ghi audit.</div>
-
-          ${adminQueueBlock("Profiles", q.profiles, "profiles")}
-          ${adminQueueBlock("Projects", q.projects, "projects")}
-          ${adminQueueBlock("Listings", q.listings, "listings")}
-          ${adminQueueBlock("Media", q.media, "media")}
-
-          <div class="hr"></div>
-
-          <h2>System</h2>
-          <div class="row2">
-            <div class="item">
-              <div class="itemTop"><div class="badge">Route health</div><div class="badge ok">Pages rewrite</div></div>
-              <div class="itemBody">Bắt buộc rewrite về /index.html để history routing sống bền.</div>
-              <div class="help">Nếu bạn thấy 404 khi refresh /u/me, tức là thiếu _redirects.</div>
-            </div>
-
-            <div class="item">
-              <div class="itemTop"><div class="badge">Export</div><button class="btn small" type="button" data-admin="export">Xuất JSON</button></div>
-              <div class="itemBody">Xuất dữ liệu demo để kiểm thử flow. Không gửi đi đâu.</div>
-              <div class="help">Khi có backend, export server-side theo quyền owner.</div>
-            </div>
-          </div>
-
-          <div class="hr"></div>
-
-          <h2>Audit log</h2>
-          <div class="muted">Minh bạch hành động quản trị. Không làm mờ câu chuyện. Không làm tối hệ.</div>
-          <div class="list">
-            ${d.audit.slice(0,12).map(x=>`
-              <div class="item">
-                <div class="itemTop">
-                  <div class="badge">${esc(x.actor)}</div>
-                  <div class="badge">${esc(x.action)}</div>
-                </div>
-                <div class="help">${fmtTime(x.at)}${x.meta ? " · "+esc(JSON.stringify(x.meta)) : ""}</div>
-              </div>
-            `).join("") || `<div class="item"><div class="itemBody">Chưa có audit.</div></div>`}
-          </div>
-        `;
-
-        const right = `
-          <h2>Console status</h2>
-          <div class="muted">Queue và chuẩn vận hành.</div>
-          <div class="hr"></div>
-
-          <div class="list">
-            <div class="item">
-              <div class="itemTop"><div class="badge">Total queue</div><div class="badge warn">${totalQ}</div></div>
-              <div class="itemBody">Pending cần xử lý.</div>
-            </div>
-            <div class="item">
-              <div class="itemTop"><div class="badge">Anti-abuse</div><div class="badge ok">ready</div></div>
-              <div class="itemBody">Thiết kế cho rate-limit và gate khi có backend.</div>
-            </div>
-            <div class="item">
-              <div class="itemTop"><div class="badge">Privacy</div><div class="badge ok">default</div></div>
-              <div class="itemBody">Không tracking, không analytics, dữ liệu tối thiểu.</div>
-            </div>
-          </div>
-
-          <div class="hr"></div>
-
-          <div class="muted mono">
-            Giai đoạn 1 đúng tinh thần: Landing, SPA routing sạch, Work + Profile cơ bản, link bền.
-          </div>
-        `;
-
-        return shell(
-          "Admin Console",
-          "Bảo vệ vận hành. Giảm lạm dụng. Minh bạch hành động.",
-          left,
-          right
-        );
-      }
-
-      function adminQueueBlock(title, arr, key){
-        if(!arr || !arr.length){
-          return `
-            <div class="hr"></div>
-            <div class="item">
-              <div class="itemTop"><div class="badge">${esc(title)}</div><div class="badge ok">0</div></div>
-              <div class="itemBody">Không có mục pending.</div>
-            </div>
-          `;
-        }
-
-        return `
-          <div class="hr"></div>
-          <div class="item">
-            <div class="itemTop">
-              <div class="badge">${esc(title)}</div>
-              <div class="badge warn">${arr.length}</div>
-            </div>
-            <div class="itemBody">Pending items</div>
-          </div>
-
-          <div class="list">
-            ${arr.map(x=>`
-              <div class="item">
-                <div class="itemTop">
-                  <div class="badge">${esc(x.id)}</div>
-                  <div class="badge warn">${esc(x.status)}</div>
-                </div>
-                <div class="itemTitle">${esc(x.title || x.handle || "Request")}</div>
-                <div class="itemBody">${esc(x.note || "")}</div>
-                <div class="help">${fmtTime(x.created_at)}</div>
-                <div style="margin-top:10px; display:flex; gap:10px; flex-wrap:wrap">
-                  <button class="btn small primary" type="button" data-admin="approve" data-q="${esc(key)}" data-id="${esc(x.id)}">Approve</button>
-                  <button class="btn small" type="button" data-admin="reject" data-q="${esc(key)}" data-id="${esc(x.id)}">Reject</button>
-                </div>
-              </div>
-            `).join("")}
-          </div>
-        `;
-      }
-
-      // Modals (simple)
-      function modalWrap(id, title, body){
-        return `
-          <div class="hidden" id="${esc(id)}_overlay" style="position:fixed; inset:0; background:rgba(0,0,0,.55); z-index:110; padding:18px; overflow:auto">
-            <div class="card" style="max-width:860px; margin:40px auto; border-color: rgba(255,255,255,.14)">
-              <div class="pad">
-                <div class="itemTop">
-                  <div class="badge">${esc(title)}</div>
-                  <button class="btn small" type="button" data-close="${esc(id)}">Đóng</button>
-                </div>
-                <div style="height:12px"></div>
-                ${body}
-              </div>
-            </div>
-          </div>
-        `;
-      }
-
-      function modalCreateProject(){
-        const body = `
-          <div class="muted">Tạo dự án theo hướng vận hành. Dự án là đơn vị đóng góp.</div>
-          <div class="hr"></div>
-          <input class="input" id="cp_title" placeholder="Tên dự án" />
-          <div style="height:10px"></div>
-          <textarea class="textarea" id="cp_body" placeholder="Mô tả ngắn, rõ mục tiêu, rõ kết quả mong đợi"></textarea>
-          <div class="help">Gợi ý: tránh khẩu hiệu. Chỉ nói thứ sẽ làm và cách đo kết quả.</div>
-          <div style="height:12px; display:flex; gap:10px; flex-wrap:wrap">
-            <button class="btn primary" type="button" data-create="project">Tạo</button>
-            <button class="btn" type="button" data-close="createProject">Hủy</button>
-          </div>
-        `;
-        return modalWrap("createProject", "Create Project", body);
-      }
-
-      function modalCreateListing(){
-        const body = `
-          <div class="muted">Tạo listing cho commerce layer. Ưu tiên minh bạch và lộ trình.</div>
-          <div class="hr"></div>
-          <input class="input" id="cl_title" placeholder="Tên sản phẩm hoặc dịch vụ" />
-          <div style="height:10px"></div>
-          <textarea class="textarea" id="cl_body" placeholder="Mô tả ngắn, điều kiện, cách giao, rủi ro và cách xử lý"></textarea>
-          <div class="help">Chuẩn bị escrow-ready. Nói rõ trách nhiệm và biên nhận.</div>
-          <div style="height:12px; display:flex; gap:10px; flex-wrap:wrap">
-            <button class="btn primary" type="button" data-create="listing">Tạo</button>
-            <button class="btn" type="button" data-close="createListing">Hủy</button>
-          </div>
-        `;
-        return modalWrap("createListing", "Create Listing", body);
-      }
-
-      function modalCreateMedia(){
-        const body = `
-          <div class="muted">Tạo nội dung media/learn không gây nghiện. Ưu tiên cấu trúc.</div>
-          <div class="hr"></div>
-          <input class="input" id="cm_title" placeholder="Tiêu đề video/tài liệu" />
-          <div style="height:10px"></div>
-          <textarea class="textarea" id="cm_body" placeholder="Mô tả: người xem sẽ đạt được gì sau khi xem"></textarea>
-          <div class="help">Không câu kéo. Không hứa suông. Nói đúng giá trị.</div>
-          <div style="height:12px; display:flex; gap:10px; flex-wrap:wrap">
-            <button class="btn primary" type="button" data-create="media">Tạo</button>
-            <button class="btn" type="button" data-close="createMedia">Hủy</button>
-          </div>
-        `;
-        return modalWrap("createMedia", "Create Media", body);
-      }
-
-      function modalCreateReceipt(){
-        const body = `
-          <div class="muted">Tạo receipt hash demo. Khi có backend sẽ ký số và lưu D1.</div>
-          <div class="hr"></div>
-          <input class="input" id="cr_title" placeholder="Tên receipt" />
-          <div style="height:10px"></div>
-          <textarea class="textarea" id="cr_body" placeholder="Nội dung biên nhận: điều gì đã được cam kết hoặc giao dịch"></textarea>
-          <div class="help">Receipt là bằng chứng cho trust. Không phải trang trí.</div>
-          <div style="height:12px; display:flex; gap:10px; flex-wrap:wrap">
-            <button class="btn primary" type="button" data-create="receipt">Tạo</button>
-            <button class="btn" type="button" data-close="createReceipt">Hủy</button>
-          </div>
-        `;
-        return modalWrap("createReceipt", "Create Receipt", body);
-      }
-
-      function modalEditProfile(){
-        const p = profile();
-        const body = `
-          <div class="muted">Hồ sơ tối giản, rõ đóng góp, không feed.</div>
-          <div class="hr"></div>
-          <input class="input" id="ep_name" value="${esc(p.display_name)}" placeholder="Tên hiển thị" />
-          <div style="height:10px"></div>
-          <input class="input" id="ep_headline" value="${esc(p.headline)}" placeholder="Headline" />
-          <div style="height:10px"></div>
-          <textarea class="textarea" id="ep_bio" placeholder="Bio">${esc(p.bio)}</textarea>
-          <div style="height:10px"></div>
-          <input class="input" id="ep_loc" value="${esc(p.location)}" placeholder="Vị trí" />
-          <div style="height:10px"></div>
-          <input class="input" id="ep_skills" value="${esc(p.skills.join(", "))}" placeholder="Kỹ năng, cách nhau bởi dấu phẩy" />
-          <div class="help">Gợi ý: nói thứ bạn làm và thứ bạn đã làm xong. Không khẩu hiệu.</div>
-          <div style="height:12px; display:flex; gap:10px; flex-wrap:wrap">
-            <button class="btn primary" type="button" data-profile="save">Lưu</button>
-            <button class="btn" type="button" data-close="editProfile">Hủy</button>
-          </div>
-        `;
-        return modalWrap("editProfile", "Edit Profile", body);
-      }
-
-      // Render
-      function render(){
-        initDB();
-
-        const path = parsePath(location.pathname);
-        const parts = path.parts;
-        const app = $("#app");
-
-        // Route map (core)
-        // / => home
-        // /u/:handle => profile
-        // /p/:id => project
-        // /m/:id => listing
-        // /v/:id => media
-        // /r/:id => receipt
-        // /admin => admin console
-        // /work, /commerce, /media, /messages, /pay => forward to home sections (MVP)
-        let html = "";
-
-        if(parts.length === 0){
-          html = pageHome();
-        } else if(parts[0] === "u" && parts[1]){
-          html = pageUser(parts[1]);
-        } else if(parts[0] === "p" && parts[1]){
-          html = pageEntity("p", parts[1]);
-        } else if(parts[0] === "m" && parts[1]){
-          html = pageEntity("m", parts[1]);
-        } else if(parts[0] === "v" && parts[1]){
-          html = pageEntity("v", parts[1]);
-        } else if(parts[0] === "r" && parts[1]){
-          html = pageEntity("r", parts[1]);
-        } else if(parts[0] === "admin"){
-          html = pageAdmin();
-        } else if(["work","commerce","media","messages","pay"].includes(parts[0])){
-          // MVP: direct back to home (later split into real pages)
-          html = pageHome();
-          setTimeout(()=>toast("Giai đoạn 1: module page sẽ được tách riêng. Hiện đang hiển thị dashboard."), 60);
-        } else {
-          html = shell(
-            "Không tìm thấy route",
-            "Route chưa tồn tại. Ở giai đoạn 1, app ưu tiên link bền và điều hướng sạch.",
-            `
-              <div class="item">
-                <div class="itemTop">
-                  <div class="badge warn">404</div>
-                  <button class="btn small" type="button" data-nav="/">Về trang vận hành</button>
-                </div>
-                <div class="itemTitle">Đường dẫn này chưa được khai báo.</div>
-                <div class="itemBody">Khi bạn thêm module thật, route sẽ sống mà không cần thay tư duy điều hướng.</div>
-                <div class="help mono">${esc(location.pathname)}</div>
-              </div>
-            `,
-            `
-              <h2>Route map</h2>
-              <div class="muted mono">/, /u/:handle, /p/:id, /m/:id, /v/:id, /r/:id, /admin</div>
-              <div class="hr"></div>
-              <div class="muted mono">Hint: Pages cần rewrite để refresh không 404.</div>
-            `
-          );
-        }
-
-        app.innerHTML = html;
-      }
-
-      // Events (global)
-      document.addEventListener("click", async (e)=>{
-        const navEl = e.target.closest("[data-nav]");
-        if(navEl){
-          e.preventDefault();
-          const to = navEl.getAttribute("data-nav");
-          nav(to);
-          return;
-        }
-
-        const openEl = e.target.closest("[data-open]");
-        if(openEl){
-          const id = openEl.getAttribute("data-open");
-          const ov = document.getElementById(id + "_overlay");
-          if(ov){ ov.classList.remove("hidden"); }
-          return;
-        }
-
-        const closeEl = e.target.closest("[data-close]");
-        if(closeEl){
-          const id = closeEl.getAttribute("data-close");
-          const ov = document.getElementById(id + "_overlay");
-          if(ov){ ov.classList.add("hidden"); }
-          return;
-        }
-
-        const createEl = e.target.closest("[data-create]");
-        if(createEl){
-          const kind = createEl.getAttribute("data-create");
-          const d = db();
-
-          if(kind === "project"){
-            const title = ($("#cp_title")?.value || "").trim();
-            const body  = ($("#cp_body")?.value || "").trim();
-            if(!title || !body){ toast("Thiếu nội dung. Hãy viết rõ mục tiêu và kết quả."); return; }
-            const id = "p_" + Math.random().toString(16).slice(2,6);
-            d.projects.unshift({ id, title, body, owner:"me", status:"draft", created_at: now() });
-            saveDB(d);
-            audit("me", "create_project", {id});
-            $("#createProject_overlay")?.classList.add("hidden");
-            toast("Đã tạo dự án: /p/" + id);
-            nav("/p/" + id);
-            return;
-          }
-
-          if(kind === "listing"){
-            const title = ($("#cl_title")?.value || "").trim();
-            const body  = ($("#cl_body")?.value || "").trim();
-            if(!title || !body){ toast("Thiếu nội dung. Hãy viết điều kiện và lộ trình giao."); return; }
-            const id = "m_" + Math.random().toString(16).slice(2,6);
-            d.listings.unshift({ id, title, body, owner:"me", status:"pending", created_at: now() });
-            saveDB(d);
-            audit("me", "create_listing", {id});
-            $("#createListing_overlay")?.classList.add("hidden");
-            toast("Đã tạo listing: /m/" + id);
-            nav("/m/" + id);
-            return;
-          }
-
-          if(kind === "media"){
-            const title = ($("#cm_title")?.value || "").trim();
-            const body  = ($("#cm_body")?.value || "").trim();
-            if(!title || !body){ toast("Thiếu nội dung. Hãy viết rõ giá trị người xem nhận được."); return; }
-            const id = "v_" + Math.random().toString(16).slice(2,6);
-            d.media.unshift({ id, title, body, owner:"me", status:"draft", created_at: now() });
-            saveDB(d);
-            audit("me", "create_media", {id});
-            $("#createMedia_overlay")?.classList.add("hidden");
-            toast("Đã tạo media: /v/" + id);
-            nav("/v/" + id);
-            return;
-          }
-
-          if(kind === "receipt"){
-            const title = ($("#cr_title")?.value || "").trim();
-            const body  = ($("#cr_body")?.value || "").trim();
-            if(!title || !body){ toast("Thiếu nội dung. Receipt phải rõ và có thể đối chiếu."); return; }
-
-            // demo hash using WebCrypto
-            const msg = new TextEncoder().encode(title + "|" + body + "|" + now());
-            const buf = await crypto.subtle.digest("SHA-256", msg);
-            const hex = Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,"0")).join("");
-            const hash = "sha256:" + hex.slice(0,48) + "…";
-
-            const id = "r_" + Math.random().toString(16).slice(2,6);
-            d.receipts.unshift({ id, title, body, owner:"me", status:"issued", created_at: now(), hash });
-            saveDB(d);
-            audit("me", "create_receipt", {id});
-            $("#createReceipt_overlay")?.classList.add("hidden");
-            toast("Đã tạo receipt: /r/" + id);
-            nav("/r/" + id);
-            return;
-          }
-        }
-
-        const profEl = e.target.closest("[data-profile]");
-        if(profEl && profEl.getAttribute("data-profile")==="save"){
-          const p = profile();
-          const name = ($("#ep_name")?.value || "").trim();
-          const head = ($("#ep_headline")?.value || "").trim();
-          const bio  = ($("#ep_bio")?.value || "").trim();
-          const loc  = ($("#ep_loc")?.value || "").trim();
-          const skills = ($("#ep_skills")?.value || "").split(",").map(x=>x.trim()).filter(Boolean);
-
-          if(!name || !head){ toast("Thiếu tên hoặc headline."); return; }
-          const next = {...p, display_name:name, headline:head, bio:bio||p.bio, location:loc||p.location, skills: skills.length?skills:p.skills };
-          setProfile(next);
-          audit("me", "update_profile", {handle: next.handle});
-          $("#editProfile_overlay")?.classList.add("hidden");
-          toast("Đã lưu hồ sơ.");
-          render();
-          return;
-        }
-
-        const adminEl = e.target.closest("[data-admin]");
-        if(adminEl){
-          const action = adminEl.getAttribute("data-admin");
-          const a = store.get(ADMIN_KEY, { ok:false });
-
-          if(action === "login"){
-            const email = ($("#adminEmail")?.value || "").trim();
-            const pass  = ($("#adminPass")?.value || "").trim();
-            if(!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ toast("Email không hợp lệ."); return; }
-            if(!pass || pass.length < 10){ toast("Passphrase quá ngắn. Hãy dùng câu dài."); return; }
-
-            store.set(ADMIN_KEY, { ok:true, owner_email: email, created_at: now() });
-            audit("owner", "admin_login", {email});
-            toast("Đã đăng nhập admin.");
-            render();
-            return;
-          }
-
-          if(action === "logout"){
-            store.set(ADMIN_KEY, { ok:false, owner_email:null, created_at:null });
-            audit("owner", "admin_logout", null);
-            toast("Đã đăng xuất.");
-            render();
-            return;
-          }
-
-          if(action === "approve" || action === "reject"){
-            if(!a.ok){ toast("Chưa đăng nhập."); return; }
-            const qKey = adminEl.getAttribute("data-q");
-            const id = adminEl.getAttribute("data-id");
-            const d = db();
-            const arr = (d.adminQueue && d.adminQueue[qKey]) ? d.adminQueue[qKey] : [];
-            const idx = arr.findIndex(x=>x.id===id);
-            if(idx < 0){ toast("Không tìm thấy item."); return; }
-
-            const it = arr[idx];
-            it.status = (action === "approve") ? "approved" : "rejected";
-            arr.splice(idx,1);
-            d.adminQueue[qKey] = arr;
-            saveDB(d);
-            audit("owner", action === "approve" ? "approve" : "reject", {queue:qKey, id});
-            toast((action==="approve"?"Approved: ":"Rejected: ") + id);
-            render();
-            return;
-          }
-
-          if(action === "export"){
-            if(!a.ok){ toast("Chưa đăng nhập."); return; }
-            const payload = db();
-            const text = JSON.stringify(payload, null, 2);
-            const blob = new Blob([text], {type:"application/json"});
-            const url = URL.createObjectURL(blob);
-            const aEl = document.createElement("a");
-            aEl.href = url;
-            aEl.download = "muonnoi-demo-export.json";
-            document.body.appendChild(aEl);
-            aEl.click();
-            aEl.remove();
-            setTimeout(()=>URL.revokeObjectURL(url), 1000);
-            audit("owner", "export_json", {bytes: text.length});
-            toast("Đã export JSON.");
-            return;
-          }
-        }
-      });
-
-      // Language dropdown
-      const langSelect = document.getElementById("langSelect");
-      if(langSelect){
-        langSelect.addEventListener("change", ()=>{
-          const v = langSelect.value;
-          if(!v) return;
-          // Each language is separate file path. Navigate to that root.
-          window.location.assign(v);
-        });
-      }
-
-      // Mobile drawer
-      const burger = document.getElementById("burgerBtn");
-      const closeBtn = document.getElementById("closeBtn");
-      const backdrop = document.getElementById("backdrop");
-      const drawer = document.getElementById("drawer");
-
-      function openDrawer(){
-        document.body.classList.add("isOpen");
-        burger.setAttribute("aria-expanded","true");
-        backdrop.setAttribute("aria-hidden","false");
-        setTimeout(()=>closeBtn.focus(), 0);
-      }
-      function closeDrawer(){
-        document.body.classList.remove("isOpen");
-        burger.setAttribute("aria-expanded","false");
-        backdrop.setAttribute("aria-hidden","true");
-        burger.focus();
-      }
-      if(burger) burger.addEventListener("click", openDrawer);
-      if(closeBtn) closeBtn.addEventListener("click", closeDrawer);
-      if(backdrop) backdrop.addEventListener("click", closeDrawer);
-      window.addEventListener("keydown", (e)=>{
-        if(e.key === "Escape" && document.body.classList.contains("isOpen")) closeDrawer();
-      });
-
-      // Keyboard quick nav (minimal)
-      window.addEventListener("keydown", (e)=>{
-        if(e.key === "g" || e.key === "G"){
-          toast("Gợi ý: dùng menu trên cùng để điều hướng. Giai đoạn 1 ưu tiên link bền.");
-        }
-        if(e.key === "/"){
-          e.preventDefault();
-          toast("Search sẽ được triển khai ở giai đoạn 2. Hiện tại dùng route link bền.");
-        }
-      });
-
-      // Boot
-      initDB();
-      render();
-
-    })();
+    }, {capture:true});
+  })();
   </script>
 </body>
 </html>
