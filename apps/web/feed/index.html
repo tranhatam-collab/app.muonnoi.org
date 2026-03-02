@@ -1,283 +1,118 @@
 <!doctype html>
-<html lang="vi" data-theme="auto">
+<html lang="vi" data-theme="dark">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <meta name="color-scheme" content="dark light" />
-  <meta name="referrer" content="no-referrer" />
+  <meta name="theme-color" content="#0b0f0c" />
+  <meta name="robots" content="index,follow" />
 
-  <title>MN App – Bảng tin</title>
-  <meta name="description" content="Bảng tin MN App: đăng bài, tương tác, theo dõi. Social-first, privacy-first." />
-  <meta name="robots" content="noindex,nofollow" />
+  <title>Bảng tin — Muôn Nơi</title>
+  <meta name="description" content="Bảng tin Muôn Nơi. Sạch, nhanh, ưu tiên người thật. Không mồi nghiện." />
+  <link rel="canonical" href="https://app.muonnoi.org/feed/" />
 
-  <link rel="icon" href="/assets/brand/mn.svg" />
-  <link rel="stylesheet" href="/assets/ui.css" />
+  <link rel="icon" href="/favicon.ico" />
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="stylesheet" href="/assets/ui.css?v=20260303-1" />
 </head>
 
 <body class="mn-body">
   <div class="mn-bg" aria-hidden="true">
-    <div class="mn-bg__grid"></div>
     <div class="mn-bg__glow"></div>
+    <div class="mn-bg__grid"></div>
     <div class="mn-bg__sweep"></div>
     <div class="mn-bg__noise"></div>
   </div>
 
-  <header class="mn-top mn-top--pill" role="banner">
+  <header class="mn-top" role="banner">
     <div class="mn-top__inner">
-      <a class="mn-brand mn-brand--mono" href="/" aria-label="MN App">
+      <a class="mn-brand" href="https://muonnoi.org/" rel="noopener">
         <span class="mn-mark" aria-hidden="true">MN</span>
-        <span class="mn-brand__title">MN App</span>
+        <span class="mn-brand__stack">
+          <span class="mn-brand__title">Muôn Nơi</span>
+          <span class="mn-brand__sub">Social Operating Space. Không feed. Không tracking.</span>
+        </span>
       </a>
 
-      <nav class="mn-nav mn-nav--pills" aria-label="Primary">
-        <a class="mn-pill" href="/">Trang chủ</a>
-        <a class="mn-pill is-active" href="/feed/">Bảng tin</a>
-        <a class="mn-pill" href="/verify/">Xác minh</a>
-        <a class="mn-pill" href="/commit/">Cam kết</a>
-        <a class="mn-pill" href="/complaints/">Khiếu nại</a>
-        <a class="mn-pill mn-pill--ghost" href="/admin/">Admin</a>
-        <a class="mn-pill" href="https://docs.muonnoi.org/" rel="noopener">Hướng dẫn</a>
+      <nav class="mn-nav" aria-label="Điều hướng chính">
+        <a class="mn-pill" href="https://app.muonnoi.org/">Trang chủ</a>
+        <a class="mn-pill is-active" href="https://app.muonnoi.org/feed/">Bảng tin</a>
+        <a class="mn-pill" href="https://app.muonnoi.org/verify/">Xác minh</a>
+        <a class="mn-pill" href="https://app.muonnoi.org/commit/">Cam kết</a>
+        <a class="mn-pill" href="https://app.muonnoi.org/complaints/">Khiếu nại</a>
+        <a class="mn-pill" href="https://app.muonnoi.org/admin/">Admin</a>
+        <a class="mn-pill" href="https://app.muonnoi.org/legal/privacy.html">Bảo mật</a>
+        <a class="mn-pill" href="https://app.muonnoi.org/security/">Hướng dẫn</a>
       </nav>
 
       <div class="mn-top__actions">
-        <a class="mn-btn mn-btn--primary" href="/join/">Bắt đầu</a>
-        <button class="mn-btn mn-btn--ghost" id="themeBtn" type="button" aria-label="Theme">◐</button>
-        <button class="mn-btn mn-btn--ghost" id="langBtn" type="button" aria-label="Language">VI</button>
-        <button class="mn-burger" id="mnBurger" type="button" aria-label="Menu">
+        <button class="mn-btn mn-btn--ghost" type="button" id="themeBtn" aria-label="Đổi theme">◐</button>
+        <button class="mn-btn mn-btn--ghost" type="button" id="langBtn" aria-label="Đổi ngôn ngữ">VI</button>
+        <a class="mn-btn mn-btn--ghost" href="https://app.muonnoi.org/join/">Tài khoản</a>
+        <a class="mn-btn mn-btn--primary" href="https://app.muonnoi.org/join/">Mở hệ</a>
+
+        <button class="mn-burger" type="button" id="mnBurger" aria-label="Mở menu">
           <span></span><span></span><span></span>
         </button>
       </div>
     </div>
 
     <div class="mn-mobile" id="mnMobile" hidden>
-      <a class="mn-mobile__item mn-mobile__item--primary" href="/join/">Bắt đầu</a>
-      <a class="mn-mobile__item" href="/">Trang chủ</a>
-      <a class="mn-mobile__item" href="/verify/">Xác minh</a>
-      <a class="mn-mobile__item" href="/commit/">Cam kết</a>
-      <a class="mn-mobile__item" href="/complaints/">Khiếu nại</a>
-      <a class="mn-mobile__item" href="/admin/">Admin</a>
-      <a class="mn-mobile__item" href="/security/">Bảo mật</a>
-      <a class="mn-mobile__item" href="/legal/">Pháp lý</a>
-      <a class="mn-mobile__item" href="https://docs.muonnoi.org/" rel="noopener">Hướng dẫn</a>
+      <a class="mn-mobile__item mn-mobile__item--primary" href="https://app.muonnoi.org/join/"><span>Vào ứng dụng</span><span>→</span></a>
+      <a class="mn-mobile__item" href="https://app.muonnoi.org/">Trang chủ</a>
+      <a class="mn-mobile__item" href="https://app.muonnoi.org/feed/">Bảng tin</a>
+      <a class="mn-mobile__item" href="https://app.muonnoi.org/verify/">Xác minh</a>
+      <a class="mn-mobile__item" href="https://app.muonnoi.org/commit/">Cam kết</a>
+      <a class="mn-mobile__item" href="https://app.muonnoi.org/complaints/">Khiếu nại</a>
+      <a class="mn-mobile__item" href="https://app.muonnoi.org/admin/">Admin</a>
+      <a class="mn-mobile__item" href="https://app.muonnoi.org/legal/privacy.html">Bảo mật</a>
+      <a class="mn-mobile__item" href="https://app.muonnoi.org/security/">Hướng dẫn</a>
     </div>
   </header>
 
   <main class="mn-main" role="main">
-    <section class="mn-section">
-      <div class="mn-wrap">
+    <div class="mn-wrap">
+      <section class="mn-section mn-glass" style="border-radius:28px; padding:18px;">
+        <h1 class="mn-h1" style="font-size:38px;">Bảng Tin</h1>
+        <p class="mn-sub" style="margin-top:10px; max-width:980px;">
+          Bảng tin giai đoạn đầu là “khung” để khoá UI, tốc độ, chống bot và trải nghiệm sạch.
+          Bước kế tiếp: kết nối Worker API để hiển thị bài viết thật, có xác minh và chống spam theo lớp.
+        </p>
 
-        <div class="mn-glass" style="padding:16px;border-radius:26px;">
-          <div class="mn-hero__top" style="margin-bottom:8px;">
-            <span class="mn-chip">Feed</span>
-            <span class="mn-chip mn-chip--soft">Social Core</span>
-            <span class="mn-chip mn-chip--soft">Demo UI</span>
+        <div class="mn-grid" style="gap:12px; margin-top:14px; grid-template-columns:repeat(12,1fr);">
+          <div class="mn-glass" style="grid-column:span 12; border-radius:18px; padding:14px;">
+            <div class="mn-h2">Khung Feed (Demo)</div>
+            <div class="mn-sub" style="margin-top:6px;">
+              1) Bài viết ngắn  2) Media  3) Link sạch  4) Báo cáo vi phạm  5) Xác minh.
+            </div>
           </div>
-          <h1 class="mn-h1" style="font-size:30px;margin:6px 0 4px;">Bảng Tin</h1>
-          <p class="mn-sub" style="max-width:960px;">
-            Giai đoạn 1: lõi mạng xã hội. Trang này chạy UI demo để bạn test trải nghiệm.
-            Khi nối Worker API, feed sẽ dùng dữ liệu thật.
-          </p>
-          <div class="mn-hero__cta" style="margin-top:12px;">
-            <button class="mn-btn mn-btn--primary" id="mnNewPostBtn" type="button">Đăng bài</button>
-            <button class="mn-btn mn-btn--ghost" id="mnSeed" type="button">Sinh 9 bài demo</button>
-            <a class="mn-btn mn-btn--ghost" href="/security/">Chuẩn bảo mật</a>
+
+          <a class="mn-glass mn-linkcard" href="https://app.muonnoi.org/complaints/" style="grid-column:span 12; border-radius:18px; padding:14px; text-decoration:none; color:inherit;">
+            <div class="mn-h2">Báo cáo nội dung</div>
+            <div class="mn-sub" style="margin-top:6px;">Nếu có spam, giả mạo, lừa đảo, vào Khiếu nại để gửi chuẩn.</div>
+          </a>
+        </div>
+      </section>
+
+      <footer class="mn-footer" role="contentinfo">
+        <div class="mn-wrap mn-footer__inner">
+          <div class="mn-footer__brand">
+            <span class="mn-mark mn-mark--sm" aria-hidden="true">MN</span>
+            <div>
+              <div class="mn-footer__name">Muôn Nơi</div>
+              <div class="mn-footer__tag">© 2026 muonnoi.org • social-first • privacy-first</div>
+            </div>
+          </div>
+          <div class="mn-footer__right">
+            <a class="mn-footer__link" href="https://app.muonnoi.org/legal/privacy.html">Privacy</a>
+            <a class="mn-footer__link" href="https://app.muonnoi.org/legal/terms.html">Terms</a>
+            <a class="mn-footer__link" href="https://app.muonnoi.org/security/">Security</a>
           </div>
         </div>
-
-        <div style="height:12px;"></div>
-
-        <div class="mn-glass" style="padding:16px;border-radius:26px;">
-          <h2 class="mn-h2" style="font-size:18px;margin:0 0 10px;">Tạo bài viết</h2>
-          <label class="mn-label" for="mnContent">Nội dung</label>
-          <textarea id="mnContent" class="mn-input" rows="5" maxlength="800" placeholder="Viết ngắn, rõ, thật. Tối đa 800 ký tự."></textarea>
-          <div style="height:10px;"></div>
-          <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
-            <button class="mn-btn mn-btn--primary" id="mnPostNow" type="button">Đăng</button>
-            <button class="mn-btn mn-btn--ghost" id="mnClear" type="button">Xoá</button>
-            <span class="mn-muted" id="mnCount">0/800</span>
-          </div>
-        </div>
-
-        <div style="height:12px;"></div>
-
-        <div class="mn-glass" style="padding:16px;border-radius:26px;">
-          <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;">
-            <h2 class="mn-h2" style="font-size:18px;margin:0;">Dòng thời gian</h2>
-            <button class="mn-btn mn-btn--ghost" id="mnLoadMore" type="button">Xem thêm</button>
-          </div>
-          <div style="height:10px;"></div>
-          <div id="mnFeed"></div>
-          <div class="mn-muted" style="margin-top:10px;">
-            Like/Share/Save là demo UI. Khi có API sẽ chuyển thành thao tác thật.
-          </div>
-        </div>
-
-        <div style="height:12px;"></div>
-
-        <h3 class="mn-h3">Liên kết liên quan</h3>
-        <div class="mn-footlinks mn-glass" style="padding:12px;border-radius:24px;">
-          <a class="mn-footlinks__a" href="/join/">Bắt đầu</a>
-          <a class="mn-footlinks__a" href="/verify/">Xác minh</a>
-          <a class="mn-footlinks__a" href="/commit/">Cam kết</a>
-          <a class="mn-footlinks__a" href="/security/">Bảo mật</a>
-          <a class="mn-footlinks__a" href="/legal/">Pháp lý</a>
-          <a class="mn-footlinks__a" href="/complaints/">Khiếu nại</a>
-          <a class="mn-footlinks__a" href="https://muonnoi.org/" rel="noopener">muonnoi.org</a>
-        </div>
-
-      </div>
-    </section>
+      </footer>
+    </div>
   </main>
 
-  <footer class="mn-footer" role="contentinfo">
-    <div class="mn-wrap mn-footer__inner">
-      <div class="mn-footer__left">
-        <div class="mn-footer__brand">
-          <span class="mn-mark mn-mark--sm" aria-hidden="true">MN</span>
-          <div>
-            <div class="mn-footer__name">MN App</div>
-            <div class="mn-footer__tag">Feed • Social Core</div>
-          </div>
-        </div>
-        <div class="mn-muted" style="margin-top:8px;">© <span id="year"></span> app.muonnoi.org</div>
-      </div>
-
-      <div class="mn-footer__right">
-        <a class="mn-footer__link" href="/">Trang chủ</a>
-        <a class="mn-footer__link" href="/security/">Bảo mật</a>
-        <a class="mn-footer__link" href="/legal/">Pháp lý</a>
-        <a class="mn-footer__link" href="/complaints/">Khiếu nại</a>
-      </div>
-    </div>
-  </footer>
-
-  <script src="/assets/ui.js" defer></script>
-  <script>
-  (function(){
-    "use strict";
-    var ye = document.getElementById("year");
-    if (ye) ye.textContent = String(new Date().getFullYear());
-
-    var contentEl = document.getElementById("mnContent");
-    var countEl = document.getElementById("mnCount");
-    var feedEl = document.getElementById("mnFeed");
-    var posts = [];
-    var page = 0;
-
-    function esc(s){return (s||"").replace(/[&<>"']/g,function(c){return({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"})[c];});}
-    function mkId(){return "p_" + Math.random().toString(16).slice(2) + "_" + Date.now().toString(16);}
-    function timeStr(t){try{return new Date(t).toLocaleString();}catch(e){return "";}}
-
-    function toast(msg){
-      var t = document.createElement("div");
-      t.className = "mn-glass";
-      t.style.position="fixed";t.style.left="50%";t.style.bottom="18px";
-      t.style.transform="translateX(-50%)";t.style.padding="10px 12px";
-      t.style.borderRadius="999px";t.style.zIndex="9999";t.style.maxWidth="92vw";
-      t.style.textAlign="center";t.textContent=msg;
-      document.body.appendChild(t);
-      setTimeout(function(){ try{t.remove();}catch(e){} }, 1600);
-    }
-
-    function render(){
-      if (!feedEl) return;
-      if (!posts.length){
-        feedEl.innerHTML = '<div class="mn-glass" style="padding:14px;border-radius:22px;"><div class="mn-sub">Chưa có bài viết. Hãy đăng bài hoặc bấm “Sinh 9 bài demo”.</div></div>';
-        return;
-      }
-      var html = "";
-      for (var i=0;i<posts.length;i++){
-        var p = posts[i];
-        html += `
-          <article class="mn-glass" style="padding:14px;border-radius:22px;margin-bottom:10px;" data-id="${esc(p.id)}">
-            <div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start;flex-wrap:wrap;">
-              <div>
-                <div class="mn-h3" style="margin:0 0 4px;font-size:16px;">${esc(p.author)} <span class="mn-muted">@${esc(p.handle)}</span></div>
-                <div class="mn-muted" style="font-size:12px;">${esc(timeStr(p.created_at))}</div>
-              </div>
-              <span class="mn-chip mn-chip--soft">${esc(p.badge)}</span>
-            </div>
-
-            <div style="height:10px;"></div>
-            <div class="mn-sub" style="white-space:pre-wrap;line-height:1.6;">${esc(p.content)}</div>
-
-            <div style="height:12px;"></div>
-
-            <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
-              <button class="mn-btn mn-btn--ghost mnLike" type="button">♡ Thích <span class="mn-muted">(${p.likes})</span></button>
-              <button class="mn-btn mn-btn--ghost mnShare" type="button">Chia sẻ</button>
-              <button class="mn-btn mn-btn--ghost mnSave" type="button">Lưu</button>
-            </div>
-          </article>
-        `;
-      }
-      feedEl.innerHTML = html;
-
-      feedEl.querySelectorAll(".mnLike").forEach(function(btn){
-        btn.addEventListener("click", function(){
-          var art = btn.closest("article");
-          var id = art && art.getAttribute("data-id");
-          var p = posts.find(function(x){return x.id===id;});
-          if (!p) return;
-          p.likes++;
-          render();
-        });
-      });
-
-      feedEl.querySelectorAll(".mnShare").forEach(function(btn){
-        btn.addEventListener("click", function(){
-          var art = btn.closest("article");
-          var id = art && art.getAttribute("data-id");
-          var url = location.origin + "/feed/?p=" + encodeURIComponent(id);
-          try{ navigator.clipboard.writeText(url); toast("Đã copy link."); }
-          catch(e){ prompt("Copy link:", url); }
-        });
-      });
-
-      feedEl.querySelectorAll(".mnSave").forEach(function(btn){
-        btn.addEventListener("click", function(){ toast("Đã lưu (demo)."); });
-      });
-    }
-
-    function seed(n){
-      var badges=["Social-first","Privacy-first","Verified-ready","Module-first"];
-      for (var i=0;i<n;i++){
-        posts.unshift({
-          id: mkId(),
-          author: "MN User",
-          handle: "muonnoi",
-          badge: badges[(i+page)%badges.length],
-          content: "Bài viết demo để test trải nghiệm feed.\nGiai đoạn 1: nhanh, sạch, an toàn.\nKhi nối API, đây sẽ là dữ liệu thật.",
-          likes: Math.floor(Math.random()*9),
-          created_at: Date.now() - (i*3600*1000)
-        });
-      }
-      page++;
-      render();
-    }
-
-    if (contentEl && countEl){
-      contentEl.addEventListener("input", function(){
-        countEl.textContent = String(contentEl.value.length) + "/800";
-      });
-    }
-
-    document.getElementById("mnSeed")?.addEventListener("click", function(){ seed(9); toast("Đã sinh 9 bài demo."); });
-    document.getElementById("mnLoadMore")?.addEventListener("click", function(){ seed(6); toast("Đã tải thêm (demo)."); });
-    document.getElementById("mnClear")?.addEventListener("click", function(){
-      if (!contentEl) return;
-      contentEl.value=""; countEl.textContent="0/800"; toast("Đã xoá.");
-    });
-    document.getElementById("mnPostNow")?.addEventListener("click", function(){
-      if (!contentEl) return;
-      var c=(contentEl.value||"").trim();
-      if (!c){ toast("Nội dung trống."); return; }
-      posts.unshift({ id:mkId(), author:"Bạn", handle:"you", badge:"New", content:c, likes:0, created_at:Date.now() });
-      contentEl.value=""; countEl.textContent="0/800"; toast("Đã đăng (demo)."); render();
-    });
-
-    seed(6);
-  })();
-  </script>
+  <script src="/assets/ui.js?v=20260303-1" defer></script>
 </body>
 </html>
