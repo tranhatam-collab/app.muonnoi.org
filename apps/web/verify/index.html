@@ -8,12 +8,135 @@
   <meta name="robots" content="index,follow" />
 
   <title>Xác minh — Muôn Nơi</title>
-  <meta name="description" content="Xác minh Muôn Nơi. Giảm bot, tăng tin cậy theo lớp." />
+  <meta name="description" content="Xác minh nhiều lớp trên Muôn Nơi: identity, contact, proof-of-work lite, chống spam, và chuẩn minh bạch. Không tracking." />
   <link rel="canonical" href="https://app.muonnoi.org/verify/" />
 
   <link rel="icon" href="/favicon.ico" />
   <link rel="manifest" href="/manifest.json" />
   <link rel="stylesheet" href="/assets/ui.css?v=20260303-1" />
+
+  <style>
+    .mn-grid2{display:grid;grid-template-columns:1fr;gap:12px}
+    @media(min-width:980px){ .mn-grid2{grid-template-columns: 1fr 360px; align-items:start} .mn-sticky{position:sticky;top:92px} }
+
+    .mn-muted{color:rgba(255,255,255,.66)}
+    html[data-theme="light"] .mn-muted{color:rgba(0,0,0,.62)}
+
+    .mn-badge{
+      display:inline-flex;align-items:center;gap:8px;
+      border-radius:999px;padding:8px 10px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.05);
+      font-size:12px
+    }
+    html[data-theme="light"] .mn-badge{border-color:rgba(0,0,0,.12);background:rgba(0,0,0,.04)}
+
+    .mn-kpi{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+    .mn-kpiCard{border-radius:14px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);padding:12px}
+    .mn-kpiVal{font-size:16px;font-weight:900}
+    .mn-kpiLab{font-size:12px;color:rgba(255,255,255,.65);margin-top:4px}
+    html[data-theme="light"] .mn-kpiCard{border-color:rgba(0,0,0,.12);background:rgba(0,0,0,.04)}
+    html[data-theme="light"] .mn-kpiLab{color:rgba(0,0,0,.55)}
+
+    .mn-step{
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.05);
+      padding:14px;
+      display:grid;
+      gap:10px;
+    }
+    html[data-theme="light"] .mn-step{border-color:rgba(0,0,0,.12);background:rgba(0,0,0,.04)}
+
+    .mn-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+    .mn-field{display:grid;gap:6px}
+    .mn-fieldLabel{font-size:12px;color:rgba(255,255,255,.72)}
+    html[data-theme="light"] .mn-fieldLabel{color:rgba(0,0,0,.62)}
+    .mn-fieldHint{font-size:12px;color:rgba(255,255,255,.55);line-height:1.5}
+    html[data-theme="light"] .mn-fieldHint{color:rgba(0,0,0,.52)}
+
+    .mn-input, textarea{
+      width:100%;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.05);
+      color:inherit;
+      padding:12px 12px;
+      outline:none;
+    }
+    textarea{resize:vertical;min-height:96px}
+    html[data-theme="light"] .mn-input, html[data-theme="light"] textarea{
+      border-color:rgba(0,0,0,.12);
+      background:rgba(0,0,0,.04);
+    }
+
+    .mn-btn{display:inline-flex;align-items:center;gap:8px;border-radius:999px;padding:10px 14px;cursor:pointer;text-decoration:none;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);color:inherit}
+    .mn-btn:hover{background:rgba(255,255,255,.08)}
+    .mn-btn--primary{border-color:rgba(120,255,220,.22);background:linear-gradient(135deg, rgba(120,255,220,.18), rgba(120,200,255,.14))}
+    .mn-btn--ghost{background:transparent}
+    html[data-theme="light"] .mn-btn{border-color:rgba(0,0,0,.12);background:rgba(0,0,0,.04)}
+    html[data-theme="light"] .mn-btn--ghost{background:transparent}
+    html[data-theme="light"] .mn-btn--primary{border-color:rgba(0,180,140,.20);background:linear-gradient(135deg, rgba(0,180,140,.10), rgba(0,120,255,.08))}
+
+    .mn-pillSmall{
+      font-size:12px;
+      border-radius:999px;
+      padding:6px 10px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.05);
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      user-select:none;
+    }
+    html[data-theme="light"] .mn-pillSmall{border-color:rgba(0,0,0,.12);background:rgba(0,0,0,.04)}
+
+    .mn-status{
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.05);
+      padding:14px;
+      display:grid;
+      gap:10px;
+    }
+    html[data-theme="light"] .mn-status{border-color:rgba(0,0,0,.12);background:rgba(0,0,0,.04)}
+
+    .mn-statusRow{display:flex;justify-content:space-between;gap:12px;align-items:center}
+    .mn-statusRow b{font-size:13px}
+    .mn-statusRow span{font-size:12px;color:rgba(255,255,255,.66)}
+    html[data-theme="light"] .mn-statusRow span{color:rgba(0,0,0,.56)}
+
+    .mn-note{
+      border-radius:14px;
+      border:1px solid rgba(120,255,220,.22);
+      background:linear-gradient(135deg, rgba(120,255,220,.12), rgba(120,200,255,.10));
+      padding:12px;
+      display:none;
+    }
+    .mn-codeInline{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size:12px;
+      padding:4px 8px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.05);
+    }
+    html[data-theme="light"] .mn-codeInline{border-color:rgba(0,0,0,.12);background:rgba(0,0,0,.04)}
+
+    .mn-checks{display:grid;gap:8px}
+    .mn-check{
+      display:flex;gap:10px;align-items:flex-start;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.05);
+      padding:12px;
+    }
+    .mn-check input{margin-top:2px}
+    .mn-check b{font-size:13px}
+    .mn-check p{margin:4px 0 0 0;font-size:12px;color:rgba(255,255,255,.66);line-height:1.45}
+    html[data-theme="light"] .mn-check{border-color:rgba(0,0,0,.12);background:rgba(0,0,0,.04)}
+    html[data-theme="light"] .mn-check p{color:rgba(0,0,0,.56)}
+  </style>
 </head>
 
 <body class="mn-body">
@@ -30,26 +153,26 @@
         <span class="mn-mark" aria-hidden="true">MN</span>
         <span class="mn-brand__stack">
           <span class="mn-brand__title">Muôn Nơi</span>
-          <span class="mn-brand__sub">Social Operating Space. Không feed. Không tracking.</span>
+          <span class="mn-brand__sub">Xác minh nhiều lớp. Chống spam. Không tracking.</span>
         </span>
       </a>
 
       <nav class="mn-nav" aria-label="Điều hướng chính">
         <a class="mn-pill" href="https://app.muonnoi.org/">Trang chủ</a>
         <a class="mn-pill" href="https://app.muonnoi.org/feed/">Bảng tin</a>
+        <a class="mn-pill" href="https://app.muonnoi.org/create/">Tạo</a>
         <a class="mn-pill is-active" href="https://app.muonnoi.org/verify/">Xác minh</a>
         <a class="mn-pill" href="https://app.muonnoi.org/commit/">Cam kết</a>
         <a class="mn-pill" href="https://app.muonnoi.org/complaints/">Khiếu nại</a>
         <a class="mn-pill" href="https://app.muonnoi.org/admin/">Admin</a>
         <a class="mn-pill" href="https://app.muonnoi.org/legal/privacy.html">Bảo mật</a>
-        <a class="mn-pill" href="https://app.muonnoi.org/security/">Hướng dẫn</a>
       </nav>
 
       <div class="mn-top__actions">
         <button class="mn-btn mn-btn--ghost" type="button" id="themeBtn" aria-label="Đổi theme">◐</button>
         <button class="mn-btn mn-btn--ghost" type="button" id="langBtn" aria-label="Đổi ngôn ngữ">VI</button>
         <a class="mn-btn mn-btn--ghost" href="https://app.muonnoi.org/join/">Tài khoản</a>
-        <a class="mn-btn mn-btn--primary" href="https://app.muonnoi.org/join/">Mở hệ</a>
+        <a class="mn-btn mn-btn--primary" href="https://app.muonnoi.org/feed/">Xem bảng tin</a>
 
         <button class="mn-burger" type="button" id="mnBurger" aria-label="Mở menu">
           <span></span><span></span><span></span>
@@ -58,40 +181,214 @@
     </div>
 
     <div class="mn-mobile" id="mnMobile" hidden>
-      <a class="mn-mobile__item mn-mobile__item--primary" href="https://app.muonnoi.org/join/"><span>Vào ứng dụng</span><span>→</span></a>
+      <a class="mn-mobile__item mn-mobile__item--primary" href="https://app.muonnoi.org/feed/"><span>Bảng tin</span><span>→</span></a>
       <a class="mn-mobile__item" href="https://app.muonnoi.org/">Trang chủ</a>
-      <a class="mn-mobile__item" href="https://app.muonnoi.org/feed/">Bảng tin</a>
+      <a class="mn-mobile__item" href="https://app.muonnoi.org/create/">Tạo</a>
       <a class="mn-mobile__item" href="https://app.muonnoi.org/verify/">Xác minh</a>
       <a class="mn-mobile__item" href="https://app.muonnoi.org/commit/">Cam kết</a>
       <a class="mn-mobile__item" href="https://app.muonnoi.org/complaints/">Khiếu nại</a>
       <a class="mn-mobile__item" href="https://app.muonnoi.org/admin/">Admin</a>
       <a class="mn-mobile__item" href="https://app.muonnoi.org/legal/privacy.html">Bảo mật</a>
-      <a class="mn-mobile__item" href="https://app.muonnoi.org/security/">Hướng dẫn</a>
     </div>
   </header>
 
   <main class="mn-main" role="main">
     <div class="mn-wrap">
-      <section class="mn-section mn-glass" style="border-radius:28px; padding:18px;">
-        <h1 class="mn-h1" style="font-size:38px;">Xác Minh</h1>
-        <p class="mn-sub" style="margin-top:10px; max-width:980px;">
-          Xác minh theo lớp để giảm bot, giảm giả mạo, tăng tin cậy. Giai đoạn đầu là khung UI để khoá trải nghiệm,
-          sau đó nối Worker API để cấp level.
-        </p>
 
-        <div class="mn-grid" style="gap:12px; margin-top:14px; grid-template-columns:repeat(12,1fr);">
-          <div class="mn-glass" style="grid-column:span 12; border-radius:18px; padding:14px;">
-            <div class="mn-h2">Level 0</div>
-            <div class="mn-sub" style="margin-top:6px;">Khách. Xem công khai. Không nhắn tin hàng loạt.</div>
+      <section class="mn-section mn-glass" style="border-radius:28px; padding:18px;">
+        <div class="mn-glass" style="border-radius:18px; padding:14px;">
+          <div class="mn-row" style="justify-content:space-between;">
+            <div>
+              <div class="mn-h1" style="font-size:34px; margin:0;">Xác minh</div>
+              <div class="mn-sub" style="margin-top:8px;">
+                Xác minh không phải để “khoe”. Xác minh để giảm spam, tăng độ tin cậy, và mở quyền theo lớp.
+              </div>
+            </div>
+            <div class="mn-row">
+              <span class="mn-badge"><span aria-hidden="true">🛡️</span> Security-first</span>
+              <span class="mn-badge"><span aria-hidden="true">🧩</span> Multi-layer</span>
+              <span class="mn-codeInline">/verify</span>
+            </div>
           </div>
-          <div class="mn-glass" style="grid-column:span 12; border-radius:18px; padding:14px;">
-            <div class="mn-h2">Level 1</div>
-            <div class="mn-sub" style="margin-top:6px;">Email xác minh. Chống spam cơ bản. Rate-limit chặt.</div>
+        </div>
+
+        <div style="height:12px;"></div>
+
+        <div class="mn-grid2">
+          <!-- LEFT -->
+          <div>
+            <!-- Step 0: Enter ID/Handle -->
+            <div class="mn-step">
+              <div class="mn-row" style="justify-content:space-between;">
+                <div>
+                  <div class="mn-h2">Kiểm tra nhanh</div>
+                  <div class="mn-sub" style="margin-top:6px;">Nhập handle hoặc Verify ID (demo). Stage 2 sẽ gọi Worker để xác thực.</div>
+                </div>
+                <span class="mn-pillSmall">Không tracking</span>
+              </div>
+
+              <div class="mn-row">
+                <div style="flex:1; min-width:240px" class="mn-field">
+                  <div class="mn-fieldLabel">Handle / Verify ID</div>
+                  <input class="mn-input" id="who" type="text" placeholder="vd: tran-ha-tam hoặc mn_..." autocomplete="off" />
+                  <div class="mn-fieldHint">Gợi ý: hồ sơ dùng <span class="mn-codeInline">/u/:handle</span>. Nội dung dùng <span class="mn-codeInline">/p/:id</span>...</div>
+                </div>
+                <div class="mn-row" style="margin-top:18px;">
+                  <button class="mn-btn mn-btn--primary" type="button" id="btnCheck">Kiểm tra</button>
+                  <button class="mn-btn mn-btn--ghost" type="button" id="btnGen">Tạo ID demo</button>
+                </div>
+              </div>
+
+              <div class="mn-note" id="note">
+                <div class="mn-h2" style="font-size:16px;margin:0;">Kết quả demo</div>
+                <div class="mn-sub" style="margin-top:6px;" id="noteText">—</div>
+              </div>
+            </div>
+
+            <div style="height:12px;"></div>
+
+            <!-- Step 1: Verification checklist -->
+            <div class="mn-step">
+              <div class="mn-row" style="justify-content:space-between;">
+                <div>
+                  <div class="mn-h2">Các lớp xác minh</div>
+                  <div class="mn-sub" style="margin-top:6px;">Chọn theo nhu cầu. Không ép buộc. Mở quyền theo mức.</div>
+                </div>
+                <span class="mn-pillSmall">Stage 1 UI</span>
+              </div>
+
+              <div class="mn-checks" id="checks">
+                <label class="mn-check">
+                  <input type="checkbox" data-score="10" />
+                  <div>
+                    <b>Email xác thực</b>
+                    <p>Giảm bot. Stage 2: magic link, domain reputation, rate-limit.</p>
+                  </div>
+                </label>
+
+                <label class="mn-check">
+                  <input type="checkbox" data-score="15" />
+                  <div>
+                    <b>Số điện thoại (tùy chọn)</b>
+                    <p>Chỉ dùng khi cần. Stage 2: bảo vệ riêng tư, không hiển thị công khai.</p>
+                  </div>
+                </label>
+
+                <label class="mn-check">
+                  <input type="checkbox" data-score="20" />
+                  <div>
+                    <b>Proof-of-Work lite</b>
+                    <p>Chống spam bằng “công” nhỏ. Stage 2: challenge token + time window.</p>
+                  </div>
+                </label>
+
+                <label class="mn-check">
+                  <input type="checkbox" data-score="25" />
+                  <div>
+                    <b>Giấy tờ / doanh nghiệp (nâng cao)</b>
+                    <p>Dành cho shop, dịch vụ, tổ chức. Stage 2: duyệt admin, audit log.</p>
+                  </div>
+                </label>
+
+                <label class="mn-check">
+                  <input type="checkbox" data-score="30" />
+                  <div>
+                    <b>Proof of contribution</b>
+                    <p>Điểm tin cậy từ đóng góp thật. Stage 2: receipts, disputes, reputation graph.</p>
+                  </div>
+                </label>
+              </div>
+
+              <div class="mn-row" style="margin-top:2px;">
+                <button class="mn-btn mn-btn--primary" type="button" id="btnCalc">Tính cấp độ</button>
+                <button class="mn-btn mn-btn--ghost" type="button" id="btnReset">Reset</button>
+                <span class="mn-muted" id="levelHint" style="margin-left:auto;">Chưa tính</span>
+              </div>
+            </div>
+
+            <div style="height:12px;"></div>
+
+            <!-- Step 2: Status card -->
+            <div class="mn-status" id="status">
+              <div class="mn-row" style="justify-content:space-between;">
+                <div>
+                  <div class="mn-h2">Trạng thái xác minh</div>
+                  <div class="mn-sub" style="margin-top:6px;">Demo hiển thị. Stage 2 sẽ lấy dữ liệu từ Worker + D1.</div>
+                </div>
+                <span class="mn-pillSmall" id="lvlPill">LEVEL 0</span>
+              </div>
+
+              <div class="mn-statusRow">
+                <b>Điểm tin cậy (demo)</b>
+                <span id="scoreText">0 / 100</span>
+              </div>
+              <div class="mn-statusRow">
+                <b>Quyền mở theo lớp</b>
+                <span id="rightsText">Chưa mở</span>
+              </div>
+              <div class="mn-statusRow">
+                <b>Chống spam</b>
+                <span id="antiText">Cơ bản</span>
+              </div>
+
+              <div class="mn-row" style="margin-top:6px;">
+                <a class="mn-btn mn-btn--ghost" href="https://app.muonnoi.org/complaints/">Báo cáo/Khiếu nại</a>
+                <a class="mn-btn mn-btn--primary" href="https://app.muonnoi.org/commit/">Tạo cam kết</a>
+              </div>
+            </div>
           </div>
-          <div class="mn-glass" style="grid-column:span 12; border-radius:18px; padding:14px;">
-            <div class="mn-h2">Level 2+</div>
-            <div class="mn-sub" style="margin-top:6px;">Tăng quyền đăng bài, bán hàng, nhắn tin, gọi. Càng thật càng mở.</div>
-          </div>
+
+          <!-- RIGHT -->
+          <aside class="mn-sticky">
+            <div class="mn-glass" style="border-radius:18px; padding:14px;">
+              <div class="mn-h2">Mục tiêu của xác minh</div>
+              <div class="mn-sub" style="margin-top:6px;">Không phải để “lấy dữ liệu”. Mục tiêu là giảm rác, tăng tin cậy.</div>
+
+              <div style="height:10px;"></div>
+              <div class="mn-kpi">
+                <div class="mn-kpiCard">
+                  <div class="mn-kpiVal">Giảm bot</div>
+                  <div class="mn-kpiLab">rate-limit + verify</div>
+                </div>
+                <div class="mn-kpiCard">
+                  <div class="mn-kpiVal">Giảm scam</div>
+                  <div class="mn-kpiLab">audit + disputes</div>
+                </div>
+                <div class="mn-kpiCard">
+                  <div class="mn-kpiVal">Tăng trust</div>
+                  <div class="mn-kpiLab">proof of value</div>
+                </div>
+                <div class="mn-kpiCard">
+                  <div class="mn-kpiVal">Mở quyền</div>
+                  <div class="mn-kpiLab">level-based access</div>
+                </div>
+              </div>
+
+              <div class="mn-row" style="margin-top:12px;">
+                <a class="mn-btn mn-btn--ghost" href="https://app.muonnoi.org/security/">Security</a>
+                <a class="mn-btn mn-btn--primary" href="https://docs.muonnoi.org/" rel="noopener">Docs</a>
+              </div>
+            </div>
+
+            <div style="height:12px;"></div>
+
+            <div class="mn-glass" style="border-radius:18px; padding:14px;">
+              <div class="mn-h2">Cấp độ (gợi ý)</div>
+              <div class="mn-sub" style="margin-top:6px;">Stage 2 có thể tinh chỉnh theo lộ trình.</div>
+
+              <div style="height:10px;"></div>
+              <div class="mn-statusRow"><b>Level 0</b><span>Đọc / xem</span></div>
+              <div class="mn-statusRow"><b>Level 1</b><span>Đăng nhẹ (rate-limit)</span></div>
+              <div class="mn-statusRow"><b>Level 2</b><span>Bán/hợp tác cơ bản</span></div>
+              <div class="mn-statusRow"><b>Level 3</b><span>Shop/Pro, ưu tiên duyệt</span></div>
+              <div class="mn-statusRow"><b>Level 4</b><span>Org / Verified Pro</span></div>
+
+              <div style="height:10px;"></div>
+              <div class="mn-muted" style="font-size:12px;line-height:1.45;">
+                Gợi ý: Khiếu nại hợp lệ sẽ trừ điểm, audit log ghi lại, và có cơ chế kháng nghị.
+              </div>
+            </div>
+          </aside>
         </div>
       </section>
 
@@ -108,12 +405,41 @@
             <a class="mn-footer__link" href="https://app.muonnoi.org/legal/privacy.html">Privacy</a>
             <a class="mn-footer__link" href="https://app.muonnoi.org/legal/terms.html">Terms</a>
             <a class="mn-footer__link" href="https://app.muonnoi.org/security/">Security</a>
+            <a class="mn-footer__link" href="https://app.muonnoi.org/complaints/">Complaints</a>
           </div>
         </div>
       </footer>
+
     </div>
   </main>
 
   <script src="/assets/ui.js?v=20260303-1" defer></script>
-</body>
-</html>
+
+  <script>
+    (function(){
+      "use strict";
+      const $ = (s, el=document)=> el.querySelector(s);
+      const $$ = (s, el=document)=> Array.from(el.querySelectorAll(s));
+
+function chainId(prefix="mn"){
+  const t = Date.now();
+  const r = Math.floor(Math.random()*1e9);
+  const raw = prefix+"."+t+"."+r;
+
+  // FNV-1a 32-bit
+  let h = 2166136261;
+  for(let i=0;i<raw.length;i++){
+    h ^= raw.charCodeAt(i);
+    h = Math.imul(h, 16777619);
+  }
+
+  // base36 helpers
+  const base36u32 = (n) => Math.max(0, (n >>> 0)).toString(36);
+  const pad6 = (s) => String(s).padStart(6,"0").slice(0,6);
+
+  // checksum (6 chars)
+  const c = pad6(base36u32(h >>> 0));
+
+  // chain-like id: mn_<time>_<rand>_<chk>
+  return `${prefix}_${base36u32(t)}_${base36u32(r)}_${c}`;
+}
