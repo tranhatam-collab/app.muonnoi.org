@@ -1,484 +1,154 @@
-/* ==========================================================
-   MUON NOI — UI SYSTEM (FINAL STABLE BUILD)
-   Works with ui.js (no hash routing, overlay safe)
-   Mobile-first • No layout break • No stuck modal
-========================================================== */
+/* apps/web/assets/ui.js
+   MUON NOI — UI Controller (No hash, no router)
+   - Mobile drawer stable (no stuck)
+   - Theme dark/light saved
+   - Language VI/EN saved (UI label only for now)
+   - No tracking, no libs
+*/
 
-:root{
-  --bg0:#070a0b;
-  --bg1:#0b0f0c;
-  --card:rgba(255,255,255,.06);
-  --card2:rgba(255,255,255,.08);
-  --stroke:rgba(255,255,255,.10);
-  --stroke2:rgba(255,255,255,.14);
-  --text:rgba(255,255,255,.92);
-  --muted:rgba(255,255,255,.62);
-  --muted2:rgba(255,255,255,.45);
-  --shadow:0 18px 70px rgba(0,0,0,.55);
-  --shadow2:0 12px 40px rgba(0,0,0,.40);
-  --r12:12px;
-  --r16:16px;
-  --r20:20px;
-  --r24:24px;
-  --topbarH:64px;
-  --tabbarH:64px;
-  --safeT:env(safe-area-inset-top,0px);
-  --safeB:env(safe-area-inset-bottom,0px);
-}
+(() => {
+  "use strict";
 
-/* ==========================================================
-   RESET
-========================================================== */
+  const $ = (s, el = document) => el.querySelector(s);
 
-*{box-sizing:border-box}
-html,body{height:100%}
-body{
-  margin:0;
-  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
-  background:
-    radial-gradient(900px 500px at 20% -10%, rgba(120,255,220,.10), transparent 55%),
-    radial-gradient(900px 500px at 90% 10%, rgba(120,200,255,.10), transparent 60%),
-    linear-gradient(180deg,var(--bg0),var(--bg1));
-  color:var(--text);
-  overflow-x:hidden;
-}
+  function safeSetAttr(el, k, v){ if (el) el.setAttribute(k, v); }
+  function safeText(el, v){ if (el) el.textContent = String(v ?? ""); }
 
-/* ==========================================================
-   APP WRAPPER
-========================================================== */
+  const KEY_THEME = "mn_theme";
+  const KEY_LANG  = "mn_lang";
 
-.app{
-  min-height:100%;
-  padding-top:calc(var(--topbarH) + var(--safeT));
-  padding-bottom:calc(var(--tabbarH) + var(--safeB));
-  transition:background .2s ease;
-}
+  // Elements expected from apps/web/index.html
+  const burger = $("#mnBurger");
+  const mobile = $("#mnMobile");
+  const themeBtn = $("#themeBtn");
+  const langBtn = $("#langBtn");
 
-/* ==========================================================
-   LIGHT MODE
-========================================================== */
-
-.app[data-theme="light"]{
-  --bg0:#f7fafc;
-  --bg1:#eef2f6;
-  --card:rgba(0,0,0,.04);
-  --card2:rgba(0,0,0,.06);
-  --stroke:rgba(0,0,0,.10);
-  --stroke2:rgba(0,0,0,.16);
-  --text:rgba(0,0,0,.88);
-  --muted:rgba(0,0,0,.60);
-  --muted2:rgba(0,0,0,.44);
-  background:
-    radial-gradient(900px 500px at 20% -10%, rgba(0,180,140,.10), transparent 55%),
-    radial-gradient(900px 500px at 90% 10%, rgba(0,120,255,.08), transparent 60%),
-    linear-gradient(180deg,var(--bg0),var(--bg1));
-}
-
-/* ==========================================================
-   TOPBAR
-========================================================== */
-
-.topbar{
-  position:fixed;
-  top:0;
-  left:0;
-  right:0;
-  height:calc(var(--topbarH) + var(--safeT));
-  padding-top:var(--safeT);
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding-left:12px;
-  padding-right:12px;
-  backdrop-filter:blur(18px);
-  background:rgba(0,0,0,.55);
-  border-bottom:1px solid var(--stroke);
-  z-index:1000;
-}
-
-.app[data-theme="light"] .topbar{
-  background:rgba(255,255,255,.75);
-}
-
-/* ==========================================================
-   BUTTONS
-========================================================== */
-
-.btn{
-  border:1px solid var(--stroke);
-  background:var(--card);
-  color:var(--text);
-  padding:10px 14px;
-  border-radius:999px;
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  cursor:pointer;
-  transition:.15s ease;
-  font-size:14px;
-}
-
-.btn:hover{
-  background:var(--card2);
-  border-color:var(--stroke2);
-}
-
-.btn--primary{
-  background:linear-gradient(135deg, rgba(120,255,220,.25), rgba(120,200,255,.20));
-  border-color:rgba(120,255,220,.30);
-}
-
-.btn--ghost{
-  background:transparent;
-}
-
-.w100{width:100%}
-
-/* ==========================================================
-   ICON BUTTON
-========================================================== */
-
-.iconBtn{
-  width:42px;
-  height:42px;
-  border-radius:999px;
-  border:1px solid var(--stroke);
-  background:var(--card);
-  display:grid;
-  place-items:center;
-  cursor:pointer;
-  transition:.15s ease;
-}
-
-.iconBtn:hover{
-  background:var(--card2);
-  border-color:var(--stroke2);
-}
-
-/* ==========================================================
-   HERO
-========================================================== */
-
-.hero{
-  display:grid;
-  gap:16px;
-  grid-template-columns:1fr;
-  padding:24px;
-  border-radius:var(--r24);
-  background:var(--card);
-  border:1px solid var(--stroke);
-  box-shadow:var(--shadow2);
-}
-
-.hero h1{
-  margin:0;
-  font-size:42px;
-  font-weight:900;
-}
-
-.lead{
-  color:var(--muted);
-  margin-top:8px;
-  line-height:1.6;
-}
-
-.hero__actions{
-  margin-top:14px;
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-}
-
-.heroSample{
-  margin-top:16px;
-  padding:14px;
-  border-radius:var(--r16);
-  border:1px solid var(--stroke);
-  background:var(--card);
-}
-
-.code{
-  display:block;
-  padding:10px;
-  background:rgba(0,0,0,.35);
-  border-radius:12px;
-  overflow:auto;
-  font-size:13px;
-}
-
-/* ==========================================================
-   PANELS
-========================================================== */
-
-.panel{
-  border-radius:var(--r20);
-  border:1px solid var(--stroke);
-  background:var(--card);
-  box-shadow:var(--shadow2);
-  overflow:hidden;
-}
-
-.panel__head{
-  padding:14px;
-  border-bottom:1px solid var(--stroke);
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-}
-
-.panel__block{
-  padding:14px;
-}
-
-.grid3{
-  display:grid;
-  gap:14px;
-  margin-top:20px;
-  grid-template-columns:1fr;
-}
-
-/* ==========================================================
-   DRAWERS
-========================================================== */
-
-.rail,
-.drawer{
-  position:fixed;
-  top:calc(var(--topbarH) + var(--safeT));
-  height:calc(100% - (var(--topbarH) + var(--safeT)));
-  backdrop-filter:blur(18px);
-  background:rgba(0,0,0,.65);
-  transition:transform .18s ease;
-  z-index:2100;
-}
-
-.app[data-theme="light"] .rail,
-.app[data-theme="light"] .drawer{
-  background:rgba(255,255,255,.85);
-}
-
-.rail{
-  left:0;
-  width:min(320px,90vw);
-  transform:translateX(-102%);
-}
-
-.drawer{
-  right:0;
-  width:min(380px,92vw);
-  transform:translateX(102%);
-}
-
-.rail.is-open,
-.drawer.is-open{
-  transform:translateX(0);
-}
-
-/* ==========================================================
-   MODAL
-========================================================== */
-
-.modal{
-  position:fixed;
-  inset:0;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-  z-index:3200;
-}
-
-.modal[hidden]{display:none}
-.modal:not([hidden]){display:flex}
-
-.modal__card{
-  width:min(720px,96vw);
-  border-radius:var(--r24);
-  border:1px solid var(--stroke);
-  background:var(--card);
-  box-shadow:var(--shadow);
-}
-
-/* ==========================================================
-   OVERLAY (NO STUCK ISSUE)
-========================================================== */
-
-.overlay{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.55);
-  backdrop-filter:blur(4px);
-  z-index:2000;
-}
-
-/* ==========================================================
-   TABBAR
-========================================================== */
-
-.tabbar{
-  position:fixed;
-  bottom:0;
-  left:0;
-  right:0;
-  height:calc(var(--tabbarH) + var(--safeB));
-  padding-bottom:var(--safeB);
-  backdrop-filter:blur(18px);
-  background:rgba(0,0,0,.55);
-  border-top:1px solid var(--stroke);
-  display:flex;
-  justify-content:space-around;
-  align-items:center;
-  z-index:1000;
-}
-
-.tab{
-  flex:1;
-  text-align:center;
-  font-size:12px;
-  color:var(--muted);
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-}
-
-.tab.is-active{
-  color:var(--text);
-}
-
-.tabPlus{
-  width:54px;
-  height:54px;
-  border-radius:999px;
-  display:grid;
-  place-items:center;
-  background:linear-gradient(135deg, rgba(120,255,220,.3), rgba(120,200,255,.25));
-  box-shadow:0 10px 28px rgba(0,0,0,.5);
-  font-size:24px;
-  color:white;
-}
-
-/* ==========================================================
-   RESPONSIVE
-========================================================== */
-
-@media(min-width:820px){
-  .hero{grid-template-columns:1.2fr .8fr}
-  .grid3{grid-template-columns:repeat(3,1fr)}
-  .tabbar{display:none}
-}
-/* ==========================================================
-   Web3 Glow + Glass Depth + 60fps Optimizations (ADD-ON)
-========================================================== */
-
-/* Performance helpers */
-.hero, .panel, .heroCard{
-  contain: layout paint style;
-}
-
-@supports (content-visibility: auto){
-  .panel{ content-visibility:auto; contain-intrinsic-size: 1px 480px; }
-}
-
-/* Subtle animated glow (transform-only for 60fps) */
-.glowWrap{
-  position:relative;
-  isolation:isolate;
-}
-.glowWrap::before,
-.glowWrap::after{
-  content:"";
-  position:absolute;
-  inset:-40px;
-  z-index:-1;
-  border-radius:inherit;
-  pointer-events:none;
-  opacity:.28;
-  filter:blur(26px);
-  transform:translate3d(0,0,0);
-  will-change:transform, opacity;
-}
-
-.glowWrap::before{
-  background:
-    radial-gradient(520px 240px at 20% 30%, rgba(120,255,220,.35), transparent 60%),
-    radial-gradient(520px 240px at 80% 30%, rgba(120,200,255,.32), transparent 60%),
-    radial-gradient(520px 240px at 40% 80%, rgba(160,120,255,.26), transparent 65%);
-  animation:mnGlowA 10s ease-in-out infinite;
-}
-
-.glowWrap::after{
-  background:
-    radial-gradient(520px 240px at 70% 70%, rgba(120,255,220,.22), transparent 60%),
-    radial-gradient(520px 240px at 30% 70%, rgba(120,200,255,.18), transparent 60%);
-  animation:mnGlowB 14s ease-in-out infinite;
-}
-
-@keyframes mnGlowA{
-  0%{ transform:translate3d(-10px,-8px,0) scale(1); opacity:.24 }
-  50%{ transform:translate3d(12px,10px,0) scale(1.02); opacity:.32 }
-  100%{ transform:translate3d(-10px,-8px,0) scale(1); opacity:.24 }
-}
-@keyframes mnGlowB{
-  0%{ transform:translate3d(14px,-6px,0) scale(1.01); opacity:.18 }
-  50%{ transform:translate3d(-12px,10px,0) scale(1.03); opacity:.26 }
-  100%{ transform:translate3d(14px,-6px,0) scale(1.01); opacity:.18 }
-}
-
-/* Reduce motion */
-@media (prefers-reduced-motion: reduce){
-  .glowWrap::before,
-  .glowWrap::after{ animation:none; }
-}
-
-/* Glass depth (3 layers) */
-.glass1{
-  background:rgba(255,255,255,.04);
-  border:1px solid rgba(255,255,255,.10);
-  box-shadow:var(--shadow2);
-}
-.glass2{
-  background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
-  border:1px solid rgba(255,255,255,.12);
-  box-shadow:0 16px 60px rgba(0,0,0,.45);
-}
-.glass3{
-  background:
-    radial-gradient(900px 420px at 20% 0%, rgba(120,255,220,.08), transparent 55%),
-    radial-gradient(800px 420px at 90% 20%, rgba(120,200,255,.09), transparent 60%),
-    rgba(0,0,0,.18);
-  border:1px solid rgba(255,255,255,.14);
-  box-shadow:0 20px 70px rgba(0,0,0,.55);
-}
-
-/* Backdrop-filter safe */
-@supports (backdrop-filter: blur(1px)){
-  .glass1, .glass2, .glass3{
-    backdrop-filter: blur(16px);
+  function getStored(k){
+    try { return localStorage.getItem(k); } catch { return null; }
   }
-}
+  function setStored(k,v){
+    try { localStorage.setItem(k, v); } catch {}
+  }
 
-/* If device is weak, reduce blur cost */
-@media (max-width: 420px){
-  .glass1, .glass2, .glass3{ backdrop-filter: blur(12px); }
-  .glowWrap::before, .glowWrap::after{ filter:blur(22px); }
-}
+  function detectTheme(){
+    const saved = getStored(KEY_THEME);
+    if (saved === "dark" || saved === "light") return saved;
+    // Default dark (your system tone)
+    return "dark";
+  }
 
-/* Glow emphasis on hero */
-.hero{
-  position:relative;
-}
-.hero.glowWrap{
-  border-color:rgba(120,255,220,.18);
-}
-.hero.glowWrap:hover::before{
-  opacity:.36;
-}
+  function applyTheme(t){
+    const theme = (t === "light") ? "light" : "dark";
+    safeSetAttr(document.documentElement, "data-theme", theme);
+    setStored(KEY_THEME, theme);
+    // Button icon (simple)
+    safeText(themeBtn, theme === "dark" ? "◐" : "◑");
+    // Meta theme-color
+    const m = document.querySelector('meta[name="theme-color"]');
+    if (m) m.setAttribute("content", theme === "dark" ? "#0b0f0c" : "#eef2f6");
+  }
 
-/* Micro-interactions without heavy paint */
-.btn, .iconBtn, .navItem, .rowBtn, .cmdItem{
-  will-change:transform;
-}
-.btn:active, .iconBtn:active{
-  transform:translate3d(0,1px,0);
-}
+  function toggleTheme(){
+    const cur = document.documentElement.getAttribute("data-theme") || "dark";
+    applyTheme(cur === "dark" ? "light" : "dark");
+  }
+
+  function detectLang(){
+    const saved = getStored(KEY_LANG);
+    if (saved === "vi" || saved === "en") return saved;
+    const nav = (navigator.language || "en").toLowerCase();
+    return nav.startsWith("vi") ? "vi" : "en";
+  }
+
+  function applyLang(l){
+    const lang = (l === "vi") ? "vi" : "en";
+    setStored(KEY_LANG, lang);
+    document.documentElement.lang = lang;
+    // UI label only (strings are currently VI in HTML; you can i18n later)
+    safeText(langBtn, lang.toUpperCase());
+  }
+
+  // Overlay: one node to prevent “kẹt”
+  let overlay = null;
+  function ensureOverlay(){
+    if (overlay && overlay.isConnected) return overlay;
+    overlay = document.createElement("div");
+    overlay.className = "overlay";
+    overlay.style.zIndex = "1500";
+    overlay.style.display = "none";
+    overlay.addEventListener("click", closeMobile);
+    document.body.appendChild(overlay);
+    return overlay;
+  }
+
+  function openMobile(){
+    if (!mobile) return;
+    ensureOverlay().style.display = "block";
+    mobile.hidden = false;
+    document.documentElement.style.overflow = "hidden";
+  }
+
+  function closeMobile(){
+    if (!mobile) return;
+    if (overlay) overlay.style.display = "none";
+    mobile.hidden = true;
+    document.documentElement.style.overflow = "";
+  }
+
+  function toggleMobile(){
+    if (!mobile) return;
+    if (mobile.hidden) openMobile();
+    else closeMobile();
+  }
+
+  // Toast (optional)
+  function toast(msg){
+    const t = document.createElement("div");
+    t.className = "mn-toast";
+    t.textContent = String(msg || "");
+    document.body.appendChild(t);
+    requestAnimationFrame(() => t.classList.add("is-on"));
+    setTimeout(() => t.classList.remove("is-on"), 2400);
+    setTimeout(() => { try{t.remove();}catch{} }, 3000);
+  }
+
+  function bind(){
+    if (burger) burger.addEventListener("click", toggleMobile);
+    if (themeBtn) themeBtn.addEventListener("click", toggleTheme);
+    if (langBtn) langBtn.addEventListener("click", () => {
+      const cur = (getStored(KEY_LANG) || detectLang());
+      applyLang(cur === "vi" ? "en" : "vi");
+      toast((cur === "vi") ? "Switched to English" : "Đã chuyển sang Tiếng Việt");
+    });
+
+    // ESC closes drawer
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeMobile();
+    });
+
+    // Close mobile drawer on navigation click
+    document.addEventListener("click", (e) => {
+      const a = e.target && e.target.closest ? e.target.closest("a") : null;
+      if (!a) return;
+      // internal link => close
+      const href = a.getAttribute("href") || "";
+      if (href.startsWith("/")) closeMobile();
+    }, { capture:true });
+
+    // If user hits /#something from old links, normalize:
+    if (location.hash && location.hash !== "#"){
+      // Do NOT keep hash routing (your rule)
+      try { history.replaceState({}, "", location.pathname + location.search); } catch {}
+      try { location.hash = ""; } catch {}
+    }
+  }
+
+  // Init
+  (function init(){
+    applyTheme(detectTheme());
+    applyLang(detectLang());
+    if (mobile) mobile.hidden = true;
+    bind();
+  })();
+
+})();
