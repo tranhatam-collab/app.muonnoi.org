@@ -8,12 +8,52 @@
   <meta name="robots" content="index,follow" />
 
   <title>Bảng tin — Muôn Nơi</title>
-  <meta name="description" content="Bảng tin Muôn Nơi. Sạch, nhanh, ưu tiên người thật. Không mồi nghiện." />
+  <meta name="description" content="Bảng tin Muôn Nơi: chia sẻ, làm việc, mua bán, học tập. UI sạch, link sạch, privacy-first." />
   <link rel="canonical" href="https://app.muonnoi.org/feed/" />
 
   <link rel="icon" href="/favicon.ico" />
   <link rel="manifest" href="/manifest.json" />
   <link rel="stylesheet" href="/assets/ui.css?v=20260303-1" />
+
+  <style>
+    /* Feed layout helpers (kept minimal, relies on ui.css) */
+    .mn-feedGrid{display:grid;grid-template-columns:1fr;gap:12px}
+    @media (min-width:980px){
+      .mn-feedGrid{grid-template-columns: 1fr 360px; align-items:start}
+      .mn-sticky{position:sticky; top:92px}
+    }
+    .mn-seg{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+    .mn-segBtn{border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.05); color:inherit; padding:10px 12px; border-radius:999px; cursor:pointer}
+    .mn-segBtn.is-active{background:linear-gradient(135deg, rgba(120,255,220,.20), rgba(120,200,255,.16)); border-color:rgba(120,255,220,.22)}
+    .mn-inputRow{display:grid; gap:10px}
+    .mn-inline{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
+    .mn-ava{width:40px;height:40px;border-radius:999px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.06);display:grid;place-items:center;font-weight:800}
+    .mn-postTop{display:flex;gap:10px;align-items:flex-start}
+    .mn-postMeta{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+    .mn-pillMini{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);color:rgba(255,255,255,.85);font-size:12px}
+    .mn-actions{display:flex;gap:8px;flex-wrap:wrap}
+    .mn-act{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);padding:10px 12px;border-radius:999px;cursor:pointer}
+    .mn-act:hover{background:rgba(255,255,255,.08)}
+    .mn-act.is-on{border-color:rgba(120,255,220,.30);background:rgba(120,255,220,.12)}
+    .mn-kpi{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+    .mn-kpiCard{border-radius:14px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);padding:12px}
+    .mn-kpiVal{font-size:18px;font-weight:900}
+    .mn-kpiLab{font-size:12px;color:rgba(255,255,255,.65);margin-top:4px}
+    .mn-tagRow{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+    .mn-tag{padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);font-size:12px;color:rgba(255,255,255,.78);cursor:pointer}
+    .mn-tag:hover{background:rgba(255,255,255,.08)}
+    .mn-muted{color:rgba(255,255,255,.66)}
+    /* light mode tweaks */
+    html[data-theme="light"] .mn-segBtn,
+    html[data-theme="light"] .mn-pillMini,
+    html[data-theme="light"] .mn-act,
+    html[data-theme="light"] .mn-kpiCard,
+    html[data-theme="light"] .mn-tag{
+      border-color: rgba(0,0,0,.12);
+      background: rgba(0,0,0,.04);
+    }
+    html[data-theme="light"] .mn-muted{color:rgba(0,0,0,.62)}
+  </style>
 </head>
 
 <body class="mn-body">
@@ -30,7 +70,7 @@
         <span class="mn-mark" aria-hidden="true">MN</span>
         <span class="mn-brand__stack">
           <span class="mn-brand__title">Muôn Nơi</span>
-          <span class="mn-brand__sub">Social Operating Space. Không feed. Không tracking.</span>
+          <span class="mn-brand__sub">Bảng tin vận hành. Mua bán. Học. Làm. Nhắn tin. Gọi.</span>
         </span>
       </a>
 
@@ -39,17 +79,17 @@
         <a class="mn-pill is-active" href="https://app.muonnoi.org/feed/">Bảng tin</a>
         <a class="mn-pill" href="https://app.muonnoi.org/verify/">Xác minh</a>
         <a class="mn-pill" href="https://app.muonnoi.org/commit/">Cam kết</a>
+        <a class="mn-pill" href="https://app.muonnoi.org/join/">Join</a>
         <a class="mn-pill" href="https://app.muonnoi.org/complaints/">Khiếu nại</a>
         <a class="mn-pill" href="https://app.muonnoi.org/admin/">Admin</a>
         <a class="mn-pill" href="https://app.muonnoi.org/legal/privacy.html">Bảo mật</a>
-        <a class="mn-pill" href="https://app.muonnoi.org/security/">Hướng dẫn</a>
       </nav>
 
       <div class="mn-top__actions">
         <button class="mn-btn mn-btn--ghost" type="button" id="themeBtn" aria-label="Đổi theme">◐</button>
         <button class="mn-btn mn-btn--ghost" type="button" id="langBtn" aria-label="Đổi ngôn ngữ">VI</button>
         <a class="mn-btn mn-btn--ghost" href="https://app.muonnoi.org/join/">Tài khoản</a>
-        <a class="mn-btn mn-btn--primary" href="https://app.muonnoi.org/join/">Mở hệ</a>
+        <a class="mn-btn mn-btn--primary" href="https://app.muonnoi.org/create/">Tạo</a>
 
         <button class="mn-burger" type="button" id="mnBurger" aria-label="Mở menu">
           <span></span><span></span><span></span>
@@ -58,39 +98,162 @@
     </div>
 
     <div class="mn-mobile" id="mnMobile" hidden>
-      <a class="mn-mobile__item mn-mobile__item--primary" href="https://app.muonnoi.org/join/"><span>Vào ứng dụng</span><span>→</span></a>
+      <a class="mn-mobile__item mn-mobile__item--primary" href="https://app.muonnoi.org/create/"><span>Tạo</span><span>＋</span></a>
       <a class="mn-mobile__item" href="https://app.muonnoi.org/">Trang chủ</a>
       <a class="mn-mobile__item" href="https://app.muonnoi.org/feed/">Bảng tin</a>
       <a class="mn-mobile__item" href="https://app.muonnoi.org/verify/">Xác minh</a>
       <a class="mn-mobile__item" href="https://app.muonnoi.org/commit/">Cam kết</a>
+      <a class="mn-mobile__item" href="https://app.muonnoi.org/join/">Join</a>
       <a class="mn-mobile__item" href="https://app.muonnoi.org/complaints/">Khiếu nại</a>
       <a class="mn-mobile__item" href="https://app.muonnoi.org/admin/">Admin</a>
       <a class="mn-mobile__item" href="https://app.muonnoi.org/legal/privacy.html">Bảo mật</a>
-      <a class="mn-mobile__item" href="https://app.muonnoi.org/security/">Hướng dẫn</a>
     </div>
   </header>
 
   <main class="mn-main" role="main">
     <div class="mn-wrap">
-      <section class="mn-section mn-glass" style="border-radius:28px; padding:18px;">
-        <h1 class="mn-h1" style="font-size:38px;">Bảng Tin</h1>
-        <p class="mn-sub" style="margin-top:10px; max-width:980px;">
-          Bảng tin giai đoạn đầu là “khung” để khoá UI, tốc độ, chống bot và trải nghiệm sạch.
-          Bước kế tiếp: kết nối Worker API để hiển thị bài viết thật, có xác minh và chống spam theo lớp.
-        </p>
 
-        <div class="mn-grid" style="gap:12px; margin-top:14px; grid-template-columns:repeat(12,1fr);">
+      <section class="mn-section mn-glass" style="border-radius:28px; padding:18px;">
+        <div class="mn-grid" style="grid-template-columns:repeat(12,1fr); gap:12px;">
           <div class="mn-glass" style="grid-column:span 12; border-radius:18px; padding:14px;">
-            <div class="mn-h2">Khung Feed (Demo)</div>
-            <div class="mn-sub" style="margin-top:6px;">
-              1) Bài viết ngắn  2) Media  3) Link sạch  4) Báo cáo vi phạm  5) Xác minh.
+            <div class="mn-row" style="display:flex; gap:10px; flex-wrap:wrap; align-items:center; justify-content:space-between;">
+              <div>
+                <div class="mn-h1" style="font-size:34px; margin:0;">Bảng Tin</div>
+                <div class="mn-sub" style="margin-top:8px;">
+                  Không phải “lướt vô thức”. Đây là bảng tin vận hành: việc làm, dự án, mua bán, học, và chia sẻ giá trị.
+                </div>
+              </div>
+
+              <div class="mn-seg" role="tablist" aria-label="Bộ lọc bảng tin">
+                <button class="mn-segBtn is-active" type="button" data-feed="all">Tất cả</button>
+                <button class="mn-segBtn" type="button" data-feed="work">Làm việc</button>
+                <button class="mn-segBtn" type="button" data-feed="market">Mua bán</button>
+                <button class="mn-segBtn" type="button" data-feed="learn">Học</button>
+                <button class="mn-segBtn" type="button" data-feed="invest">Đầu tư</button>
+              </div>
+            </div>
+
+            <div style="height:12px;"></div>
+
+            <div class="mn-feedGrid">
+              <!-- LEFT: FEED -->
+              <div>
+                <!-- Composer -->
+                <div class="mn-glass" style="border-radius:18px; padding:14px;">
+                  <div class="mn-postTop">
+                    <div class="mn-ava" aria-hidden="true">MN</div>
+                    <div style="flex:1">
+                      <div class="mn-inline" style="justify-content:space-between;">
+                        <div class="mn-postMeta">
+                          <span class="mn-pillMini">Bạn</span>
+                          <span class="mn-muted">•</span>
+                          <span class="mn-muted">Privacy-first</span>
+                        </div>
+                        <a class="mn-link" href="https://app.muonnoi.org/join/">Đăng nhập để đăng</a>
+                      </div>
+
+                      <div style="height:10px;"></div>
+
+                      <label class="mn-field" style="margin:0;">
+                        <span class="mn-field__label">Bạn muốn chia sẻ điều gì?</span>
+                        <textarea class="mn-input" id="composerText" rows="4" placeholder="Viết ngắn, thật. Có link /p /u /m nếu cần. Không dùng #..."></textarea>
+                        <span class="mn-field__hint">Giai đoạn sau: upload ảnh/video/tài liệu + ký số + chống spam.</span>
+                      </label>
+
+                      <div class="mn-inline" style="margin-top:10px;">
+                        <select class="mn-input" id="composerType" style="max-width:220px;">
+                          <option value="all">Loại: Tất cả</option>
+                          <option value="work">Loại: Làm việc</option>
+                          <option value="market">Loại: Mua bán</option>
+                          <option value="learn">Loại: Học</option>
+                          <option value="invest">Loại: Đầu tư</option>
+                        </select>
+
+                        <button class="mn-btn mn-btn--ghost" type="button" id="btnAttach">Đính kèm</button>
+                        <button class="mn-btn mn-btn--primary" type="button" id="btnPost">Đăng</button>
+                      </div>
+
+                      <div id="composerResult" class="mn-glass" style="display:none; border-radius:14px; padding:12px; margin-top:10px;">
+                        <div class="mn-h2" style="font-size:16px;">Đã tạo bài demo</div>
+                        <div class="mn-sub" style="margin-top:6px;">Link: <b id="demoLink">/p/…</b></div>
+                        <div class="mn-inline" style="margin-top:10px;">
+                          <button class="mn-btn mn-btn--ghost" type="button" id="copyDemoLink">Sao chép link</button>
+                          <a class="mn-btn mn-btn--primary" id="openDemoLink" href="#">Mở</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div style="height:12px;"></div>
+
+                <!-- Feed list -->
+                <div id="feedList" style="display:grid; gap:12px;"></div>
+
+                <div style="height:12px;"></div>
+
+                <div class="mn-glass" style="border-radius:18px; padding:14px;">
+                  <div class="mn-h2">Tải thêm</div>
+                  <div class="mn-sub" style="margin-top:6px;">
+                    Giai đoạn sau: infinite scroll có kiểm soát + rate limit + caching edge.
+                  </div>
+                  <div class="mn-inline" style="margin-top:10px;">
+                    <button class="mn-btn mn-btn--ghost" type="button" id="btnMore">Xem thêm 9 mục</button>
+                    <button class="mn-btn mn-btn--primary" type="button" id="btnRefresh">Làm mới</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- RIGHT: RAIL -->
+              <aside class="mn-sticky">
+                <div class="mn-glass" style="border-radius:18px; padding:14px;">
+                  <div class="mn-h2">Tổng quan hôm nay</div>
+                  <div class="mn-sub" style="margin-top:6px;">Chỉ số demo. Giai đoạn sau: realtime nhẹ + privacy.</div>
+                  <div style="height:10px;"></div>
+                  <div class="mn-kpi">
+                    <div class="mn-kpiCard">
+                      <div class="mn-kpiVal" id="kpiPosts">12</div>
+                      <div class="mn-kpiLab">Bài mới</div>
+                    </div>
+                    <div class="mn-kpiCard">
+                      <div class="mn-kpiVal" id="kpiDeals">5</div>
+                      <div class="mn-kpiLab">Giao dịch</div>
+                    </div>
+                    <div class="mn-kpiCard">
+                      <div class="mn-kpiVal" id="kpiRooms">3</div>
+                      <div class="mn-kpiLab">Phòng live</div>
+                    </div>
+                  </div>
+
+                  <div class="mn-tagRow" aria-label="Chủ đề nhanh">
+                    <button class="mn-tag" type="button" data-tag="work">#việc làm</button>
+                    <button class="mn-tag" type="button" data-tag="market">#mua bán</button>
+                    <button class="mn-tag" type="button" data-tag="learn">#học</button>
+                    <button class="mn-tag" type="button" data-tag="invest">#đầu tư</button>
+                    <button class="mn-tag" type="button" data-tag="nhachung">#nhà chung</button>
+                  </div>
+                </div>
+
+                <div style="height:12px;"></div>
+
+                <div class="mn-glass" style="border-radius:18px; padding:14px;">
+                  <div class="mn-h2">Liên kết hệ sinh thái</div>
+                  <div class="mn-sub" style="margin-top:6px;">Chuẩn bị cho các subdomain, không để link thô trên UI chính.</div>
+                  <div style="height:10px;"></div>
+                  <div class="mn-row" style="display:grid; gap:8px;">
+                    <a class="mn-footer__link" href="https://nhachung.muonnoi.org/" rel="noopener">Nhà Chung Muôn Nơi</a>
+                    <a class="mn-footer__link" href="https://lamviec.muonnoi.org/" rel="noopener">Làm Việc Muôn Nơi</a>
+                    <a class="mn-footer__link" href="https://hoc.muonnoi.org/" rel="noopener">Học Muôn Nơi</a>
+                    <a class="mn-footer__link" href="https://dulich.muonnoi.org/" rel="noopener">Du Lịch Muôn Nơi</a>
+                    <a class="mn-footer__link" href="https://dautu.muonnoi.org/" rel="noopener">Đầu Tư Muôn Nơi</a>
+                  </div>
+                  <div class="mn-sub" style="margin-top:10px;">
+                    Giai đoạn đầu: link có thể chưa hoạt động. Nhưng UI đã sẵn cho roadmap.
+                  </div>
+                </div>
+              </aside>
             </div>
           </div>
-
-          <a class="mn-glass mn-linkcard" href="https://app.muonnoi.org/complaints/" style="grid-column:span 12; border-radius:18px; padding:14px; text-decoration:none; color:inherit;">
-            <div class="mn-h2">Báo cáo nội dung</div>
-            <div class="mn-sub" style="margin-top:6px;">Nếu có spam, giả mạo, lừa đảo, vào Khiếu nại để gửi chuẩn.</div>
-          </a>
         </div>
       </section>
 
@@ -107,12 +270,310 @@
             <a class="mn-footer__link" href="https://app.muonnoi.org/legal/privacy.html">Privacy</a>
             <a class="mn-footer__link" href="https://app.muonnoi.org/legal/terms.html">Terms</a>
             <a class="mn-footer__link" href="https://app.muonnoi.org/security/">Security</a>
+            <a class="mn-footer__link" href="https://app.muonnoi.org/complaints/">Complaints</a>
           </div>
         </div>
       </footer>
+
     </div>
   </main>
 
   <script src="/assets/ui.js?v=20260303-1" defer></script>
+
+  <!-- Feed controller (stage-1: UI demo, no backend) -->
+  <script>
+    (function(){
+      "use strict";
+
+      const $ = (s, el=document)=> el.querySelector(s);
+      const $$ = (s, el=document)=> Array.from(el.querySelectorAll(s));
+
+      function pad(n){ return String(n).padStart(2,"0"); }
+      function chainId(prefix="mn"){
+        const t = Date.now();
+        const r = Math.floor(Math.random()*1e9);
+        const raw = prefix+"."+t+"."+r;
+        let h = 2166136261;
+        for(let i=0;i<raw.length;i++){ h ^= raw.charCodeAt(i); h = Math.imul(h, 16777619); }
+        const c = (h>>>0).toString(36).padStart(6,"0").slice(0,6);
+        return `${prefix}_${(t>>>0).toString(36)}_${(r>>>0).toString(36)}_${c}`;
+      }
+
+      async function copy(text){
+        try{
+          if(navigator.clipboard && navigator.clipboard.writeText){
+            await navigator.clipboard.writeText(text);
+            return true;
+          }
+        }catch{}
+        try{
+          const ta=document.createElement("textarea");
+          ta.value=text;
+          ta.style.position="fixed"; ta.style.left="-9999px";
+          document.body.appendChild(ta);
+          ta.select(); document.execCommand("copy");
+          ta.remove();
+          return true;
+        }catch{ return false; }
+      }
+
+      const state = {
+        filter: "all",
+        items: []
+      };
+
+      function sampleData(n=9, type="all"){
+        const types = ["work","market","learn","invest"];
+        const pick = ()=> types[Math.floor(Math.random()*types.length)];
+        const now = Date.now();
+
+        const out = [];
+        for(let i=0;i<n;i++){
+          const t = (type==="all") ? pick() : type;
+          const id = chainId("mn");
+          out.push({
+            id,
+            type: t,
+            author: (t==="work" ? "Người Tuyển Dụng" :
+                     t==="market" ? "Người Bán" :
+                     t==="learn" ? "Người Dạy" : "Nhà Đầu Tư"),
+            handle: (t==="work" ? "workhub" :
+                     t==="market" ? "marketvn" :
+                     t==="learn" ? "learnlab" : "investroom"),
+            title: (t==="work" ? "Tuyển: Designer / Dev (Remote)" :
+                    t==="market" ? "Bán: Gói dịch vụ / sản phẩm" :
+                    t==="learn" ? "Khóa học: Kỹ năng / tư duy" : "Deal: Cơ hội hợp tác"),
+            body: (t==="work" ? "Mô tả công việc rõ ràng. Không spam. Có trách nhiệm." :
+                   t==="market" ? "Giá trị thật, điều kiện rõ. Không lừa đảo." :
+                   t==="learn" ? "Học để làm được. Không lý thuyết rỗng." : "Đầu tư minh bạch. Không hype."),
+            ts: now - Math.floor(Math.random()*86400000),
+            likes: Math.floor(Math.random()*120),
+            saves: Math.floor(Math.random()*60),
+            comments: Math.floor(Math.random()*18),
+            verified: Math.random() > 0.7
+          });
+        }
+        return out;
+      }
+
+      function badge(type){
+        if(type==="work") return "Làm việc";
+        if(type==="market") return "Mua bán";
+        if(type==="learn") return "Học";
+        if(type==="invest") return "Đầu tư";
+        return "Tất cả";
+      }
+
+      function timeAgo(ts){
+        const s = Math.max(1, Math.floor((Date.now()-ts)/1000));
+        const m = Math.floor(s/60);
+        const h = Math.floor(m/60);
+        const d = Math.floor(h/24);
+        if(d>0) return d+"d";
+        if(h>0) return h+"h";
+        if(m>0) return m+"m";
+        return s+"s";
+      }
+
+      function postCard(item){
+        const v = item.verified ? `<span class="mn-pillMini">Verified</span>` : "";
+        const link = `/p/${encodeURIComponent(item.id)}/`;
+        return `
+          <article class="mn-glass" style="border-radius:18px; padding:14px;">
+            <div class="mn-postTop">
+              <div class="mn-ava" aria-hidden="true">${item.handle.slice(0,2).toUpperCase()}</div>
+              <div style="flex:1">
+                <div class="mn-inline" style="justify-content:space-between;">
+                  <div class="mn-postMeta">
+                    <span class="mn-pillMini">${badge(item.type)}</span>
+                    ${v}
+                    <span class="mn-muted">•</span>
+                    <a class="mn-link" href="/u/${encodeURIComponent(item.handle)}/">u/${item.handle}</a>
+                    <span class="mn-muted">•</span>
+                    <span class="mn-muted">${timeAgo(item.ts)}</span>
+                  </div>
+                  <a class="mn-link" href="${link}">Mở</a>
+                </div>
+
+                <div style="height:8px;"></div>
+                <div class="mn-h2" style="margin:0; font-size:16px;">${item.title}</div>
+                <div class="mn-sub" style="margin-top:8px;">${item.body}</div>
+
+                <div style="height:12px;"></div>
+
+                <div class="mn-actions">
+                  <button class="mn-act" type="button" data-act="like" data-id="${item.id}">
+                    ❤ <span>${item.likes}</span>
+                  </button>
+                  <button class="mn-act" type="button" data-act="save" data-id="${item.id}">
+                    ⧉ <span>${item.saves}</span>
+                  </button>
+                  <button class="mn-act" type="button" data-act="comment" data-id="${item.id}">
+                    💬 <span>${item.comments}</span>
+                  </button>
+                  <button class="mn-act" type="button" data-act="share" data-id="${item.id}">
+                    ↗ <span>Share</span>
+                  </button>
+                </div>
+
+                <div class="mn-sub" style="margin-top:10px;">
+                  Link sạch: <span class="mn-code">${link}</span>
+                </div>
+              </div>
+            </div>
+          </article>
+        `;
+      }
+
+      function render(){
+        const list = $("#feedList");
+        if(!list) return;
+        list.innerHTML = state.items.map(postCard).join("");
+      }
+
+      function setFilter(f){
+        state.filter = f;
+        $$(".mn-segBtn").forEach(btn=>{
+          btn.classList.toggle("is-active", btn.getAttribute("data-feed")===f);
+        });
+        // reset list
+        state.items = sampleData(9, f);
+        render();
+      }
+
+      function bindActions(){
+        // filter buttons
+        $$(".mn-segBtn").forEach(btn=>{
+          btn.addEventListener("click", ()=>{
+            setFilter(btn.getAttribute("data-feed") || "all");
+          });
+        });
+
+        // tags
+        $$("[data-tag]").forEach(btn=>{
+          btn.addEventListener("click", ()=>{
+            const t = btn.getAttribute("data-tag");
+            if(t==="nhachung") { window.location.href = "https://nhachung.muonnoi.org/"; return; }
+            if(t==="work") setFilter("work");
+            else if(t==="market") setFilter("market");
+            else if(t==="learn") setFilter("learn");
+            else if(t==="invest") setFilter("invest");
+          });
+        });
+
+        // composer
+        const btnPost = $("#btnPost");
+        const btnAttach = $("#btnAttach");
+        const text = $("#composerText");
+        const type = $("#composerType");
+        const box = $("#composerResult");
+        const demo = $("#demoLink");
+        const open = $("#openDemoLink");
+        const copyBtn = $("#copyDemoLink");
+
+        btnAttach && btnAttach.addEventListener("click", ()=>{
+          alert("Giai đoạn sau: upload ảnh/video/tài liệu qua R2 signed upload + quét malware + chống spam.");
+        });
+
+        btnPost && btnPost.addEventListener("click", async ()=>{
+          const content = (text && text.value || "").trim();
+          if(!content){
+            alert("Hãy viết nội dung trước khi đăng.");
+            return;
+          }
+          const id = chainId("mn");
+          const t = (type && type.value) || "all";
+          const item = {
+            id,
+            type: t==="all" ? "work" : t,
+            author: "Bạn",
+            handle: "you",
+            title: "Bài mới",
+            body: content.slice(0, 320),
+            ts: Date.now(),
+            likes: 0, saves: 0, comments: 0,
+            verified: false
+          };
+          state.items = [item, ...state.items];
+          render();
+
+          const link = `/p/${encodeURIComponent(id)}/`;
+          if(demo) demo.textContent = link;
+          if(open) open.href = link;
+          if(box) box.style.display = "block";
+          try{ box.scrollIntoView({behavior:"smooth", block:"center"}); }catch{}
+          try{ text.value=""; }catch{}
+        });
+
+        copyBtn && copyBtn.addEventListener("click", async ()=>{
+          const ok = await copy((demo && demo.textContent) ? ("https://app.muonnoi.org"+demo.textContent) : "");
+          copyBtn.textContent = ok ? "Đã sao chép" : "Không sao chép được";
+          setTimeout(()=>{ copyBtn.textContent = "Sao chép link"; }, 1200);
+        });
+
+        // load more
+        const btnMore = $("#btnMore");
+        btnMore && btnMore.addEventListener("click", ()=>{
+          state.items = state.items.concat(sampleData(9, state.filter));
+          render();
+          window.scrollBy({ top: 420, behavior: "smooth" });
+        });
+
+        const btnRefresh = $("#btnRefresh");
+        btnRefresh && btnRefresh.addEventListener("click", ()=>{
+          state.items = sampleData(9, state.filter);
+          render();
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+
+        // post actions (delegate)
+        document.addEventListener("click", async (e)=>{
+          const btn = e.target && e.target.closest ? e.target.closest("[data-act]") : null;
+          if(!btn) return;
+          const act = btn.getAttribute("data-act");
+          const id = btn.getAttribute("data-id");
+          if(!act || !id) return;
+
+          const item = state.items.find(x=> x.id===id);
+          if(!item) return;
+
+          if(act==="like"){
+            item.likes += 1;
+            btn.classList.add("is-on");
+            btn.querySelector("span").textContent = String(item.likes);
+            return;
+          }
+          if(act==="save"){
+            item.saves += 1;
+            btn.classList.add("is-on");
+            btn.querySelector("span").textContent = String(item.saves);
+            return;
+          }
+          if(act==="comment"){
+            alert("Giai đoạn sau: mở thread /p/:id + bình luận + chống spam + quyền riêng tư.");
+            return;
+          }
+          if(act==="share"){
+            const link = "https://app.muonnoi.org/p/" + encodeURIComponent(id) + "/";
+            const ok = await copy(link);
+            btn.classList.add("is-on");
+            btn.querySelector("span").textContent = ok ? "Copied" : "Copy failed";
+            setTimeout(()=>{ btn.classList.remove("is-on"); btn.querySelector("span").textContent = "Share"; }, 1200);
+            return;
+          }
+        }, { passive:true });
+      }
+
+      // init
+      function init(){
+        state.items = sampleData(9, "all");
+        render();
+        bindActions();
+      }
+
+      if(document.readyState==="loading") document.addEventListener("DOMContentLoaded", init);
+      else init();
+    })();
+  </script>
 </body>
 </html>
