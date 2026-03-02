@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="vi" data-theme="auto">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="color-scheme" content="dark light" />
+  <meta name="referrer" content="no-referrer" />
+
+  <title>MN App – Khiếu nại</title>
+  <meta name="description" content="Khiếu nại MN: báo cáo lạm dụng, tranh chấp, vi phạm. Quy trình rõ ràng, chống lạm dụng báo cáo." />
+  <meta name="robots" content="noindex,nofollow" />
+
+  <link rel="icon" href="/assets/brand/mn.svg" />
+  <link rel="stylesheet" href="/assets/ui.css" />
+</head>
+
+<body class="mn-body">
+  <div class="mn-bg" aria-hidden="true">
+    <div class="mn-bg__grid"></div>
+    <div class="mn-bg__glow"></div>
+    <div class="mn-bg__sweep"></div>
+    <div class="mn-bg__noise"></div>
+  </div>
+
+  <header class="mn-top mn-top--pill" role="banner">
+    <div class="mn-top__inner">
+      <a class="mn-brand mn-brand--mono" href="/" aria-label="MN App">
+        <span class="mn-mark" aria-hidden="true">MN</span>
+        <span class="mn-brand__title">MN App</span>
+      </a>
+
+      <nav class="mn-nav mn-nav--pills" aria-label="Primary">
+        <a class="mn-pill" href="/">Trang chủ</a>
+        <a class="mn-pill" href="/feed/">Bảng tin</a>
+        <a class="mn-pill" href="/verify/">Xác minh</a>
+        <a class="mn-pill" href="/commit/">Cam kết</a>
+        <a class="mn-pill is-active" href="/complaints/">Khiếu nại</a>
+        <a class="mn-pill mn-pill--ghost" href="/admin/">Admin</a>
+        <a class="mn-pill" href="https://docs.muonnoi.org/" rel="noopener">Hướng dẫn</a>
+      </nav>
+
+      <div class="mn-top__actions">
+        <a class="mn-btn mn-btn--primary" href="/join/">Bắt đầu</a>
+        <button class="mn-btn mn-btn--ghost" id="themeBtn" type="button" aria-label="Theme">◐</button>
+        <button class="mn-btn mn-btn--ghost" id="langBtn" type="button" aria-label="Language">VI</button>
+        <button class="mn-burger" id="mnBurger" type="button" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+
+    <div class="mn-mobile" id="mnMobile" hidden>
+      <a class="mn-mobile__item mn-mobile__item--primary" href="/join/">Bắt đầu</a>
+      <a class="mn-mobile__item" href="/">Trang chủ</a>
+      <a class="mn-mobile__item" href="/feed/">Bảng tin</a>
+      <a class="mn-mobile__item" href="/verify/">Xác minh</a>
+      <a class="mn-mobile__item" href="/commit/">Cam kết</a>
+      <a class="mn-mobile__item" href="/admin/">Admin</a>
+      <a class="mn-mobile__item" href="/security/">Bảo mật</a>
+      <a class="mn-mobile__item" href="/legal/">Pháp lý</a>
+    </div>
+  </header>
+
+  <main class="mn-main" role="main">
+    <section class="mn-section">
+      <div class="mn-wrap">
+
+        <div class="mn-glass" style="padding:16px;border-radius:26px;">
+          <div class="mn-hero__top" style="margin-bottom:8px;">
+            <span class="mn-chip">Complaints</span>
+            <span class="mn-chip mn-chip--soft">Process</span>
+            <span class="mn-chip mn-chip--soft">Anti-abuse</span>
+          </div>
+
+          <h1 class="mn-h1" style="font-size:30px;margin:6px 0 4px;">Khiếu Nại</h1>
+          <p class="mn-sub" style="max-width:980px;">
+            Khiếu nại là để bảo vệ cộng đồng, không phải vũ khí để triệt nhau.
+            Giai đoạn 1: quy trình rõ, UI chạy liền. Giai đoạn 2: ticket lưu D1 + audit + chống lạm dụng báo cáo.
+          </p>
+
+          <div class="mn-hero__cta" style="margin-top:12px;">
+            <button class="mn-btn mn-btn--primary" id="mnOpenForm" type="button">Tạo khiếu nại</button>
+            <a class="mn-btn mn-btn--ghost" href="/security/">Chuẩn bảo mật</a>
+            <a class="mn-btn mn-btn--ghost" href="/legal/">Điều khoản</a>
+          </div>
+        </div>
+
+        <div style="height:12px;"></div>
+
+        <div class="mn-grid" style="grid-template-columns:1fr 1fr;gap:12px;">
+          <div class="mn-glass" style="padding:16px;border-radius:26px;">
+            <h2 class="mn-h2" style="font-size:18px;margin:0 0 10px;">Quy trình xử lý</h2>
+            <ol class="mn-list">
+              <li>Tạo ticket: mô tả rõ sự việc, cung cấp link/ID.</li>
+              <li>Hệ thống ghi nhận: chống spam, chống bot, rate-limit.</li>
+              <li>Đánh giá sơ bộ: ưu tiên an toàn người dùng và bằng chứng.</li>
+              <li>Quyết định: cảnh báo, giới hạn, gỡ nội dung, hoặc khóa tài khoản theo mức.</li>
+              <li>Phản hồi: có mã theo dõi, có thời gian dự kiến.</li>
+            </ol>
+            <div class="mn-muted" style="margin-top:10px;">
+              Stage 2 sẽ có “appeal” + lịch sử xử lý (audit).
+            </div>
+          </div>
+
+          <div class="mn-glass" style="padding:16px;border-radius:26px;">
+            <h2 class="mn-h2" style="font-size:18px;margin:0 0 10px;">Tạo khiếu nại (UI)</h2>
+
+            <label class="mn-label" for="mnType">Loại khiếu nại</label>
+            <select id="mnType" class="mn-input">
+              <option value="abuse">Lạm dụng / spam / bot</option>
+              <option value="scam">Lừa đảo / giao dịch</option>
+              <option value="privacy">Xâm phạm riêng tư</option>
+              <option value="content">Nội dung gây hại</option>
+              <option value="other">Khác</option>
+            </select>
+
+            <div style="height:10px;"></div>
+
+            <label class="mn-label" for="mnTarget">Link hoặc ID liên quan</label>
+            <input id="mnTarget" class="mn-input" type="text" maxlength="200" placeholder="Ví dụ: /feed/?p=... hoặc @username hoặc post_id" />
+
+            <div style="height:10px;"></div>
+
+            <label class="mn-label" for="mnDesc">Mô tả</label>
+            <textarea id="mnDesc" class="mn-input" rows="5" maxlength="900" placeholder="Viết rõ: chuyện gì xảy ra, lúc nào, liên quan ai, bằng chứng gì."></textarea>
+
+            <!-- honeypot -->
+            <div style="position:absolute;left:-9999px;top:-9999px;">
+              <label for="mnWebsite">Website</label>
+              <input id="mnWebsite" type="text" autocomplete="off" tabindex="-1" />
+            </div>
+
+            <div style="height:10px;"></div>
+
+            <button class="mn-btn mn-btn--primary" id="mnSubmit" type="button">Gửi</button>
+            <button class="mn-btn mn-btn--ghost" id="mnReset" type="button">Làm lại</button>
+
+            <div class="mn-glass" id="mnResult" style="padding:12px;border-radius:22px;margin-top:12px;display:none;"></div>
+
+            <div class="mn-muted" style="margin-top:10px;">
+              Khi nối API: ticket sẽ được lưu D1 và trả mã theo dõi.
+            </div>
+          </div>
+        </div>
+
+        <div style="height:12px;"></div>
+
+        <h3 class="mn-h3">Liên kết liên quan</h3>
+        <div class="mn-footlinks mn-glass" style="padding:12px;border-radius:24px;">
+          <a class="mn-footlinks__a" href="/feed/">Bảng tin</a>
+          <a class="mn-footlinks__a" href="/verify/">Xác minh</a>
+          <a class="mn-footlinks__a" href="/commit/">Cam kết</a>
+          <a class="mn-footlinks__a" href="/security/">Bảo mật</a>
+          <a class="mn-footlinks__a" href="/legal/">Pháp lý</a>
+          <a class="mn-footlinks__a" href="/admin/">Admin</a>
+          <a class="mn-footlinks__a" href="https://muonnoi.org/" rel="noopener">muonnoi.org</a>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <footer class="mn-footer" role="contentinfo">
+    <div class="mn-wrap mn-footer__inner">
+      <div class="mn-footer__left">
+        <div class="mn-footer__brand">
+          <span class="mn-mark mn-mark--sm" aria-hidden="true">MN</span>
+          <div>
+            <div class="mn-footer__name">MN App</div>
+            <div class="mn-footer__tag">Complaints</div>
+          </div>
+        </div>
+        <div class="mn-muted" style="margin-top:8px;">© <span id="year"></span> app.muonnoi.org</div>
+      </div>
+      <div class="mn-footer__right">
+        <a class="mn-footer__link" href="/">Trang chủ</a>
+        <a class="mn-footer__link" href="/security/">Bảo mật</a>
+        <a class="mn-footer__link" href="/legal/">Pháp lý</a>
+        <a class="mn-footer__link" href="/admin/">Admin</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/assets/ui.js" defer></script>
+  <script>
+  (function(){
+    "use strict";
+    document.getElementById("year").textContent = String(new Date().getFullYear());
+
+    function esc(s){return (s||"").replace(/[&<>"']/g,function(c){return({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"})[c];});}
+    function tid(){return "T-" + Math.random().toString(16).slice(2,10).toUpperCase() + "-" + Date.now().toString(16).slice(-6).toUpperCase();}
+
+    var res = document.getElementById("mnResult");
+    function show(html){ res.style.display="block"; res.innerHTML = html; }
+
+    document.getElementById("mnOpenForm").addEventListener("click", function(){
+      try{ document.getElementById("mnType").focus(); }catch(e){}
+    });
+
+    document.getElementById("mnSubmit").addEventListener("click", function(){
+      var hp = (document.getElementById("mnWebsite").value || "").trim();
+      if (hp){ show("<div class='mn-sub'>Yêu cầu bị từ chối.</div>"); return; }
+
+      var type = document.getElementById("mnType").value;
+      var target = (document.getElementById("mnTarget").value || "").trim();
+      var desc = (document.getElementById("mnDesc").value || "").trim();
+
+      if (!desc){ show("<div class='mn-sub'>Vui lòng nhập mô tả.</div>"); return; }
+
+      var id = tid();
+      show(
+        "<div class='mn-h3' style='font-size:16px;margin:0 0 6px;'>Đã ghi nhận (demo UI)</div>" +
+        "<div class='mn-sub'>Mã theo dõi: <b>" + esc(id) + "</b></div>" +
+        "<div class='mn-sub' style='margin-top:6px;'>Loại: " + esc(type) + "</div>" +
+        "<div class='mn-sub' style='margin-top:6px;'>Liên quan: " + esc(target || 'Không') + "</div>" +
+        "<div class='mn-muted' style='margin-top:10px;'>Stage 2: ticket lưu D1 + audit + chống lạm dụng báo cáo.</div>"
+      );
+    });
+
+    document.getElementById("mnReset").addEventListener("click", function(){
+      document.getElementById("mnType").value = "abuse";
+      document.getElementById("mnTarget").value = "";
+      document.getElementById("mnDesc").value = "";
+      res.style.display = "none";
+      res.innerHTML = "";
+    });
+  })();
+  </script>
+</body>
+</html>
