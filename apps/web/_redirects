@@ -7,5 +7,5 @@
 /security  /security/  301
 /legal     /legal/     301
 /complaints /complaints/ 301
-
+https://www.app.muonnoi.org/* https://app.muonnoi.org/:splat 301
 # Keep existing routes as-is (no SPA wildcard rewrite here)
