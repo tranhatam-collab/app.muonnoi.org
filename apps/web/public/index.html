@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="vi" data-theme="auto">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="color-scheme" content="dark light" />
+  <meta name="referrer" content="no-referrer" />
+
+  <title>MN App – Muôn Nơi • Muốn nói</title>
+  <meta name="description" content="MN App là lõi mạng xã hội của Muôn Nơi: sống thật, chia sẻ thật, tạo giá trị thật. Social-first, privacy-first, bảo mật cao. Mở rộng module theo subdomain." />
+
+  <meta property="og:title" content="MN App – Muôn Nơi" />
+  <meta property="og:description" content="Social-first • Privacy-first • Bảo mật cao • Mở rộng theo module" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://app.muonnoi.org/" />
+  <meta property="og:image" content="/og.png" />
+
+  <link rel="icon" href="/assets/brand/mn.svg" />
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="stylesheet" href="/assets/site.css" />
+
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"WebSite",
+    "name":"MN App – Muôn Nơi",
+    "url":"https://app.muonnoi.org/"
+  }
+  </script>
+</head>
+
+<body class="mn-body">
+  <!-- 4D Mirror Background -->
+  <div class="mn-bg" aria-hidden="true">
+    <div class="mn-bg__grid"></div>
+    <div class="mn-bg__glow"></div>
+    <div class="mn-bg__sweep"></div>
+    <div class="mn-bg__noise"></div>
+  </div>
+
+  <!-- TOP BAR (pill style like your NC sample) -->
+  <header class="mn-top mn-top--pill" role="banner">
+    <div class="mn-top__inner">
+      <a class="mn-brand mn-brand--mono" href="/" aria-label="MN App">
+        <span class="mn-mark" aria-hidden="true">MN</span>
+        <span class="mn-brand__title">MN App</span>
+      </a>
+
+      <!-- Links are REAL paths, no # -->
+      <nav class="mn-nav mn-nav--pills" aria-label="Primary">
+        <a class="mn-pill is-active" href="/">Trang chủ</a>
+        <a class="mn-pill" href="/feed/">Bảng tin</a>
+        <a class="mn-pill" href="/verify/">Xác minh</a>
+        <a class="mn-pill" href="/commit/">Cam kết</a>
+        <a class="mn-pill" href="/complaints/">Khiếu nại</a>
+        <a class="mn-pill mn-pill--ghost" href="/admin/">Admin</a>
+        <a class="mn-pill" href="https://docs.muonnoi.org/" rel="noopener">Hướng dẫn</a>
+      </nav>
+
+      <div class="mn-top__actions">
+        <a class="mn-btn mn-btn--primary" href="/join/">Bắt đầu</a>
+        <button class="mn-btn mn-btn--ghost" id="themeBtn" type="button" aria-label="Theme">◐</button>
+        <button class="mn-btn mn-btn--ghost" id="langBtn" type="button" aria-label="Language">VI</button>
+        <button class="mn-burger" id="mnBurger" type="button" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile menu -->
+    <div class="mn-mobile" id="mnMobile" hidden>
+      <a class="mn-mobile__item mn-mobile__item--primary" href="/join/">Bắt đầu</a>
+      <a class="mn-mobile__item" href="/feed/">Bảng tin</a>
+      <a class="mn-mobile__item" href="/verify/">Xác minh</a>
+      <a class="mn-mobile__item" href="/commit/">Cam kết</a>
+      <a class="mn-mobile__item" href="/complaints/">Khiếu nại</a>
+      <a class="mn-mobile__item" href="/admin/">Admin</a>
+      <a class="mn-mobile__item" href="https://docs.muonnoi.org/" rel="noopener">Hướng dẫn</a>
+      <a class="mn-mobile__item" href="https://muonnoi.org/" rel="noopener">Về muonnoi.org</a>
+    </div>
+  </header>
+
+  <main class="mn-main" role="main">
+    <section class="mn-section">
+      <div class="mn-wrap">
+
+        <!-- HERO -->
+        <div class="mn-glass" style="padding:18px;border-radius:28px;">
+          <div class="mn-hero__top" style="margin-bottom:10px;">
+            <span class="mn-chip">Social-first</span>
+            <span class="mn-chip mn-chip--soft">Privacy-first</span>
+            <span class="mn-chip mn-chip--soft">Module-first</span>
+            <span class="mn-chip mn-chip--soft">Free to start</span>
+          </div>
+
+          <h1 class="mn-h1" style="font-size:40px;margin-top:6px;">
+            Một Mạng Xã Hội Sống Thật Cho Đời Sống Muôn Nơi
+          </h1>
+
+          <p class="mn-lead" style="max-width:920px;">
+            MN App hướng đến sự tự do tuyệt đối của con người từ bên trong, đi kèm trách nhiệm rõ ràng trong đời sống muôn nơi.
+            Giai đoạn 1 tập trung lõi mạng xã hội để tăng trưởng người dùng nhanh nhưng vẫn khóa an toàn ngay từ đầu.
+          </p>
+
+          <div class="mn-hero__cta" style="margin-top:14px;">
+            <a class="mn-btn mn-btn--primary mn-btn--xl" href="/join/">Tạo tài khoản</a>
+            <a class="mn-btn mn-btn--ghost mn-btn--xl" href="/feed/">Xem bảng tin</a>
+            <a class="mn-btn mn-btn--ghost mn-btn--xl" href="/security/">Chuẩn bảo mật</a>
+          </div>
+
+          <div class="mn-muted" style="margin-top:10px;">
+            Không dùng link #. Tất cả route là đường dẫn thật, sẵn cho router History API và mở rộng module.
+          </div>
+        </div>
+
+        <div style="height:12px;"></div>
+
+        <!-- 3 PRINCIPLES -->
+        <div class="mn-trust">
+          <div class="mn-trust__col mn-glass">
+            <h3 class="mn-h3">Tăng trưởng nhanh nhưng không bẩn</h3>
+            <p class="mn-sub">Chống bot, chống spam, chống lạm dụng ngay từ nền. Không “đẻ nợ kỹ thuật” để sửa về sau.</p>
+          </div>
+          <div class="mn-trust__col mn-glass">
+            <h3 class="mn-h3">Người dùng kiếm tiền đúng nghĩa</h3>
+            <p class="mn-sub">Giai đoạn đầu: hồ sơ + cửa hàng số (bán nội dung/tài liệu/chương trình). Mở dần marketplace theo mốc.</p>
+          </div>
+          <div class="mn-trust__col mn-glass">
+            <h3 class="mn-h3">Mở rộng theo module, không phá hệ</h3>
+            <p class="mn-sub">Mỗi module chạy độc lập: Nhà Chung, Làm Việc, Học Tập, Đầu Tư… đảm bảo nhanh, ổn định, an toàn.</p>
+          </div>
+        </div>
+
+        <div style="height:12px;"></div>
+
+        <!-- MODULES (Stage 1 vs Later) -->
+        <div class="mn-glass" style="padding:16px;border-radius:26px;">
+          <h2 class="mn-h2" style="font-size:22px;margin:0;">Modules</h2>
+          <p class="mn-sub" style="margin-top:6px;max-width:960px;">
+            Stage 1 tập trung Social Core. Các module mở rộng được “đặt chỗ” sẵn bằng link thật để không sửa lại kiến trúc sau này.
+          </p>
+
+          <div class="mn-grid" style="grid-template-columns:1fr 1fr;gap:12px;margin-top:12px;">
+            <div class="mn-glass" style="padding:14px;border-radius:22px;">
+              <h3 class="mn-h3">Social Core (Stage 1)</h3>
+              <ul class="mn-list">
+                <li>Bảng tin: đăng bài, like, chia sẻ.</li>
+                <li>Hồ sơ: danh tính, mức xác minh, cửa hàng số.</li>
+                <li>Tin nhắn: mở ở Stage 2.</li>
+                <li>Gọi/Video: mở khi đạt quy mô.</li>
+              </ul>
+              <div style="height:10px;"></div>
+              <a class="mn-btn mn-btn--primary" href="/feed/">Vào bảng tin</a>
+            </div>
+
+            <div class="mn-glass" style="padding:14px;border-radius:22px;">
+              <h3 class="mn-h3">Bảo mật & Trách nhiệm</h3>
+              <ul class="mn-list">
+                <li>Session HttpOnly, CSP strict, audit log.</li>
+                <li>Rate-limit theo IP và hành vi.</li>
+                <li>Quy trình khiếu nại rõ ràng, chống lạm dụng báo cáo.</li>
+                <li>Không tracking, không quảng cáo bẩn.</li>
+              </ul>
+              <div style="height:10px;"></div>
+              <a class="mn-btn mn-btn--ghost" href="/security/">Xem chuẩn bảo mật</a>
+              <a class="mn-btn mn-btn--ghost" href="/complaints/">Khiếu nại</a>
+            </div>
+          </div>
+        </div>
+
+        <div style="height:12px;"></div>
+
+        <!-- ECOSYSTEM LINKS (real links, no #) -->
+        <div class="mn-glass" style="padding:16px;border-radius:26px;">
+          <h2 class="mn-h2" style="font-size:22px;margin:0;">Hệ sinh thái Muôn Nơi (đặt chỗ sẵn)</h2>
+          <p class="mn-sub" style="margin-top:6px;max-width:960px;">
+            Đây là các module sẽ mở rộng khi Social Core đủ mạnh. Link là thật để khóa chuẩn kiến trúc ngay từ đầu.
+          </p>
+
+          <div class="mn-footlinks mn-glass" style="padding:12px;border-radius:24px;margin-top:12px;">
+            <a class="mn-footlinks__a" href="https://muonnoi.org/" rel="noopener">muonnoi.org</a>
+            <a class="mn-footlinks__a" href="https://docs.muonnoi.org/" rel="noopener">docs.muonnoi.org</a>
+            <a class="mn-footlinks__a" href="https://nhachung.muonnoi.org/" rel="noopener">nhachung.muonnoi.org</a>
+            <a class="mn-footlinks__a" href="https://lamviec.muonnoi.org/" rel="noopener">lamviec.muonnoi.org</a>
+            <a class="mn-footlinks__a" href="https://hoc.muonnoi.org/" rel="noopener">hoc.muonnoi.org</a>
+            <a class="mn-footlinks__a" href="https://dautu.muonnoi.org/" rel="noopener">dautu.muonnoi.org</a>
+            <a class="mn-footlinks__a" href="https://dulich.muonnoi.org/" rel="noopener">dulich.muonnoi.org</a>
+          </div>
+
+          <div class="mn-muted" style="margin-top:10px;">
+            Nếu subdomain chưa triển khai, bạn có thể để Cloudflare redirect tạm về trang “coming soon” sau.
+          </div>
+        </div>
+
+        <div style="height:12px;"></div>
+
+        <!-- ROADMAP -->
+        <div class="mn-glass" style="padding:16px;border-radius:26px;">
+          <h2 class="mn-h2" style="font-size:22px;margin:0;">Lộ trình nâng cấp theo giai đoạn</h2>
+
+          <div class="mn-grid" style="grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:12px;">
+            <div class="mn-glass" style="padding:14px;border-radius:22px;">
+              <h3 class="mn-h3">Stage 1 – Social Core</h3>
+              <p class="mn-sub">Auth, feed, post, like, profile, verify, complaints, security baseline.</p>
+            </div>
+            <div class="mn-glass" style="padding:14px;border-radius:22px;">
+              <h3 class="mn-h3">Stage 2 – Marketplace nhẹ</h3>
+              <p class="mn-sub">Cửa hàng số, listing, thanh toán/đơn hàng (mở theo pháp lý & hạ tầng).</p>
+            </div>
+            <div class="mn-glass" style="padding:14px;border-radius:22px;">
+              <h3 class="mn-h3">Stage 3 – Messages/Call</h3>
+              <p class="mn-sub">Nhắn tin + gọi + video, mở khi có nền chống abuse đủ mạnh.</p>
+            </div>
+          </div>
+
+          <div style="height:10px;"></div>
+          <div class="mn-hero__cta">
+            <a class="mn-btn mn-btn--primary" href="/join/">Bắt đầu</a>
+            <a class="mn-btn mn-btn--ghost" href="/verify/">Xác minh</a>
+            <a class="mn-btn mn-btn--ghost" href="/commit/">Cam kết</a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <footer class="mn-footer" role="contentinfo">
+    <div class="mn-wrap mn-footer__inner">
+      <div class="mn-footer__left">
+        <div class="mn-footer__brand">
+          <span class="mn-mark mn-mark--sm" aria-hidden="true">MN</span>
+          <div>
+            <div class="mn-footer__name">MN App</div>
+            <div class="mn-footer__tag">Muôn Nơi • Muốn nói</div>
+          </div>
+        </div>
+        <div class="mn-muted">© <span id="year"></span> app.muonnoi.org</div>
+      </div>
+
+      <div class="mn-footer__right">
+        <a class="mn-footer__link" href="/security/">Bảo mật</a>
+        <a class="mn-footer__link" href="/legal/">Pháp lý</a>
+        <a class="mn-footer__link" href="/complaints/">Khiếu nại</a>
+        <a class="mn-footer__link" href="https://muonnoi.org/" rel="noopener">Trang chủ</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/assets/site.js" defer></script>
+</body>
+</html>
