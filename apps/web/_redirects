@@ -1,11 +1,7 @@
-# --- Canonical trailing slash (no hash routing) ---
-/feed      /feed/      301
-/join      /join/      301
-/verify    /verify/    301
-/commit    /commit/    301
-/admin     /admin/     301
-/security  /security/  301
-/legal     /legal/     301
-/complaints /complaints/ 301
+# Force canonical host (www -> non-www)
 https://www.app.muonnoi.org/* https://app.muonnoi.org/:splat 301
-# Keep existing routes as-is (no SPA wildcard rewrite here)
+
+# Keep / as is
+/ / 200
+
+# (No hash routing required)
