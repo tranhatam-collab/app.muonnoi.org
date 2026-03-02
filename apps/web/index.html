@@ -1,290 +1,197 @@
 <!doctype html>
-<html lang="vi" data-theme="auto">
+<html lang="vi" data-theme="dark">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <meta name="color-scheme" content="dark light" />
-  <meta name="referrer" content="no-referrer" />
   <meta name="theme-color" content="#0b0f0c" />
+  <meta name="robots" content="index,follow" />
 
-  <title>MN App – Muôn Nơi • Muốn nói</title>
-  <meta name="description" content="MN App – Social-first, Security-first. Tự do tuyệt đối từ bên trong, trách nhiệm rõ ràng trong đời sống muôn nơi." />
+  <title>app.muonnoi.org — Social Operating Space</title>
+  <meta name="description" content="Muon Noi App. Social Operating Space. Hướng đến sự tự do tuyệt đối của con người từ bên trong, có trách nhiệm rõ ràng trong đời sống muôn nơi. Không tracking." />
   <link rel="canonical" href="https://app.muonnoi.org/" />
 
-  <meta property="og:title" content="MN App – Muôn Nơi • Muốn nói" />
-  <meta property="og:description" content="Social-first. Security-first. Module-first. Không tracking. Không xây nghiện." />
+  <meta property="og:title" content="app.muonnoi.org — Social Operating Space" />
+  <meta property="og:description" content="Muon Noi App. Useful by design. Safe by default. Not built to addict you." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://app.muonnoi.org/" />
-  <meta property="og:image" content="/og.png" />
 
-  <link rel="icon" href="/assets/brand/mn.svg" />
+  <link rel="icon" href="/favicon.ico" />
   <link rel="manifest" href="/manifest.json" />
 
-  <!-- IMPORTANT: these must exist under apps/web/assets/ -->
-  <link rel="preload" href="/assets/ui.css" as="style" />
-  <link rel="stylesheet" href="/assets/ui.css" />
+  <!-- IMPORTANT: must exist at /apps/web/assets/ui.css -->
+  <link rel="stylesheet" href="/assets/ui.css?v=20260303-1" />
 </head>
 
 <body class="mn-body">
   <!-- 4D mirror background -->
   <div class="mn-bg" aria-hidden="true">
-    <div class="mn-bg__grid"></div>
     <div class="mn-bg__glow"></div>
+    <div class="mn-bg__grid"></div>
     <div class="mn-bg__sweep"></div>
     <div class="mn-bg__noise"></div>
   </div>
 
-  <!-- TOP NAV (pill + strong) -->
-  <header class="mn-top mn-top--pill" role="banner">
+  <!-- TOP BAR -->
+  <header class="mn-top" role="banner">
     <div class="mn-top__inner">
-      <a class="mn-brand mn-brand--mono" href="/" aria-label="MN App">
+      <a class="mn-brand" href="https://muonnoi.org/" rel="noopener">
         <span class="mn-mark" aria-hidden="true">MN</span>
         <span class="mn-brand__stack">
           <span class="mn-brand__title">Muôn Nơi</span>
-          <span class="mn-brand__sub">Muốn nói</span>
+          <span class="mn-brand__sub">Social Operating Space. Không feed. Không tracking.</span>
         </span>
       </a>
 
-      <nav class="mn-nav mn-nav--pills" aria-label="Primary">
-        <a class="mn-pill is-active" href="/">Trang chủ</a>
-        <a class="mn-pill" href="/join/">Vào ứng dụng</a>
-        <a class="mn-pill" href="/ecosystem/">Hệ sinh thái</a>
-        <a class="mn-pill" href="/roadmap/">Lộ trình</a>
-        <a class="mn-pill" href="/security/">Bảo mật</a>
-        <a class="mn-pill" href="https://docs.muonnoi.org/" rel="noopener">Hướng dẫn</a>
-        <a class="mn-pill mn-pill--ghost" href="/admin/">Admin</a>
+      <!-- Desktop pill nav -->
+      <nav class="mn-nav" aria-label="Điều hướng chính">
+        <a class="mn-pill is-active" href="https://app.muonnoi.org/">Trang chủ</a>
+        <a class="mn-pill" href="https://app.muonnoi.org/feed/">Bảng tin</a>
+        <a class="mn-pill" href="https://app.muonnoi.org/verify/">Xác minh</a>
+        <a class="mn-pill" href="https://app.muonnoi.org/commit/">Cam kết</a>
+        <a class="mn-pill" href="https://app.muonnoi.org/complaints/">Khiếu nại</a>
+        <a class="mn-pill" href="https://app.muonnoi.org/admin/">Admin</a>
+        <a class="mn-pill" href="https://app.muonnoi.org/legal/privacy.html">Bảo mật</a>
+        <a class="mn-pill" href="https://app.muonnoi.org/security/">Hướng dẫn</a>
       </nav>
 
       <div class="mn-top__actions">
-        <a class="mn-btn mn-btn--primary" href="/join/">Mở hệ</a>
-        <button class="mn-btn mn-btn--ghost" id="themeBtn" type="button" aria-label="Theme">◐</button>
-        <button class="mn-btn mn-btn--ghost" id="langBtn" type="button" aria-label="Language">VI</button>
-        <button class="mn-burger" id="mnBurger" type="button" aria-label="Menu">
+        <button class="mn-btn mn-btn--ghost" type="button" id="themeBtn" aria-label="Đổi theme">◐</button>
+        <button class="mn-btn mn-btn--ghost" type="button" id="langBtn" aria-label="Đổi ngôn ngữ">VI</button>
+        <a class="mn-btn mn-btn--ghost" href="https://app.muonnoi.org/join/">Tài khoản</a>
+        <a class="mn-btn mn-btn--primary" href="https://app.muonnoi.org/join/">Mở hệ</a>
+
+        <!-- Mobile -->
+        <button class="mn-burger" type="button" id="mnBurger" aria-label="Mở menu">
           <span></span><span></span><span></span>
         </button>
       </div>
     </div>
 
-    <!-- Mobile drawer -->
+    <!-- Mobile menu drawer -->
     <div class="mn-mobile" id="mnMobile" hidden>
-      <a class="mn-mobile__item mn-mobile__item--primary" href="/join/">Vào ứng dụng</a>
-      <a class="mn-mobile__item" href="/ecosystem/">Hệ sinh thái</a>
-      <a class="mn-mobile__item" href="/roadmap/">Lộ trình</a>
-      <a class="mn-mobile__item" href="/security/">Bảo mật</a>
-      <a class="mn-mobile__item" href="/feed/">Bảng tin</a>
-      <a class="mn-mobile__item" href="/verify/">Xác minh</a>
-      <a class="mn-mobile__item" href="/commit/">Cam kết</a>
-      <a class="mn-mobile__item" href="/complaints/">Khiếu nại</a>
-      <a class="mn-mobile__item" href="/legal/">Pháp lý</a>
-      <a class="mn-mobile__item" href="/admin/">Admin</a>
-      <a class="mn-mobile__item" href="https://muonnoi.org/" rel="noopener">muonnoi.org</a>
+      <a class="mn-mobile__item mn-mobile__item--primary" href="https://app.muonnoi.org/join/">
+        <span>Vào ứng dụng</span><span>→</span>
+      </a>
+      <a class="mn-mobile__item" href="https://app.muonnoi.org/">Trang chủ</a>
+      <a class="mn-mobile__item" href="https://app.muonnoi.org/feed/">Bảng tin</a>
+      <a class="mn-mobile__item" href="https://app.muonnoi.org/verify/">Xác minh</a>
+      <a class="mn-mobile__item" href="https://app.muonnoi.org/commit/">Cam kết</a>
+      <a class="mn-mobile__item" href="https://app.muonnoi.org/complaints/">Khiếu nại</a>
+      <a class="mn-mobile__item" href="https://app.muonnoi.org/admin/">Admin</a>
+      <a class="mn-mobile__item" href="https://app.muonnoi.org/legal/privacy.html">Bảo mật</a>
+      <a class="mn-mobile__item" href="https://app.muonnoi.org/security/">Hướng dẫn</a>
     </div>
   </header>
 
+  <!-- MAIN -->
   <main class="mn-main" role="main">
-    <section class="mn-section">
-      <div class="mn-wrap">
+    <div class="mn-wrap">
+      <section class="mn-section mn-glass mn-hero" style="border-radius:28px; padding:18px;">
+        <div class="mn-hero__top">
+          <span class="mn-chip mn-chip--soft">MN • social-first</span>
+          <span class="mn-chip mn-chip--soft">privacy-first</span>
+          <span class="mn-chip mn-chip--soft">module-first</span>
+        </div>
 
-        <!-- HERO -->
-        <div class="mn-glass mn-hero" style="padding:18px;border-radius:28px;">
-          <div class="mn-hero__top">
-            <span class="mn-chip">MN • social-first</span>
-            <span class="mn-chip mn-chip--soft">privacy-first</span>
-            <span class="mn-chip mn-chip--soft">module-first</span>
-          </div>
-
-          <h1 class="mn-h1" style="margin-top:10px;">
-            Tự Do Tuyệt Đối Từ Bên Trong<br />
-            Trách Nhiệm Rõ Ràng Trong Đời Sống Muôn Nơi.
-          </h1>
-
-          <p class="mn-sub" style="max-width:1000px;">
+        <div style="margin-top:14px;">
+          <h1 class="mn-h1">Tự Do Tuyệt Đối Từ Bên Trong<br/>Trách Nhiệm Rõ Ràng Trong Đời Sống Muôn Nơi.</h1>
+          <p class="mn-sub" style="max-width:980px; margin-top:10px;">
             Muôn Nơi là nền tảng để sống, học, làm, kinh doanh, đầu tư và chia sẻ giá trị thật.
             Giai đoạn đầu tập trung “social-first” miễn phí, bảo mật cao, mượt và sạch.
-            Khi đủ quy mô, hệ sinh thái sẽ mở rộng theo mô-đun subdomain để tăng trưởng nhanh nhưng không phá nền tảng.
+            Khi đủ quy mô, hệ sinh thái mở rộng theo mô-đun subdomain để tăng trưởng nhanh nhưng không phá nền tảng.
           </p>
 
           <div class="mn-hero__cta">
-            <a class="mn-btn mn-btn--primary" href="/join/">Vào ứng dụng</a>
-            <a class="mn-btn mn-btn--ghost" href="/ecosystem/">Xem hệ sinh thái</a>
-            <a class="mn-btn mn-btn--ghost" href="https://docs.muonnoi.org/" rel="noopener">Hướng dẫn</a>
-          </div>
-
-          <div class="mn-grid" style="margin-top:14px;grid-template-columns:1fr 1fr 1fr;gap:12px;">
-            <div class="mn-glass" style="padding:14px;border-radius:22px;">
-              <div class="mn-muted">Khóa</div>
-              <div class="mn-h3" style="margin-top:6px;">Tự do từ bên trong</div>
-              <div class="mn-sub">Tự do thật không phải vô trách nhiệm. MN thiết kế để rõ luật, rõ chuẩn, rõ an toàn.</div>
-            </div>
-            <div class="mn-glass" style="padding:14px;border-radius:22px;">
-              <div class="mn-muted">Mục tiêu</div>
-              <div class="mn-h3" style="margin-top:6px;">1.000.000 tài khoản</div>
-              <div class="mn-sub">Social-first ổn định rồi mới mở rộng hệ sinh thái tốc độ cao.</div>
-            </div>
-            <div class="mn-glass" style="padding:14px;border-radius:22px;">
-              <div class="mn-muted">Hướng đi</div>
-              <div class="mn-h3" style="margin-top:6px;">All-in-one bằng mô-đun</div>
-              <div class="mn-sub">Không làm 1 khối nặng dễ lỗi. Mỗi mô-đun là 1 app độc lập, liên kết về MN core.</div>
-            </div>
-          </div>
-
-          <div class="mn-grid" style="margin-top:12px;grid-template-columns:repeat(3,1fr);gap:12px;">
-            <a class="mn-glass mn-linkcard" href="/feed/" style="padding:14px;border-radius:22px;text-decoration:none;">
-              <div class="mn-h3">Ứng dụng</div>
-              <div class="mn-sub">Social core</div>
-            </a>
-            <a class="mn-glass mn-linkcard" href="/ecosystem/" style="padding:14px;border-radius:22px;text-decoration:none;">
-              <div class="mn-h3">Hệ sinh thái</div>
-              <div class="mn-sub">Modules map</div>
-            </a>
-            <a class="mn-glass mn-linkcard" href="/roadmap/" style="padding:14px;border-radius:22px;text-decoration:none;">
-              <div class="mn-h3">Lộ trình</div>
-              <div class="mn-sub">Phased plan</div>
-            </a>
-
-            <a class="mn-glass mn-linkcard" href="/security/" style="padding:14px;border-radius:22px;text-decoration:none;">
-              <div class="mn-h3">Bảo mật</div>
-              <div class="mn-sub">Trust & safety</div>
-            </a>
-            <a class="mn-glass mn-linkcard" href="/status/" style="padding:14px;border-radius:22px;text-decoration:none;">
-              <div class="mn-h3">Trạng thái</div>
-              <div class="mn-sub">System status</div>
-            </a>
-            <a class="mn-glass mn-linkcard" href="/verify/" style="padding:14px;border-radius:22px;text-decoration:none;">
-              <div class="mn-h3">Xác minh</div>
-              <div class="mn-sub">Verification</div>
-            </a>
+            <a class="mn-btn mn-btn--primary" href="https://app.muonnoi.org/join/">Vào ứng dụng</a>
+            <a class="mn-btn" href="https://muonnoi.org/">Về muonnoi.org</a>
+            <a class="mn-btn mn-btn--ghost" href="https://app.muonnoi.org/security/">Hướng dẫn</a>
           </div>
         </div>
 
-        <div style="height:12px;"></div>
-
-        <!-- “Đi nhanh theo đường đúng” cards -->
-        <div class="mn-glass" style="padding:16px;border-radius:26px;">
-          <h2 class="mn-h2" style="margin:0 0 8px;">Đi nhanh theo đường đúng</h2>
-          <p class="mn-sub" style="max-width:980px;margin-top:0;">
-            Trang chủ là bản đồ điều hướng. Mọi nội dung dài đã được tách thành trang riêng để cập nhật dần không phá hệ thống.
-          </p>
-
-          <div class="mn-grid" style="grid-template-columns:repeat(4,1fr);gap:12px;">
-            <div class="mn-glass" style="padding:14px;border-radius:22px;">
-              <div class="mn-h3">Hệ sinh thái</div>
-              <div class="mn-sub">Sơ đồ modules và subdomain, mục đích từng phần, nguyên tắc mở rộng.</div>
-              <div style="height:10px;"></div>
-              <a class="mn-btn mn-btn--ghost" href="/ecosystem/">Mở trang</a>
-            </div>
-
-            <div class="mn-glass" style="padding:14px;border-radius:22px;">
-              <div class="mn-h3">Lộ trình</div>
-              <div class="mn-sub">Social-first đến 1M user, rồi mở marketplace, chat/call, và hệ sinh thái.</div>
-              <div style="height:10px;"></div>
-              <a class="mn-btn mn-btn--ghost" href="/roadmap/">Mở trang</a>
-            </div>
-
-            <div class="mn-glass" style="padding:14px;border-radius:22px;">
-              <div class="mn-h3">Bảo mật</div>
-              <div class="mn-sub">CSP, session HttpOnly, rate-limit, anti-bot, audit log, nguyên tắc dữ liệu tối thiểu.</div>
-              <div style="height:10px;"></div>
-              <a class="mn-btn mn-btn--ghost" href="/security/">Mở trang</a>
-            </div>
-
-            <div class="mn-glass" style="padding:14px;border-radius:22px;">
-              <div class="mn-h3">Hướng dẫn</div>
-              <div class="mn-sub">Bắt đầu, quy tắc, các trang chính, sạch, FAQ, hướng dẫn sử dụng.</div>
-              <div style="height:10px;"></div>
-              <a class="mn-btn mn-btn--ghost" href="https://docs.muonnoi.org/" rel="noopener">Mở trang</a>
+        <div class="mn-grid" style="gap:12px; margin-top:16px; grid-template-columns:repeat(12,1fr);">
+          <div class="mn-glass mn-linkcard" style="grid-column:span 12; border-radius:18px; padding:14px;">
+            <div class="mn-muted" style="font-weight:900; font-size:12px;">Tagline Khóa</div>
+            <div style="margin-top:6px; font-weight:900;">
+              … hướng đến sự tự do tuyệt đối của con người từ bên trong, có trách nhiệm rõ ràng trong đời sống muôn nơi.
             </div>
           </div>
 
-          <div style="height:12px;"></div>
+          <div class="mn-glass mn-linkcard" style="grid-column:span 12; border-radius:18px; padding:14px;">
+            <div class="mn-muted" style="font-weight:900; font-size:12px;">Lộ trình</div>
+            <div style="margin-top:6px; color:var(--muted); line-height:1.6;">
+              Social Core ổn định → Verify & Anti-bot → Messaging/Projects/Market → mở rộng hệ sinh thái theo mô-đun subdomain.
+            </div>
+          </div>
+        </div>
+      </section>
 
-          <div class="mn-glass" style="padding:14px;border-radius:22px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
-            <div>
-              <div class="mn-h3" style="margin:0;">Vào Social Core ngay</div>
-              <div class="mn-sub" style="margin:6px 0 0;">
-                Đi thẳng tới app.muonnoi.org — UI sạch, link đúng, mở rộng không phá nền.
+      <section class="mn-section">
+        <div class="mn-grid" style="gap:12px; grid-template-columns:repeat(12,1fr);">
+          <a class="mn-glass mn-linkcard" href="https://app.muonnoi.org/feed/" style="grid-column:span 12; border-radius:18px; padding:14px; text-decoration:none; color:inherit;">
+            <div class="mn-h2">Bảng tin</div>
+            <div class="mn-sub" style="margin-top:6px;">Bảng tin tối giản, sạch, ưu tiên người thật. Không mồi nghiện.</div>
+          </a>
+
+          <a class="mn-glass mn-linkcard" href="https://app.muonnoi.org/verify/" style="grid-column:span 12; border-radius:18px; padding:14px; text-decoration:none; color:inherit;">
+            <div class="mn-h2">Xác minh</div>
+            <div class="mn-sub" style="margin-top:6px;">Giảm bot, tăng tin cậy theo lớp. Thiết kế hướng minh bạch.</div>
+          </a>
+
+          <a class="mn-glass mn-linkcard" href="https://app.muonnoi.org/commit/" style="grid-column:span 12; border-radius:18px; padding:14px; text-decoration:none; color:inherit;">
+            <div class="mn-h2">Cam kết</div>
+            <div class="mn-sub" style="margin-top:6px;">Cơ chế cam kết rõ ràng để sống và làm việc có trách nhiệm.</div>
+          </a>
+
+          <a class="mn-glass mn-linkcard" href="https://app.muonnoi.org/complaints/" style="grid-column:span 12; border-radius:18px; padding:14px; text-decoration:none; color:inherit;">
+            <div class="mn-h2">Khiếu nại</div>
+            <div class="mn-sub" style="margin-top:6px;">Kênh phản hồi chuẩn, minh bạch, chống abuse, có quy trình.</div>
+          </a>
+
+          <a class="mn-glass mn-linkcard" href="https://app.muonnoi.org/admin/" style="grid-column:span 12; border-radius:18px; padding:14px; text-decoration:none; color:inherit;">
+            <div class="mn-h2">Admin</div>
+            <div class="mn-sub" style="margin-top:6px;">Quản trị tối giản để giữ hệ thống sạch và an toàn.</div>
+          </a>
+        </div>
+      </section>
+
+      <section class="mn-section mn-glass" style="border-radius:22px; padding:16px;">
+        <h3 class="mn-h3">Hệ sinh thái sẽ mở rộng theo mô-đun</h3>
+        <p class="mn-sub" style="margin-top:8px;">
+          Tương lai: Nhà Chung Muôn Nơi, Làm Việc Muôn Nơi, Cuộc Sống, Du Lịch, Học Tập, Đầu Tư… tất cả tách thành subdomain để triển khai nhanh và độc lập.
+        </p>
+
+        <div class="mn-footlinks mn-glass" style="padding:12px; border-radius:18px; margin-top:10px;">
+          <a class="mn-footlinks__a" href="https://nhachung.muonnoi.org/">nhachung.muonnoi.org</a>
+          <a class="mn-footlinks__a" href="https://lamviec.muonnoi.org/">lamviec.muonnoi.org</a>
+          <a class="mn-footlinks__a" href="https://muonnoi.org/">muonnoi.org</a>
+          <a class="mn-footlinks__a" href="https://docs.muonnoi.org/">docs.muonnoi.org</a>
+        </div>
+      </section>
+
+      <footer class="mn-footer" role="contentinfo">
+        <div class="mn-wrap mn-footer__inner">
+          <div class="mn-footer__left">
+            <div class="mn-footer__brand">
+              <span class="mn-mark mn-mark--sm" aria-hidden="true">MN</span>
+              <div>
+                <div class="mn-footer__name">Muôn Nơi</div>
+                <div class="mn-footer__tag">© 2026 muonnoi.org • social-first • privacy-first</div>
               </div>
             </div>
-            <div style="display:flex;gap:10px;flex-wrap:wrap;">
-              <a class="mn-btn mn-btn--primary" href="/join/">Vào ứng dụng</a>
-              <a class="mn-btn mn-btn--ghost" href="https://docs.muonnoi.org/" rel="noopener">Hướng dẫn</a>
-            </div>
+          </div>
+
+          <div class="mn-footer__right">
+            <a class="mn-footer__link" href="https://app.muonnoi.org/legal/privacy.html">Privacy</a>
+            <a class="mn-footer__link" href="https://app.muonnoi.org/legal/terms.html">Terms</a>
+            <a class="mn-footer__link" href="https://app.muonnoi.org/security/">Security</a>
           </div>
         </div>
-
-        <div style="height:14px;"></div>
-
-        <!-- Footer quick links -->
-        <h3 class="mn-h3">Liên kết nhanh</h3>
-        <div class="mn-footlinks mn-glass" style="padding:12px;border-radius:24px;">
-          <a class="mn-footlinks__a" href="/join/">Vào ứng dụng</a>
-          <a class="mn-footlinks__a" href="/feed/">Bảng tin</a>
-          <a class="mn-footlinks__a" href="/verify/">Xác minh</a>
-          <a class="mn-footlinks__a" href="/commit/">Cam kết</a>
-          <a class="mn-footlinks__a" href="/complaints/">Khiếu nại</a>
-          <a class="mn-footlinks__a" href="/security/">Bảo mật</a>
-          <a class="mn-footlinks__a" href="/legal/">Pháp lý</a>
-        </div>
-
-      </div>
-    </section>
+      </footer>
+    </div>
   </main>
 
-  <footer class="mn-footer" role="contentinfo">
-    <div class="mn-wrap mn-footer__inner">
-      <div class="mn-footer__left">
-        <div class="mn-footer__brand">
-          <span class="mn-mark mn-mark--sm" aria-hidden="true">MN</span>
-          <div>
-            <div class="mn-footer__name">Muôn Nơi • Muốn nói</div>
-            <div class="mn-footer__tag">social-first • privacy-first • module-first</div>
-          </div>
-        </div>
-        <div class="mn-muted" style="margin-top:8px;">© <span id="year"></span> muonnoi.org</div>
-      </div>
-
-      <div class="mn-footer__right">
-        <a class="mn-footer__link" href="/join/">Ứng dụng</a>
-        <a class="mn-footer__link" href="https://docs.muonnoi.org/" rel="noopener">Hướng dẫn</a>
-        <a class="mn-footer__link" href="/security/">Bảo mật</a>
-        <a class="mn-footer__link" href="/legal/">Pháp lý</a>
-      </div>
-    </div>
-  </footer>
-
-  <!-- IMPORTANT: must exist under apps/web/assets/ -->
-  <script src="/assets/ui.js" defer></script>
-
-  <!-- minimal page logic -->
-  <script>
-  (function(){
-    "use strict";
-    var y = document.getElementById("year");
-    if (y) y.textContent = String(new Date().getFullYear());
-
-    // Soft toast if future pages not yet created (still no hash)
-    function toast(msg){
-      var t = document.createElement("div");
-      t.className = "mn-toast";
-      t.textContent = msg;
-      document.body.appendChild(t);
-      setTimeout(function(){ t.classList.add("is-on"); }, 10);
-      setTimeout(function(){ t.classList.remove("is-on"); }, 2600);
-      setTimeout(function(){ try{t.remove();}catch(e){} }, 3200);
-    }
-
-    // if a route folder not exists yet, ui.js may still navigate and show 404.html.
-    // We keep it simple: no blocking navigation; only message for new routes.
-    var maybeNew = ["/ecosystem/","/roadmap/","/status/"];
-    document.addEventListener("click", function(e){
-      var a = e.target && e.target.closest ? e.target.closest("a") : null;
-      if (!a) return;
-      var href = a.getAttribute("href") || "";
-      if (maybeNew.indexOf(href) !== -1){
-        toast("Trang này sẽ được mở dần theo giai đoạn. Nếu chưa có, vui lòng quay lại sau.");
-      }
-    }, {capture:true});
-  })();
-  </script>
+  <!-- IMPORTANT: must exist at /apps/web/assets/ui.js -->
+  <script src="/assets/ui.js?v=20260303-1" defer></script>
 </body>
 </html>
