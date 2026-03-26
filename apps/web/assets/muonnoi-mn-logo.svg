@@ -1,0 +1,12 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="muonnoi mn monogram">
+  <defs>
+    <linearGradient id="mnBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6cc7ff" />
+      <stop offset="100%" stop-color="#9ca6ff" />
+    </linearGradient>
+  </defs>
+  <rect x="96" y="96" width="832" height="832" rx="220" fill="#0a0f14"/>
+  <rect x="112" y="112" width="800" height="800" rx="204" fill="none" stroke="url(#mnBg)" stroke-width="20"/>
+  <path d="M248 702V334h82l182 230 182-230h82v368h-92V500L545 679h-66L340 500v202h-92z" fill="url(#mnBg)"/>
+  <path d="M248 334c58 0 86 31 92 84h-92v-84zm436 0c58 0 86 31 92 84h-92v-84z" fill="#0a0f14" opacity=".65"/>
+</svg>

@@ -1,0 +1,5 @@
+node_modules/
+mobile-shell/node_modules/
+mobile-shell/ios/Pods/
+mobile-shell/ios/App/DerivedData/
+*.DS_Store

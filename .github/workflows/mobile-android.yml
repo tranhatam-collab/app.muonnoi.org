@@ -1,0 +1,48 @@
+name: Mobile Android Debug Build
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "apps/web/**"
+      - "mobile-shell/**"
+      - ".github/workflows/mobile-android.yml"
+
+jobs:
+  android-debug:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: mobile-shell
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: mobile-shell/package-lock.json
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Capacitor sync
+        run: npm run cap:sync
+
+      - name: Build Android debug APK
+        run: cd android && ./gradlew assembleDebug
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: muonnoi-android-debug-apk
+          path: mobile-shell/android/app/build/outputs/apk/debug/*.apk

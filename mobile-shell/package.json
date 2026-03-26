@@ -1,0 +1,30 @@
+{
+  "name": "muonnoi-mobile-shell",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Capacitor shell for app.muonnoi.org web core",
+  "scripts": {
+    "cap:sync": "npx cap sync",
+    "cap:open:ios": "npx cap open ios",
+    "cap:open:android": "npx cap open android",
+    "cap:add:ios": "npx cap add ios",
+    "cap:add:android": "npx cap add android",
+    "build:android:debug": "cd android && ./gradlew assembleDebug",
+    "build:ios:sim": "xcodebuild -project ios/App/App.xcodeproj -scheme App -configuration Debug -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 15' build"
+  },
+  "dependencies": {
+    "@aparajita/capacitor-biometric-auth": "latest",
+    "@capacitor/android": "latest",
+    "@capacitor/app": "latest",
+    "@capacitor/camera": "latest",
+    "@capacitor/core": "latest",
+    "@capacitor/haptics": "latest",
+    "@capacitor/ios": "latest",
+    "@capacitor/push-notifications": "latest",
+    "@capacitor/status-bar": "latest"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "latest",
+    "typescript": "latest"
+  }
+}

@@ -10,6 +10,7 @@
   "use strict";
 
   const $ = (s, el = document) => el.querySelector(s);
+  const IS_SECURE = location.protocol === "https:";
 
   function safeSetAttr(el, k, v){ if (el) el.setAttribute(k, v); }
   function safeText(el, v){ if (el) el.textContent = String(v ?? ""); }
@@ -157,8 +158,138 @@
     }
   }
 
+  function setupPwaAndNativeBridge() {
+    // Register SW only in secure context and only if browser supports it.
+    try {
+      if (IS_SECURE && "serviceWorker" in navigator) {
+        navigator.serviceWorker.register("/sw.js").catch(() => {});
+      }
+    } catch {}
+
+    const PUSH_ENDPOINT = window.MN_PUSH_ENDPOINT || "/api/mobile/push/register";
+    const PUSH_SENT_KEY = "mn_push_token_sent";
+
+    async function sendPushToken(token, platform) {
+      if (!token) return { ok: false, reason: "empty_token" };
+      try {
+        const sent = localStorage.getItem(PUSH_SENT_KEY);
+        if (sent === token) return { ok: true, skipped: true };
+      } catch {}
+
+      try {
+        const res = await fetch(PUSH_ENDPOINT, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: JSON.stringify({
+            token,
+            platform,
+            source: "capacitor",
+            at: Date.now()
+          })
+        });
+        if (!res.ok) return { ok: false, reason: `push_endpoint_${res.status}` };
+        try { localStorage.setItem(PUSH_SENT_KEY, token); } catch {}
+        return { ok: true };
+      } catch {
+        return { ok: false, reason: "push_endpoint_failed" };
+      }
+    }
+
+    function resolveBiometricPlugin() {
+      const plugins = window.Capacitor?.Plugins || {};
+      return (
+        plugins.BiometricAuth ||
+        plugins.NativeBiometric ||
+        plugins.CapacitorBiometricAuth ||
+        null
+      );
+    }
+
+    // Unified bridge surface for web + Capacitor native shell.
+    const Native = {
+      isNative() {
+        return !!(window.Capacitor && typeof window.Capacitor.isNativePlatform === "function" && window.Capacitor.isNativePlatform());
+      },
+      platform() {
+        if (!window.Capacitor || typeof window.Capacitor.getPlatform !== "function") return "web";
+        try { return window.Capacitor.getPlatform(); } catch { return "web"; }
+      },
+      async pushEnable() {
+        if (!this.isNative() || !window.Capacitor?.Plugins?.PushNotifications) {
+          return { ok: false, reason: "native_push_unavailable" };
+        }
+        try {
+          const plugin = window.Capacitor.Plugins.PushNotifications;
+          const perm = await plugin.requestPermissions();
+          if (perm?.receive === "denied") return { ok: false, reason: "push_permission_denied" };
+
+          plugin.removeAllListeners?.();
+          plugin.addListener?.("registration", (token) => {
+            const value = token?.value || "";
+            sendPushToken(value, this.platform()).catch(() => {});
+          });
+          plugin.addListener?.("registrationError", () => {});
+
+          await plugin.register();
+          return { ok: true };
+        } catch {
+          return { ok: false, reason: "push_register_failed" };
+        }
+      },
+      async cameraPickPhoto() {
+        if (!this.isNative() || !window.Capacitor?.Plugins?.Camera) {
+          return { ok: false, reason: "native_camera_unavailable" };
+        }
+        try {
+          const photo = await window.Capacitor.Plugins.Camera.getPhoto({
+            quality: 85,
+            resultType: "uri",
+            source: "prompt"
+          });
+          return { ok: true, photo };
+        } catch {
+          return { ok: false, reason: "camera_failed" };
+        }
+      },
+      async biometricVerify() {
+        if (!this.isNative()) return { ok: false, reason: "native_biometric_unavailable" };
+        const plugin = resolveBiometricPlugin();
+        if (!plugin) return { ok: false, reason: "biometric_plugin_not_installed" };
+        try {
+          if (typeof plugin.authenticate === "function") {
+            const result = await plugin.authenticate({
+              reason: "Xác thực để tiếp tục",
+              title: "muonnoi",
+              subtitle: "Biometric verification"
+            });
+            return { ok: true, result };
+          }
+          if (typeof plugin.verifyIdentity === "function") {
+            const result = await plugin.verifyIdentity({
+              reason: "Xác thực để tiếp tục",
+              title: "muonnoi",
+              subtitle: "Biometric verification"
+            });
+            return { ok: true, result };
+          }
+          return { ok: false, reason: "biometric_api_unsupported" };
+        } catch {
+          return { ok: false, reason: "biometric_verify_failed" };
+        }
+      },
+      async callStart(kind) {
+        // Placeholder for WebRTC native optimization bridge.
+        return { ok: false, reason: `call_bridge_not_wired:${kind || "unknown"}` };
+      }
+    };
+
+    try { window.MNNative = Native; } catch {}
+  }
+
   // Init
   (function init(){
+    setupPwaAndNativeBridge();
     applyTheme(detectTheme());
     applyLang(detectLang());
     if (mobile) mobile.hidden = true;

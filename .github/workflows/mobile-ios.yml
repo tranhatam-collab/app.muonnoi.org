@@ -1,0 +1,36 @@
+name: Mobile iOS Simulator Build
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "apps/web/**"
+      - "mobile-shell/**"
+      - ".github/workflows/mobile-ios.yml"
+
+jobs:
+  ios-sim-build:
+    runs-on: macos-latest
+    defaults:
+      run:
+        working-directory: mobile-shell
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: mobile-shell/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Capacitor sync
+        run: npm run cap:sync
+
+      - name: Build iOS simulator app
+        run: xcodebuild -project ios/App/App.xcodeproj -scheme App -configuration Debug -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 15' build
