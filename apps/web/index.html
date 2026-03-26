@@ -7,11 +7,11 @@
   <meta name="theme-color" content="#0b0f0c" />
   <meta name="robots" content="index,follow" />
 
-  <title>app.muonnoi.org — Social Operating Space</title>
-  <meta name="description" content="Muon Noi App. Social Operating Space. Hướng đến sự tự do tuyệt đối của con người từ bên trong, có trách nhiệm rõ ràng trong đời sống muôn nơi. Không tracking." />
+  <title>app.muonnoi.org v1.0 — Social Operating Space</title>
+  <meta name="description" content="Muon Noi App v1.0. Social Operating Space cho social-first, privacy-first, module-first. Không tracking. Không thao túng feed." />
   <link rel="canonical" href="https://app.muonnoi.org/" />
 
-  <meta property="og:title" content="app.muonnoi.org — Social Operating Space" />
+  <meta property="og:title" content="app.muonnoi.org v1.0 — Social Operating Space" />
   <meta property="og:description" content="Muon Noi App. Useful by design. Safe by default. Not built to addict you." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://app.muonnoi.org/" />
@@ -20,7 +20,7 @@
   <link rel="manifest" href="/manifest.json" />
 
   <!-- IMPORTANT: must exist at /apps/web/assets/ui.css -->
-  <link rel="stylesheet" href="/assets/ui.css?v=20260303-1" />
+  <link rel="stylesheet" href="/assets/ui.css?v=1.0.0" />
 </head>
 
 <body class="mn-body">
@@ -39,7 +39,10 @@
         <span class="mn-mark" aria-hidden="true">MN</span>
         <span class="mn-brand__stack">
           <span class="mn-brand__title">Muôn Nơi</span>
-          <span class="mn-brand__sub">Social Operating Space. Không feed. Không tracking.</span>
+          <span class="mn-brand__sub">
+            <span data-lang="vi">Social Operating Space. Không feed. Không tracking.</span>
+            <span data-lang="en">Social Operating Space. No manipulative feed. No tracking.</span>
+          </span>
         </span>
       </a>
 
@@ -58,8 +61,14 @@
       <div class="mn-top__actions">
         <button class="mn-btn mn-btn--ghost" type="button" id="themeBtn" aria-label="Đổi theme">◐</button>
         <button class="mn-btn mn-btn--ghost" type="button" id="langBtn" aria-label="Đổi ngôn ngữ">VI</button>
-        <a class="mn-btn mn-btn--ghost" href="https://app.muonnoi.org/join/">Tài khoản</a>
-        <a class="mn-btn mn-btn--primary" href="https://app.muonnoi.org/join/">Mở hệ</a>
+        <a class="mn-btn mn-btn--ghost" href="https://app.muonnoi.org/join/">
+          <span data-lang="vi">Tài khoản</span>
+          <span data-lang="en">Account</span>
+        </a>
+        <a class="mn-btn mn-btn--primary" href="https://app.muonnoi.org/join/">
+          <span data-lang="vi">Mở hệ</span>
+          <span data-lang="en">Open App</span>
+        </a>
 
         <!-- Mobile -->
         <button class="mn-burger" type="button" id="mnBurger" aria-label="Mở menu">
@@ -89,39 +98,80 @@
     <div class="mn-wrap">
       <section class="mn-section mn-glass mn-hero" style="border-radius:28px; padding:18px;">
         <div class="mn-hero__top">
-          <span class="mn-chip mn-chip--soft">MN • social-first</span>
+          <span class="mn-chip mn-chip--soft">MN v1.0 • social-first</span>
           <span class="mn-chip mn-chip--soft">privacy-first</span>
           <span class="mn-chip mn-chip--soft">module-first</span>
         </div>
 
         <div style="margin-top:14px;">
-          <h1 class="mn-h1">Tự Do Tuyệt Đối Từ Bên Trong<br/>Trách Nhiệm Rõ Ràng Trong Đời Sống Muôn Nơi.</h1>
+          <h1 class="mn-h1">
+            <span data-lang="vi">Tự Do Tuyệt Đối Từ Bên Trong<br/>Trách Nhiệm Rõ Ràng Trong Đời Sống Muôn Nơi.</span>
+            <span data-lang="en">Absolute Freedom From Within<br/>Clear Responsibility Across Daily Life.</span>
+          </h1>
           <p class="mn-sub" style="max-width:980px; margin-top:10px;">
-            Muôn Nơi là nền tảng để sống, học, làm, kinh doanh, đầu tư và chia sẻ giá trị thật.
-            Giai đoạn đầu tập trung “social-first” miễn phí, bảo mật cao, mượt và sạch.
-            Khi đủ quy mô, hệ sinh thái mở rộng theo mô-đun subdomain để tăng trưởng nhanh nhưng không phá nền tảng.
+            <span data-lang="vi">
+              Muôn Nơi là nền tảng để sống, học, làm, kinh doanh, đầu tư và chia sẻ giá trị thật.
+              Giai đoạn đầu tập trung social-first miễn phí, bảo mật cao, mượt và sạch.
+              V1.0 chốt social core ổn định, sẵn sàng mở rộng theo mô-đun subdomain.
+            </span>
+            <span data-lang="en">
+              Muon Noi is an operating space to live, learn, work, build, invest, and share real value.
+              Phase one is social-first, free, privacy-focused, and clean by default.
+              Version 1.0 stabilizes the social core and prepares modular subdomain expansion.
+            </span>
           </p>
 
           <div class="mn-hero__cta">
-            <a class="mn-btn mn-btn--primary" href="https://app.muonnoi.org/join/">Vào ứng dụng</a>
-            <a class="mn-btn" href="https://muonnoi.org/">Về muonnoi.org</a>
-            <a class="mn-btn mn-btn--ghost" href="https://app.muonnoi.org/security/">Hướng dẫn</a>
+            <a class="mn-btn mn-btn--primary" href="https://app.muonnoi.org/join/">
+              <span data-lang="vi">Vào ứng dụng</span>
+              <span data-lang="en">Enter App</span>
+            </a>
+            <a class="mn-btn" href="https://muonnoi.org/">
+              <span data-lang="vi">Về muonnoi.org</span>
+              <span data-lang="en">About muonnoi.org</span>
+            </a>
+            <a class="mn-btn mn-btn--ghost" href="https://app.muonnoi.org/security/">
+              <span data-lang="vi">Hướng dẫn</span>
+              <span data-lang="en">Guide</span>
+            </a>
           </div>
         </div>
 
         <div class="mn-grid" style="gap:12px; margin-top:16px; grid-template-columns:repeat(12,1fr);">
           <div class="mn-glass mn-linkcard" style="grid-column:span 12; border-radius:18px; padding:14px;">
-            <div class="mn-muted" style="font-weight:900; font-size:12px;">Tagline Khóa</div>
+            <div class="mn-muted" style="font-weight:900; font-size:12px;">
+              <span data-lang="vi">Tagline Khóa</span>
+              <span data-lang="en">Core Tagline</span>
+            </div>
             <div style="margin-top:6px; font-weight:900;">
-              … hướng đến sự tự do tuyệt đối của con người từ bên trong, có trách nhiệm rõ ràng trong đời sống muôn nơi.
+              <span data-lang="vi">... hướng đến sự tự do tuyệt đối của con người từ bên trong, có trách nhiệm rõ ràng trong đời sống muôn nơi.</span>
+              <span data-lang="en">... toward absolute inner freedom with clear responsibility in everyday life.</span>
             </div>
           </div>
 
           <div class="mn-glass mn-linkcard" style="grid-column:span 12; border-radius:18px; padding:14px;">
-            <div class="mn-muted" style="font-weight:900; font-size:12px;">Lộ trình</div>
-            <div style="margin-top:6px; color:var(--muted); line-height:1.6;">
-              Social Core ổn định → Verify & Anti-bot → Messaging/Projects/Market → mở rộng hệ sinh thái theo mô-đun subdomain.
+            <div class="mn-muted" style="font-weight:900; font-size:12px;">
+              <span data-lang="vi">Lộ trình v1.0</span>
+              <span data-lang="en">v1.0 Roadmap</span>
             </div>
+            <div style="margin-top:6px; color:var(--muted); line-height:1.6;">
+              <span data-lang="vi">Social Core ổn định -> Verify & Anti-bot -> Messaging/Projects/Market -> mở rộng hệ sinh thái theo mô-đun subdomain.</span>
+              <span data-lang="en">Stable Social Core -> Verify & Anti-bot -> Messaging/Projects/Market -> modular subdomain ecosystem expansion.</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="mn-section mn-glass" style="border-radius:22px; padding:16px;">
+        <h3 class="mn-h3">
+          <span data-lang="vi">Trạng thái phát hành app.muonnoi.org v1.0</span>
+          <span data-lang="en">app.muonnoi.org v1.0 Release Status</span>
+        </h3>
+        <div class="mn-grid" style="gap:10px; grid-template-columns:repeat(12,1fr); margin-top:8px;">
+          <div class="mn-glass mn-linkcard" style="grid-column:span 12; border-radius:14px; padding:12px;">
+            <div class="mn-sub"><span data-lang="vi">- Social core: feed/create/profile/join hoạt động theo lớp.</span><span data-lang="en">- Social core: feed/create/profile/join available as layered modules.</span></div>
+            <div class="mn-sub"><span data-lang="vi">- Trust core: verify/commit/complaints có luồng minh bạch.</span><span data-lang="en">- Trust core: verify/commit/complaints with transparent flows.</span></div>
+            <div class="mn-sub"><span data-lang="vi">- Admin core: khu vực admin tách biệt để vận hành an toàn.</span><span data-lang="en">- Admin core: isolated admin area for safer operations.</span></div>
           </div>
         </div>
       </section>
@@ -156,12 +206,20 @@
       </section>
 
       <section class="mn-section mn-glass" style="border-radius:22px; padding:16px;">
-        <h3 class="mn-h3">Hệ sinh thái sẽ mở rộng theo mô-đun</h3>
+        <h3 class="mn-h3">
+          <span data-lang="vi">Hệ sinh thái mở rộng theo mô-đun</span>
+          <span data-lang="en">Modular Ecosystem Expansion</span>
+        </h3>
         <p class="mn-sub" style="margin-top:8px;">
-          Tương lai: Nhà Chung Muôn Nơi, Làm Việc Muôn Nơi, Cuộc Sống, Du Lịch, Học Tập, Đầu Tư… tất cả tách thành subdomain để triển khai nhanh và độc lập.
+          <span data-lang="vi">V1.0 đã chốt social core, đồng thời map các module family/chat/ai/docs/dautu/lamviec/nhachung để triển khai độc lập và đồng bộ thương hiệu.</span>
+          <span data-lang="en">v1.0 stabilizes the social core while mapping family/chat/ai/docs/dautu/lamviec/nhachung as independent but brand-consistent modules.</span>
         </p>
 
         <div class="mn-footlinks mn-glass" style="padding:12px; border-radius:18px; margin-top:10px;">
+          <a class="mn-footlinks__a" href="https://family.muonnoi.org/">family.muonnoi.org</a>
+          <a class="mn-footlinks__a" href="https://chat.muonnoi.org/">chat.muonnoi.org</a>
+          <a class="mn-footlinks__a" href="https://ai.muonnoi.org/">ai.muonnoi.org</a>
+          <a class="mn-footlinks__a" href="https://dautu.muonnoi.org/">dautu.muonnoi.org</a>
           <a class="mn-footlinks__a" href="https://nhachung.muonnoi.org/">nhachung.muonnoi.org</a>
           <a class="mn-footlinks__a" href="https://lamviec.muonnoi.org/">lamviec.muonnoi.org</a>
           <a class="mn-footlinks__a" href="https://muonnoi.org/">muonnoi.org</a>
@@ -176,7 +234,7 @@
               <span class="mn-mark mn-mark--sm" aria-hidden="true">MN</span>
               <div>
                 <div class="mn-footer__name">Muôn Nơi</div>
-                <div class="mn-footer__tag">© 2026 muonnoi.org • social-first • privacy-first</div>
+                <div class="mn-footer__tag">© 2026 muonnoi.org • v1.0 • social-first • privacy-first</div>
               </div>
             </div>
           </div>
@@ -192,6 +250,6 @@
   </main>
 
   <!-- IMPORTANT: must exist at /apps/web/assets/ui.js -->
-  <script src="/assets/ui.js?v=20260303-1" defer></script>
+  <script src="/assets/ui.js?v=1.0.0" defer></script>
 </body>
 </html>
