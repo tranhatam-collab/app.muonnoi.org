@@ -1,10 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Muon Noi">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="muonnoi mn monogram">
   <defs>
     <linearGradient id="mn-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#d7ff72" />
-      <stop offset="100%" stop-color="#4cf2c2" />
+      <stop offset="0%" stop-color="#6cc7ff" />
+      <stop offset="100%" stop-color="#9ca6ff" />
     </linearGradient>
   </defs>
-  <rect width="64" height="64" rx="18" fill="#09110d" />
-  <path d="M14 46V18h8l10 14 10-14h8v28h-8V31L32 44 22 31v15z" fill="url(#mn-grad)" />
+  <rect width="64" height="64" rx="16" fill="#0a0f14" />
+  <rect x="2" y="2" width="60" height="60" rx="14" fill="none" stroke="url(#mn-grad)" stroke-width="1.5" />
+  <path d="M13 46V18h7l12 14 12-14h7v28h-8V30L32 42 21 30v16z" fill="url(#mn-grad)" />
 </svg>
