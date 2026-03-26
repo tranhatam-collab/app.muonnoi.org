@@ -40,6 +40,20 @@
     let showCipher = false;
     let key = null;
     let messages = [];
+    let callStatusKey = "idle";
+
+    function statusText(statusKey, lang) {
+      if (statusKey === "requesting") return t(lang, "Đang xin quyền media...", "Requesting media permission...");
+      if (statusKey === "preview") return t(lang, "Đang preview.", "Preview running.");
+      if (statusKey === "error") return t(lang, "Không thể start media.", "Cannot start media.");
+      return t(lang, "Chưa kết nối.", "Not connected.");
+    }
+
+    function updateCallStatus(statusKey) {
+      callStatusKey = statusKey;
+      if (!callStatus) return;
+      callStatus.textContent = statusText(statusKey, readLang());
+    }
 
     function genJoinCode() {
       const r = Math.random().toString(36).slice(2, 10).toUpperCase();
@@ -146,15 +160,15 @@
     async function startMedia(kind) {
       const lang = readLang();
       try {
-        callStatus.textContent = t(lang, "Đang xin quyền media...", "Requesting media permission...");
+        updateCallStatus("requesting");
         const stream = await navigator.mediaDevices.getUserMedia(kind);
         if (localVideo) {
           localVideo.hidden = false;
           localVideo.srcObject = stream;
         }
-        callStatus.textContent = t(lang, "Đang preview (demo).", "Preview running (demo).");
+        updateCallStatus("preview");
       } catch (e) {
-        callStatus.textContent = t(lang, "Không thể start media (demo).", "Cannot start media (demo).");
+        updateCallStatus("error");
       }
     }
 
@@ -164,6 +178,11 @@
     // init
     await initE2EE();
     render();
+    updateCallStatus("idle");
+    window.addEventListener("mn_lang_changed", () => {
+      render();
+      updateCallStatus(callStatusKey);
+    });
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", main);

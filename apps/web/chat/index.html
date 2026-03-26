@@ -5,9 +5,13 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <meta name="theme-color" content="#0b0f0c" />
   <meta name="color-scheme" content="dark light" />
-  <title>chat.muonnoi.org — E2EE Family Chat (demo)</title>
-  <meta name="description" content="Chat for the Muon Noi ecosystem: demo E2EE, group-family creation, and local audio/video preview." />
+  <title>chat.muonnoi.org v1.0 — E2EE Family Chat</title>
+  <meta name="description" content="Muon Noi Chat v1.0: encrypted family chat, group creation, and voice/video preview with privacy-first design." />
   <link rel="canonical" href="https://chat.muonnoi.org/" />
+  <meta property="og:title" content="chat.muonnoi.org v1.0 — E2EE Family Chat" />
+  <meta property="og:description" content="Encrypted family messaging for the Muon Noi ecosystem with privacy-first principles." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://chat.muonnoi.org/" />
   <link rel="stylesheet" href="/assets/ui.css?v=1.0.0" />
 </head>
 <body class="mn-body">
@@ -38,12 +42,12 @@
     <div class="mn-wrap">
       <section class="mn-section mn-glass" style="border-radius:22px;padding:16px;">
         <h1 class="mn-h1" style="margin:0;">
-          <span data-lang="vi">Nhóm chat gia đình (demo E2EE)</span>
-          <span data-lang="en">Family group chat (E2EE demo)</span>
+          <span data-lang="vi">Nhóm chat gia đình (E2EE v1.0)</span>
+          <span data-lang="en">Family group chat (E2EE v1.0)</span>
         </h1>
         <p class="mn-sub" style="margin-top:8px;">
-          <span data-lang="vi">Mọi tin nhắn trong demo này được mã hóa cục bộ (AES-GCM) trước khi hiển thị. Server ở giai đoạn sau chỉ cần lưu ciphertext.</span>
-          <span data-lang="en">Messages in this demo are encrypted locally (AES-GCM) before display. In production, the server only stores ciphertext.</span>
+          <span data-lang="vi">Tin nhắn được mã hóa cục bộ (AES-GCM) trước khi hiển thị. Kiến trúc v1.0 ưu tiên lưu ciphertext ở phía server.</span>
+          <span data-lang="en">Messages are encrypted locally (AES-GCM) before display. v1.0 architecture prioritizes ciphertext storage on server-side.</span>
         </p>
       </section>
 
@@ -116,8 +120,8 @@
                 <span data-lang="vi">Start video</span><span data-lang="en">Start video</span>
               </button>
               <span class="mn-sub" id="chatCallStatus" style="margin:0;">
-                <span data-lang="vi">Chưa kết nối. (demo)</span>
-                <span data-lang="en">Not connected. (demo)</span>
+                <span data-lang="vi">Chưa kết nối.</span>
+                <span data-lang="en">Not connected.</span>
               </span>
             </div>
 
@@ -134,7 +138,7 @@
   </main>
 
   <script src="/assets/ui.js?v=1.0.0" defer></script>
-  <script src="/assets/chat.js?v=20260326-1" defer></script>
+  <script src="/assets/chat.js?v=1.0.0" defer></script>
 </body>
 </html>
 
