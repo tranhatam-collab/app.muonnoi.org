@@ -64,11 +64,16 @@ html[data-theme="light"] .mn-top,html[data-theme="light"] .mn-topbar{background:
 textarea{min-height:100px;resize:vertical}
 .mn-field{display:flex;flex-direction:column;gap:6px}
 .mn-field__label{font-size:13px;color:var(--muted)}
+.mn-field__hint{font-size:12px;color:var(--muted);line-height:1.4;margin-top:2px}
+.mn-check{display:flex;gap:10px;align-items:flex-start}
+.mn-check input{margin-top:3px}
 .mn-seg{display:flex;flex-wrap:wrap;gap:8px}
 .mn-segBtn{min-height:34px;padding:0 10px;border:1px solid var(--line);border-radius:999px;background:transparent;color:var(--text)}
 .mn-segBtn.is-active{background:var(--panel)}
 .mn-actions{display:flex;gap:8px;flex-wrap:wrap}
 .mn-act{min-height:30px;padding:0 10px;border:1px solid var(--line);border-radius:999px;background:transparent;color:var(--text)}
+.mn-form{display:block}
+.mn-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
 .mn-footlinks{display:flex;gap:8px;flex-wrap:wrap}
 .mn-footlinks__a{min-height:34px;padding:0 10px;border:1px solid var(--line);border-radius:999px;background:var(--panel);display:inline-flex;align-items:center;text-decoration:none}
 .mn-footer{border-top:1px solid var(--line);margin-top:22px}

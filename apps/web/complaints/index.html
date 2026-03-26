@@ -90,8 +90,8 @@
 
             <form id="complaintForm" class="mn-form" style="margin-top:14px; display:grid; gap:10px;">
               <div class="mn-grid" style="grid-template-columns:repeat(12,1fr); gap:10px;">
-                <label class="mn-field" style="grid-column:span 12;">
-                  <span class="mn-field__label">Loại báo cáo</span>
+                <label class="mn-field" style="grid-column:span 6;">
+                  <span class="mn-field__label">Loại sự cố</span>
                   <select class="mn-input" name="type" required>
                     <option value="">Chọn loại</option>
                     <option value="spam">Spam / Bot</option>
@@ -106,42 +106,40 @@
                   </select>
                 </label>
 
-                <label class="mn-field" style="grid-column:span 12;">
-                  <span class="mn-field__label">Đối tượng bị báo cáo</span>
-                  <select class="mn-input" name="targetKind" required>
-                    <option value="">Chọn đối tượng</option>
-                    <option value="user">Tài khoản (u/…)</option>
-                    <option value="post">Bài viết (p/…)</option>
-                    <option value="video">Video (v/…)</option>
-                    <option value="market">Sản phẩm/đơn (m/…)</option>
-                    <option value="message">Tin nhắn / cuộc gọi</option>
-                    <option value="other">Khác</option>
+                <label class="mn-field" style="grid-column:span 6;">
+                  <span class="mn-field__label">Mức độ</span>
+                  <select class="mn-input" name="level" required>
+                    <option value="">Chọn mức</option>
+                    <option value="low">Nhẹ</option>
+                    <option value="medium">Trung bình</option>
+                    <option value="high">Nghiêm trọng</option>
+                    <option value="critical">Cực kỳ nghiêm trọng</option>
                   </select>
                 </label>
 
                 <label class="mn-field" style="grid-column:span 12;">
-                  <span class="mn-field__label">Link đối tượng (bắt buộc nếu có)</span>
-                  <input class="mn-input" type="url" name="targetUrl" placeholder="https://app.muonnoi.org/p/xxxx hoặc /u/handle" />
-                  <span class="mn-field__hint">Ưu tiên link sạch trong hệ thống. Nếu không có, mô tả rõ.</span>
+                  <span class="mn-field__label">Liên quan đến (URL hoặc @)</span>
+                  <input class="mn-input" type="text" name="related" placeholder="Ví dụ: https://app.muonnoi.org/p/xxxx hoặc @username" required />
+                  <span class="mn-field__hint">Ưu tiên link sạch trong hệ thống. Nếu không có, ghi @/handle rõ ràng.</span>
                 </label>
 
                 <label class="mn-field" style="grid-column:span 12;">
-                  <span class="mn-field__label">Mô tả sự việc</span>
-                  <textarea class="mn-input" name="details" rows="6" required placeholder="Mô tả ngắn, đúng sự thật: xảy ra khi nào, ở đâu, ai, làm gì..."></textarea>
-                  <span class="mn-field__hint">Gợi ý: “Ngày… lúc… tài khoản … đã … link …”.</span>
+                  <span class="mn-field__label">Nội dung sự việc</span>
+                  <textarea class="mn-input" name="details" rows="5" required placeholder="Mô tả ngắn gọn (tối đa ~800 ký tự), đúng sự thật: xảy ra khi nào, ở đâu, ai, làm gì…"></textarea>
+                  <span class="mn-field__hint">Không gửi mã độc, không cố ý spam. MN sẽ xử lý theo tiêu chuẩn an toàn.</span>
                 </label>
 
-                <label class="mn-field" style="grid-column:span 12;">
-                  <span class="mn-field__label">Bằng chứng (link ảnh/video/tài liệu)</span>
-                  <textarea class="mn-input" name="evidence" rows="3" placeholder="Dán link (Google Drive, iCloud, hoặc nơi lưu trữ). Mỗi link một dòng."></textarea>
-                  <span class="mn-field__hint">Giai đoạn sau sẽ có upload ký số. Hiện tại dùng link ngoài.</span>
-                </label>
+                <div class="mn-grid" style="grid-column:span 12; grid-template-columns:repeat(12,1fr); gap:10px;">
+                  <label class="mn-field" style="grid-column:span 6;">
+                    <span class="mn-field__label">Email liên hệ (tuỳ chọn)</span>
+                    <input class="mn-input" type="email" name="email" placeholder="you@example.com" autocomplete="email" />
+                  </label>
 
-                <label class="mn-field" style="grid-column:span 12;">
-                  <span class="mn-field__label">Email liên hệ (tuỳ chọn)</span>
-                  <input class="mn-input" type="email" name="email" placeholder="you@domain.com" autocomplete="email" />
-                  <span class="mn-field__hint">Không bắt buộc. Nếu để trống, bạn vẫn nhận được mã tham chiếu ngay.</span>
-                </label>
+                  <label class="mn-field" style="grid-column:span 6;">
+                    <span class="mn-field__label">Bằng chứng (link, tuỳ chọn)</span>
+                    <input class="mn-input" type="url" name="evidence" placeholder="https://..." />
+                  </label>
+                </div>
 
                 <label class="mn-field" style="grid-column:span 12;">
                   <span class="mn-field__label">Xác nhận</span>
@@ -152,16 +150,13 @@
                 </label>
               </div>
 
-              <div class="mn-row" style="display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-top:4px;">
+              <div class="mn-row" style="justify-content:flex-end; margin-top:4px;">
+                <button class="mn-btn mn-btn--ghost" type="button" id="resetBtn">
+                  Xoá
+                </button>
                 <button class="mn-btn mn-btn--primary" type="submit">
                   Gửi báo cáo
                 </button>
-                <button class="mn-btn mn-btn--ghost" type="button" id="resetBtn">
-                  Xoá form
-                </button>
-                <a class="mn-btn mn-btn--ghost" href="https://app.muonnoi.org/security/">
-                  Xem hướng dẫn an toàn
-                </a>
               </div>
 
               <div id="resultBox" class="mn-glass" style="display:none; border-radius:14px; padding:12px; margin-top:10px;">
