@@ -1,154 +1,84 @@
-/* apps/web/assets/ui.js
-   MUON NOI — UI Controller (No hash, no router)
-   - Mobile drawer stable (no stuck)
-   - Theme dark/light saved
-   - Language VI/EN saved (UI label only for now)
-   - No tracking, no libs
-*/
-
-(() => {
-  "use strict";
-
-  const $ = (s, el = document) => el.querySelector(s);
-
-  function safeSetAttr(el, k, v){ if (el) el.setAttribute(k, v); }
-  function safeText(el, v){ if (el) el.textContent = String(v ?? ""); }
-
-  const KEY_THEME = "mn_theme";
-  const KEY_LANG  = "mn_lang";
-
-  // Elements expected from apps/web/index.html
-  const burger = $("#mnBurger");
-  const mobile = $("#mnMobile");
-  const themeBtn = $("#themeBtn");
-  const langBtn = $("#langBtn");
-
-  function getStored(k){
-    try { return localStorage.getItem(k); } catch { return null; }
-  }
-  function setStored(k,v){
-    try { localStorage.setItem(k, v); } catch {}
-  }
-
-  function detectTheme(){
-    const saved = getStored(KEY_THEME);
-    if (saved === "dark" || saved === "light") return saved;
-    // Default dark (your system tone)
-    return "dark";
-  }
-
-  function applyTheme(t){
-    const theme = (t === "light") ? "light" : "dark";
-    safeSetAttr(document.documentElement, "data-theme", theme);
-    setStored(KEY_THEME, theme);
-    // Button icon (simple)
-    safeText(themeBtn, theme === "dark" ? "◐" : "◑");
-    // Meta theme-color
-    const m = document.querySelector('meta[name="theme-color"]');
-    if (m) m.setAttribute("content", theme === "dark" ? "#0b0f0c" : "#eef2f6");
-  }
-
-  function toggleTheme(){
-    const cur = document.documentElement.getAttribute("data-theme") || "dark";
-    applyTheme(cur === "dark" ? "light" : "dark");
-  }
-
-  function detectLang(){
-    const saved = getStored(KEY_LANG);
-    if (saved === "vi" || saved === "en") return saved;
-    const nav = (navigator.language || "en").toLowerCase();
-    return nav.startsWith("vi") ? "vi" : "en";
-  }
-
-  function applyLang(l){
-    const lang = (l === "vi") ? "vi" : "en";
-    setStored(KEY_LANG, lang);
-    document.documentElement.lang = lang;
-    // UI label only (strings are currently VI in HTML; you can i18n later)
-    safeText(langBtn, lang.toUpperCase());
-  }
-
-  // Overlay: one node to prevent “kẹt”
-  let overlay = null;
-  function ensureOverlay(){
-    if (overlay && overlay.isConnected) return overlay;
-    overlay = document.createElement("div");
-    overlay.className = "overlay";
-    overlay.style.zIndex = "1500";
-    overlay.style.display = "none";
-    overlay.addEventListener("click", closeMobile);
-    document.body.appendChild(overlay);
-    return overlay;
-  }
-
-  function openMobile(){
-    if (!mobile) return;
-    ensureOverlay().style.display = "block";
-    mobile.hidden = false;
-    document.documentElement.style.overflow = "hidden";
-  }
-
-  function closeMobile(){
-    if (!mobile) return;
-    if (overlay) overlay.style.display = "none";
-    mobile.hidden = true;
-    document.documentElement.style.overflow = "";
-  }
-
-  function toggleMobile(){
-    if (!mobile) return;
-    if (mobile.hidden) openMobile();
-    else closeMobile();
-  }
-
-  // Toast (optional)
-  function toast(msg){
-    const t = document.createElement("div");
-    t.className = "mn-toast";
-    t.textContent = String(msg || "");
-    document.body.appendChild(t);
-    requestAnimationFrame(() => t.classList.add("is-on"));
-    setTimeout(() => t.classList.remove("is-on"), 2400);
-    setTimeout(() => { try{t.remove();}catch{} }, 3000);
-  }
-
-  function bind(){
-    if (burger) burger.addEventListener("click", toggleMobile);
-    if (themeBtn) themeBtn.addEventListener("click", toggleTheme);
-    if (langBtn) langBtn.addEventListener("click", () => {
-      const cur = (getStored(KEY_LANG) || detectLang());
-      applyLang(cur === "vi" ? "en" : "vi");
-      toast((cur === "vi") ? "Switched to English" : "Đã chuyển sang Tiếng Việt");
-    });
-
-    // ESC closes drawer
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") closeMobile();
-    });
-
-    // Close mobile drawer on navigation click
-    document.addEventListener("click", (e) => {
-      const a = e.target && e.target.closest ? e.target.closest("a") : null;
-      if (!a) return;
-      // internal link => close
-      const href = a.getAttribute("href") || "";
-      if (href.startsWith("/")) closeMobile();
-    }, { capture:true });
-
-    // If user hits /#something from old links, normalize:
-    if (location.hash && location.hash !== "#"){
-      // Do NOT keep hash routing (your rule)
-      try { history.replaceState({}, "", location.pathname + location.search); } catch {}
-      try { location.hash = ""; } catch {}
-    }
-  }
-
-  // Init
-  (function init(){
-    applyTheme(detectTheme());
-    applyLang(detectLang());
-    if (mobile) mobile.hidden = true;
-    bind();
-  })();
-
-})();
+:root{
+  --bg:#0a0f14;
+  --bg2:#111823;
+  --panel:rgba(255,255,255,.05);
+  --line:rgba(255,255,255,.14);
+  --text:#eef4fb;
+  --muted:rgba(238,244,251,.74);
+  --brand:#8be9ff;
+  --radius:18px;
+}
+html[data-theme="light"]{
+  --bg:#f4f7fb;
+  --bg2:#eaf1f8;
+  --panel:rgba(16,24,32,.05);
+  --line:rgba(16,24,32,.14);
+  --text:#101820;
+  --muted:rgba(16,24,32,.72);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body.mn-body{
+  color:var(--text);
+  font:16px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  background:linear-gradient(180deg,var(--bg),var(--bg2));
+}
+a{color:inherit}
+.mn-bg{position:fixed;inset:0;z-index:-1;pointer-events:none}
+.mn-bg__grid{position:absolute;inset:0;opacity:.15;background-image:linear-gradient(to right,rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(to bottom,rgba(255,255,255,.05) 1px,transparent 1px);background-size:44px 44px}
+.mn-bg__glow,.mn-bg__sweep,.mn-bg__noise{display:none}
+.mn-top,.mn-topbar{position:sticky;top:0;z-index:20;background:rgba(10,15,20,.72);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+html[data-theme="light"] .mn-top,html[data-theme="light"] .mn-topbar{background:rgba(244,247,251,.86)}
+.mn-top__inner,.mn-topbar__inner{max-width:1240px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;gap:12px}
+.mn-brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+.mn-mark,.mn-brand__mark{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;font-weight:900;background:linear-gradient(135deg,#6cc7ff,#9ca6ff);color:#081018}
+.mn-brand__stack,.mn-brand__text{display:flex;flex-direction:column}
+.mn-brand__title,.mn-brand__name{font-weight:800}
+.mn-brand__sub{font-size:13px;color:var(--muted)}
+.mn-nav,.mn-mainNav{display:flex;gap:8px;flex-wrap:wrap}
+.mn-pill,.mn-mainNav a{display:inline-flex;align-items:center;min-height:38px;padding:0 12px;border:1px solid var(--line);border-radius:999px;background:var(--panel);text-decoration:none}
+.mn-pill.is-active{border-color:var(--brand)}
+.mn-top__actions,.mn-topbar__actions{margin-left:auto;display:flex;gap:8px;align-items:center}
+.mn-btn,.mn-iconBtn,.mn-langBtn{border:1px solid var(--line);background:var(--panel);color:var(--text);border-radius:999px;min-height:38px;padding:0 14px;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.mn-btn--primary{border-color:rgba(139,233,255,.45)}
+.mn-btn--ghost{background:transparent}
+.mn-burger{width:38px;height:38px;border:1px solid var(--line);border-radius:10px;background:var(--panel);display:grid;place-items:center}
+.mn-burger span{display:block;width:16px;height:2px;background:currentColor;margin:1px 0}
+.mn-mobile,.mn-mobileMenu{padding:8px 16px 14px;border-top:1px solid var(--line);background:rgba(10,15,20,.92)}
+.mn-mobile__item,.mn-mobileMenu__links a{display:flex;min-height:38px;padding:0 12px;border:1px solid var(--line);border-radius:10px;background:var(--panel);align-items:center;text-decoration:none;margin-top:8px}
+.mn-main,.mn-page{padding:20px 0 36px}
+.mn-wrap,.mn-shell{max-width:1240px;margin:0 auto;padding:0 16px}
+.mn-section{margin:14px 0}
+.mn-glass{border:1px solid var(--line);border-radius:var(--radius);background:var(--panel)}
+.mn-h1{margin:0;font-size:clamp(34px,5vw,56px);line-height:1.02;letter-spacing:-.03em}
+.mn-h2{margin:0;font-size:22px}
+.mn-h3{margin:0;font-size:18px}
+.mn-sub,.mn-muted{color:var(--muted)}
+.mn-hero__cta,.hero-actions,.mn-inline{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.mn-chip,.mn-pillMini{display:inline-flex;align-items:center;min-height:30px;padding:0 10px;border-radius:999px;border:1px solid var(--line);background:var(--panel);font-size:13px}
+.mn-grid,.mn-cardGrid{display:grid;gap:12px}
+.mn-linkcard,.mn-module,.mn-infoCard,.mn-miniCard,.mn-tile,.mn-statCard{padding:14px;border:1px solid var(--line);border-radius:14px;background:var(--panel)}
+.mn-input,.search-input,textarea,select,input[type="text"],input[type="email"],input[type="url"]{
+  width:100%;min-height:42px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.03);color:var(--text);padding:10px 12px
+}
+textarea{min-height:100px;resize:vertical}
+.mn-field{display:flex;flex-direction:column;gap:6px}
+.mn-field__label{font-size:13px;color:var(--muted)}
+.mn-seg{display:flex;flex-wrap:wrap;gap:8px}
+.mn-segBtn{min-height:34px;padding:0 10px;border:1px solid var(--line);border-radius:999px;background:transparent;color:var(--text)}
+.mn-segBtn.is-active{background:var(--panel)}
+.mn-actions{display:flex;gap:8px;flex-wrap:wrap}
+.mn-act{min-height:30px;padding:0 10px;border:1px solid var(--line);border-radius:999px;background:transparent;color:var(--text)}
+.mn-footlinks{display:flex;gap:8px;flex-wrap:wrap}
+.mn-footlinks__a{min-height:34px;padding:0 10px;border:1px solid var(--line);border-radius:999px;background:var(--panel);display:inline-flex;align-items:center;text-decoration:none}
+.mn-footer{border-top:1px solid var(--line);margin-top:22px}
+.mn-footer__inner{max-width:1240px;margin:0 auto;padding:16px;display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}
+.mn-footer__brand{display:flex;align-items:center;gap:10px}
+.mn-footer__right{display:flex;gap:10px;flex-wrap:wrap}
+.mn-footer__link{text-decoration:none;color:var(--muted)}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.45)}
+.mn-toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);padding:8px 12px;border-radius:10px;border:1px solid var(--line);background:var(--panel);opacity:0;transition:.2s}
+.mn-toast.is-on{opacity:1}
+@media (max-width:980px){
+  .mn-nav,.mn-mainNav{display:none}
+}
