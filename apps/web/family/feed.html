@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="vi" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#0b0f0c" />
+  <title>Family Feed — Muon Noi</title>
+  <meta name="description" content="Family operating space for families: no drama, no toxic, action-first advice." />
+  <link rel="canonical" href="https://family.muonnoi.org/family/feed" />
+  <link rel="stylesheet" href="/assets/ui.css?v=20260303-1" />
+</head>
+<body class="mn-body">
+  <header class="mn-top" role="banner">
+    <div class="mn-top__inner">
+      <a class="mn-brand" href="/family/" rel="noopener">
+        <span class="mn-mark" aria-hidden="true">MN</span>
+        <span class="mn-brand__stack">
+          <span class="mn-brand__title" data-lang="vi">Family Feed</span>
+          <span class="mn-brand__title" data-lang="en">Family Feed</span>
+          <span class="mn-brand__sub" data-lang="vi">Living system, khong on ao xa hoi</span>
+          <span class="mn-brand__sub" data-lang="en">Living system, not social noise</span>
+        </span>
+      </a>
+      <nav class="mn-nav" aria-label="Family navigation">
+        <a class="mn-pill" href="/family/">Home</a>
+        <a class="mn-pill is-active" href="/family/feed">Feed</a>
+        <a class="mn-pill" href="/family/topics">Topics</a>
+        <a class="mn-pill" href="/family/rooms">Rooms</a>
+        <a class="mn-pill" href="/family/tools">Tools</a>
+      </nav>
+      <div class="mn-top__actions">
+        <button class="mn-btn mn-btn--ghost" id="themeBtn" type="button">◐</button>
+        <button class="mn-btn mn-btn--ghost" id="langBtn" type="button">VI</button>
+        <button class="mn-burger" id="mnBurger" type="button" aria-label="Open menu"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+    <div class="mn-mobile" id="mnMobile" hidden>
+      <a class="mn-mobile__item" href="/family/">Home</a>
+      <a class="mn-mobile__item" href="/family/topics">Topics</a>
+      <a class="mn-mobile__item" href="/family/rooms">Rooms</a>
+      <a class="mn-mobile__item" href="/family/guides">Guides</a>
+    </div>
+  </header>
+
+  <main class="mn-main" role="main">
+    <div class="mn-wrap">
+      <section class="mn-section mn-glass" style="border-radius:22px;padding:16px;">
+        <h1 class="mn-h1">
+          <span data-lang="vi">Family Feed</span>
+          <span data-lang="en">Family Feed</span>
+        </h1>
+        <p class="mn-sub">
+          <span data-lang="vi">Tabs: Gia dinh cua ban • Dang quan tam • Nuoi day con • Tai chinh gia dinh • Moi quan he • AI ho tro.</span>
+          <span data-lang="en">Tabs: Your family • Currently caring about • Parenting • Family finance • Relationships • AI assistance.</span>
+        </p>
+        <div class="mn-hero__cta">
+          <span class="mn-chip mn-chip--soft" data-lang="vi">Huu ich</span>
+          <span class="mn-chip mn-chip--soft" data-lang="en">Helpful</span>
+          <span class="mn-chip mn-chip--soft" data-lang="vi">Dong cam</span>
+          <span class="mn-chip mn-chip--soft" data-lang="en">Empathy</span>
+          <span class="mn-chip mn-chip--soft" data-lang="vi">Can loi khuyen</span>
+          <span class="mn-chip mn-chip--soft" data-lang="en">Advice</span>
+          <span class="mn-chip mn-chip--soft" data-lang="vi">Da ap dung</span>
+          <span class="mn-chip mn-chip--soft" data-lang="en">Applied</span>
+        </div>
+      </section>
+
+      <section class="mn-section">
+        <div style="border-radius:22px;padding:16px;" class="mn-glass">
+          <div class="mn-sub" style="margin-bottom:10px;">
+            <span data-lang="vi">Chon tab de xem noi dung phu hop boi canh gia dinh.</span>
+            <span data-lang="en">Choose a tab to see context-relevant family content.</span>
+          </div>
+          <div class="mn-seg" role="tablist" aria-label="Family feed tabs">
+            <button class="mn-segBtn is-active" type="button" data-family-tab="my">
+              <span data-lang="vi">Gia dinh cua ban</span><span data-lang="en">Your family</span>
+            </button>
+            <button class="mn-segBtn" type="button" data-family-tab="care">
+              <span data-lang="vi">Dang quan tam</span><span data-lang="en">Caring about</span>
+            </button>
+            <button class="mn-segBtn" type="button" data-family-tab="parenting">
+              <span data-lang="vi">Nuoi day con</span><span data-lang="en">Parenting</span>
+            </button>
+            <button class="mn-segBtn" type="button" data-family-tab="finance">
+              <span data-lang="vi">Tai chinh gia dinh</span><span data-lang="en">Family finance</span>
+            </button>
+            <button class="mn-segBtn" type="button" data-family-tab="relationship">
+              <span data-lang="vi">Moi quan he</span><span data-lang="en">Relationships</span>
+            </button>
+            <button class="mn-segBtn" type="button" data-family-tab="ai">
+              <span data-lang="vi">AI ho tro</span><span data-lang="en">AI assistance</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section class="mn-section">
+        <div class="mn-grid" style="grid-template-columns:repeat(12,1fr);gap:12px;">
+          <article class="mn-glass" style="grid-column:span 12;border-radius:18px;padding:14px;">
+            <h2 class="mn-h2" style="margin:0;">
+              <span data-lang="vi">Composer</span>
+              <span data-lang="en">Composer</span>
+            </h2>
+            <div style="height:8px;"></div>
+            <label class="mn-field" style="margin:0;">
+              <span class="mn-field__label" data-lang="vi">Chia se van de that, ngu canh that, mong muon that.</span>
+              <span class="mn-field__label" data-lang="en">Share real context, real needs, real intent.</span>
+              <textarea class="mn-input" id="familyComposerText" rows="4" placeholder="Vi du: Con khong tap trung khi hoc bai..."></textarea>
+            </label>
+            <div class="mn-inline" style="margin-top:10px;">
+              <button class="mn-btn mn-btn--primary" type="button" id="familyBtnPost" data-family-action="post">
+                <span data-lang="vi">Dang</span><span data-lang="en">Post</span>
+              </button>
+              <div id="familyComposerResult" style="display:none;border-radius:14px;padding:12px;margin-left:auto;" class="mn-glass"></div>
+            </div>
+          </article>
+
+          <article class="mn-glass" style="grid-column:span 12;border-radius:18px;padding:14px;">
+            <h2 class="mn-h2" style="margin:0;">
+              <span data-lang="vi">AI Assist</span>
+              <span data-lang="en">AI Assist</span>
+            </h2>
+            <div style="height:8px;"></div>
+            <p class="mn-sub" style="margin:0;">
+              <span data-lang="vi">Tom tat van de, nhan dien cam xuc, de xuat 3 huong giai quyet, va gom bai tuong tu.</span>
+              <span data-lang="en">Summarize, detect emotions, suggest 3 practical directions, and cluster similar cases.</span>
+            </p>
+          </article>
+
+          <article class="mn-glass" style="grid-column:span 12;border-radius:18px;padding:14px;">
+            <h2 class="mn-h2" style="margin:0;">
+              <span data-lang="vi">Feed</span>
+              <span data-lang="en">Feed</span>
+            </h2>
+            <div style="height:12px;"></div>
+            <div id="familyFeedList" style="display:grid;gap:12px;"></div>
+          </article>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script src="/assets/ui.js?v=20260303-1" defer></script>
+  <script src="/assets/stage-pages.js?v=20260324-1" defer></script>
+</body>
+</html>

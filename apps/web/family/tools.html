@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="vi" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#0b0f0c" />
+  <title>Family AI Tools — Muon Noi</title>
+  <meta name="description" content="AI tools for families: practical advice, conflict analysis, finance planning, and routine scheduling." />
+  <link rel="canonical" href="https://family.muonnoi.org/family/tools" />
+  <link rel="stylesheet" href="/assets/ui.css?v=20260303-1" />
+</head>
+<body class="mn-body">
+  <header class="mn-top" role="banner">
+    <div class="mn-top__inner">
+      <a class="mn-brand" href="/family/" rel="noopener">
+        <span class="mn-mark" aria-hidden="true">MN</span>
+        <span class="mn-brand__stack">
+          <span class="mn-brand__title" data-lang="vi">Family AI Tools</span>
+          <span class="mn-brand__title" data-lang="en">Family AI Tools</span>
+          <span class="mn-brand__sub" data-lang="vi">AI ho tro nhung giu gia tri con nguoi</span>
+          <span class="mn-brand__sub" data-lang="en">AI assistance with human values</span>
+        </span>
+      </a>
+      <nav class="mn-nav" aria-label="Family navigation">
+        <a class="mn-pill" href="/family/">Home</a>
+        <a class="mn-pill" href="/family/feed">Feed</a>
+        <a class="mn-pill" href="/family/guides">Guides</a>
+        <a class="mn-pill is-active" href="/family/tools">Tools</a>
+        <a class="mn-pill" href="/family/family-profile">Family Profile</a>
+      </nav>
+      <div class="mn-top__actions">
+        <button class="mn-btn mn-btn--ghost" id="themeBtn" type="button">◐</button>
+        <button class="mn-btn mn-btn--ghost" id="langBtn" type="button">VI</button>
+        <button class="mn-burger" id="mnBurger" type="button" aria-label="Open menu"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+    <div class="mn-mobile" id="mnMobile" hidden>
+      <a class="mn-mobile__item" href="/family/">Home</a>
+      <a class="mn-mobile__item" href="/family/feed">Feed</a>
+      <a class="mn-mobile__item" href="/family/guides">Guides</a>
+      <a class="mn-mobile__item" href="/family/family-profile">Profile</a>
+    </div>
+  </header>
+
+  <main class="mn-main" role="main">
+    <div class="mn-wrap">
+      <section class="mn-section mn-glass" style="border-radius:22px;padding:16px;">
+        <h1 class="mn-h1">
+          <span data-lang="vi">AI Tools</span>
+          <span data-lang="en">AI Tools</span>
+        </h1>
+        <p class="mn-sub">
+          <span data-lang="vi">AI tu van nuoi day con • AI phan tich mau thuan gia dinh • AI goi y giai phap • AI ke hoach tai chinh • AI lich sinh hoat.</span>
+          <span data-lang="en">Parenting advice • Conflict analysis • Solution ideas • Family finance planning • Routine scheduling.</span>
+        </p>
+      </section>
+
+      <section class="mn-section">
+        <div class="mn-grid" style="grid-template-columns:repeat(12,1fr);gap:12px;">
+          <article class="mn-glass" style="grid-column:span 12;border-radius:18px;padding:14px;">
+            <h2 class="mn-h2" style="margin:0;">
+              <span data-lang="vi">Run AI Tool (demo)</span>
+              <span data-lang="en">Run AI Tool (demo)</span>
+            </h2>
+            <div style="height:10px;"></div>
+
+            <div class="mn-inline" style="gap:10px;">
+              <label style="display:flex;flex-direction:column;gap:6px;">
+                <span class="mn-field__label" data-lang="vi">Chon tool</span>
+                <span class="mn-field__label" data-lang="en">Tool</span>
+                <select class="mn-input" id="familyToolType">
+                  <option value="parenting" data-lang="vi">Nuoi day con</option>
+                  <option value="parenting" data-lang="en">Parenting</option>
+                  <option value="conflict" data-lang="vi">Phan tich mau thuan</option>
+                  <option value="conflict" data-lang="en">Conflict analyzer</option>
+                  <option value="finance" data-lang="vi">Ke hoach tai chinh</option>
+                  <option value="finance" data-lang="en">Finance planner</option>
+                  <option value="schedule" data-lang="vi">Lich sinh hoat</option>
+                  <option value="schedule" data-lang="en">Routine scheduler</option>
+                </select>
+              </label>
+            </div>
+
+            <div style="height:10px;"></div>
+            <label class="mn-field" style="margin:0;">
+              <span class="mn-field__label" data-lang="vi">Mô tả ngắn tình huống</span>
+              <span class="mn-field__label" data-lang="en">Short situation description</span>
+              <textarea class="mn-input" id="familyToolInput" rows="5" placeholder="VD: Con khó vào nếp, hay cáu..."></textarea>
+            </label>
+
+            <div class="mn-inline" style="margin-top:10px;">
+              <button class="mn-btn mn-btn--primary" type="button" id="familyToolRun">
+                <span data-lang="vi">Chạy demo AI</span>
+                <span data-lang="en">Run AI demo</span>
+              </button>
+            </div>
+
+            <div id="familyToolResult" style="display:block;margin-top:12px;border-radius:18px;padding:14px;" class="mn-glass"></div>
+          </article>
+
+          <article class="mn-glass" style="grid-column:span 12;border-radius:18px;padding:14px;">
+            <h2 class="mn-h2" style="margin:0;">
+              <span data-lang="vi">Safety boundary</span>
+              <span data-lang="en">Safety boundary</span>
+            </h2>
+            <div style="height:8px;"></div>
+            <p class="mn-sub" style="margin:0;">
+              <span data-lang="vi">AI khong thay the con nguoi. Moi goi y can duoc xac nhan va ap dung theo boi canh gia dinh.</span>
+              <span data-lang="en">AI doesn't replace humans. Suggestions should be verified and applied in context.</span>
+            </p>
+          </article>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script src="/assets/ui.js?v=20260303-1" defer></script>
+  <script src="/assets/stage-pages.js?v=20260324-1" defer></script>
+</body>
+</html>

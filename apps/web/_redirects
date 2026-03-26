@@ -4,4 +4,25 @@ https://www.app.muonnoi.org/* https://app.muonnoi.org/:splat 301
 # Keep / as is
 / / 200
 
-# (No hash routing required)
+# Clean-link aliases used by the static shell
+/explore /feed/ 200
+/start /join/ 200
+/method /security/ 200
+/family /family/index.html 200
+/family/feed /family/feed.html 200
+/family/topics /family/topics.html 200
+/family/rooms /family/rooms.html 200
+/family/guides /family/guides.html 200
+/family/tools /family/tools.html 200
+/family/family-profile /family/profile.html 200
+/chat /chat/index.html 200
+/legal/privacy /legal/privacy.html 200
+/legal/terms /legal/terms.html 200
+/legal/security /legal/security.html 200
+/legal/abuse /legal/abuse.html 200
+/p/* /feed/ 200
+/u/* /feed/ 200
+/m/* /feed/ 200
+/v/* /create/ 200
+/d/* /create/ 200
+/c/* /create/ 200

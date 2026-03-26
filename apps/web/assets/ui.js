@@ -66,6 +66,20 @@
     document.documentElement.lang = lang;
     // UI label only (strings are currently VI in HTML; you can i18n later)
     safeText(langBtn, lang.toUpperCase());
+
+    // If a page provides bilingual blocks, toggle them by `data-lang`.
+    // This is safe for pages that don't use `data-lang`.
+    try {
+      document.querySelectorAll("[data-lang]").forEach((el) => {
+        const d = el.getAttribute("data-lang");
+        el.hidden = d !== lang;
+      });
+    } catch {}
+
+    // Notify pages that render dynamic bilingual blocks.
+    try {
+      window.dispatchEvent(new CustomEvent("mn_lang_changed", { detail: { lang } }));
+    } catch {}
   }
 
   // Overlay: one node to prevent “kẹt”
