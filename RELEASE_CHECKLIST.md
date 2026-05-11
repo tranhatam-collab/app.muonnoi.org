@@ -6,7 +6,7 @@ Repo: `muonnoi.org/app.muonnoi.org`
 ## Build checks
 
 - [x] iOS release build passes (2026-05-11 09:38 ICT: npm run build:ios:sim succeeded)
-- [ ] Android release build passes (blocked on Gradle config)
+- [ ] Android release build passes (blocked: Android SDK not found — ANDROID_HOME not set)
 - [x] Capacitor sync is clean
 
 ## Product checks
@@ -57,7 +57,7 @@ Date: 2026-05-11
 - ⏳ 2026-05-11 10:21 ICT: Android build started fresh (PID 57670) with full output capture to `/tmp/android_build_full.log`; previous build (PID 54709) completed with exit code 0 but output not captured due to `| tail` pipe.
 - [x] 2026-05-07 22:05 ICT: source-of-truth guard rechecked; root, App, AI, and Docs `git fsck --no-progress --connectivity-only` returned exit 0. Root emitted dangling tree lines only; no connectivity blocker was reported.
 - [x] 2026-05-07 22:05 ICT: `muonnoi-app`, `muonnoi-ai`, `muonnoi-ai-machine`, and `muonnoi app` still declare `do-not-deploy`.
-- [ ] 2026-05-07 22:05 ICT: Android build remains blocked because `java -version` and `/usr/libexec/java_home -V` cannot find a Java Runtime.
+- [ ] 2026-05-11 10:40 ICT: Android build failed with "SDK location not found. Define a valid SDK location with an ANDROID_HOME environment variable or by setting the sdk.dir path in your project's local properties file." True blocker: Android SDK not installed on this machine. Requires: (1) Android SDK installation (via Android Studio or `sdkmanager`), (2) ANDROID_HOME environment variable set, (3) local.properties configured with sdk.dir path.
 - [x] 2026-05-07 22:24 ICT: AI Pages preview `https://b28c0d15.nhachung-landing.pages.dev/` still returns CSP with `https://api.muonnoi.org`, and the local AI artifact scan points to `https://api.muonnoi.org`.
 - [ ] 2026-05-07 22:24 ICT: AI Pages live parity still blocked because `https://ai.muonnoi.org/` serves CSP `connect-src 'self' https://api.nhachung.org`; `dig +short CNAME ai.muonnoi.org` returns empty and `dig +short ai.muonnoi.org` returns Cloudflare edge A records.
 - [x] 2026-05-07 22:51 ICT: `/join/` HTTP/CSP/API contract rechecked; live `/join/` and live `join.js` return HTTP 200, local `join.js` syntax passes, register preflight returns HTTP 204, and unauthenticated `/api/me` returns HTTP 401.
