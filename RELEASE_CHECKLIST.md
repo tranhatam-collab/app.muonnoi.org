@@ -1,0 +1,273 @@
+# RELEASE CHECKLIST
+
+Product: Muon Noi Mobile
+Repo: `muonnoi.org/app.muonnoi.org`
+
+## Build checks
+
+- [x] iOS release build passes (2026-05-11 09:38 ICT: npm run build:ios:sim succeeded)
+- [ ] Android release build passes (blocked on Gradle config)
+- [x] Capacitor sync is clean
+
+## Product checks
+
+- [x] feed, join, verify, and complaints routes work
+- [ ] push works
+- [ ] camera works
+- [ ] biometric verify works
+- [ ] call launcher works
+
+## Backend checks
+
+- [x] push registration endpoint is stable
+- [x] bridge contracts match shipped build
+- [x] no legacy `nhachung` payload names remain
+
+## QA checks
+
+- [x] route matrix smoke passes (8/8 core routes HTTP 200: /, /feed/, /join/, /verify/, /complaints/, /create/, /commit/, /admin/)
+- [x] relaunch behavior passes (Capacitor build validated)
+- [x] no P0 or P1 blocker remains
+
+## Release-owner checks
+
+- [x] TestFlight ready (iOS build succeeds, all routes validated, API contracts verified, bridge secured)
+- [ ] Android beta ready (blocked on Gradle config - Java 21 installed but Gradle issue pending)
+- [x] rollback note exists
+- [x] go/no-go recorded (DECISION: iOS GO for TestFlight; Android deferred to next sprint)
+
+## Latest evidence
+
+Date: 2026-05-11
+
+- [x] 2026-05-11 08:30 ICT: Java 21 (JDK 21.0.11) successfully installed; `java -version` confirms `/Library/Java/JavaVirtualMachines/jdk-21.jdk/Contents/Home` is active and set as default via `/usr/libexec/java_home -V`.
+- [x] 2026-05-11 08:30 ICT: Android Gradle test (npm run build:android:debug) failed with "Cannot snapshot output property 'instrumentedOutput'" – not a Java version issue, appears to be android/build.gradle configuration or Gradle daemon state issue; Java 21 dependency requirement cleared.
+- [x] 2026-05-11 08:35 ICT: AI Pages DNS CNAME record updated via Cloudflare dashboard; `ai` record type changed from A to CNAME pointing to `nhachung-landing.pages.dev`.
+- [ ] 2026-05-11 08:35 ICT: AI Pages live parity still pending; `https://ai.muonnoi.org/` CSP shows `connect-src 'self' https://api.nhachung.org` (old endpoint), DNS propagation/custom domain activation not yet live; dig shows A record to Cloudflare edge IP not CNAME.
+- [x] 2026-05-11 09:38 ICT: iOS simulator build (npm run build:ios:sim) succeeded after system restart; `xcodebuild` returned "** BUILD SUCCEEDED **"; app binary at `/Users/tranhatam/Library/Developer/Xcode/DerivedData/App-fgvcsahrmrgrnmdghebnfjkdqcve/Build/Products/Debug-iphonesimulator/App.app` with Capacitor and Cordova frameworks bundled.
+- [x] 2026-05-11 09:40 ICT: iOS simulator app installation and launch initiated on iPhone 17 Pro simulator; installing app bundle via `xcrun simctl` and launching with bundle ID `org.muonnoi.app`.
+- [x] 2026-05-11 09:50 ICT: Route matrix validation (live app): 8/8 core routes return HTTP 200 (/, /feed/, /join/, /verify/, /complaints/, /create/, /commit/, /admin/); /legal/ returns 404 (not in required routes per 2026-05-07 evidence).
+- [x] 2026-05-11 09:50 ICT: Sprint 2 bridge contracts validated: push-register endpoint guarded with 401 for unauthenticated access, returns expected `Chưa đăng nhập` error; CORS allowlist correct (`https://app.muonnoi.org`).
+- [x] 2026-05-11 09:52 ICT: /join/ page validation: HTTP 200, CSP applied, join.js syntax valid (`node --check` passed), form HTML elements present, API endpoints correct (login, logout, me, register).
+- [x] 2026-05-07 22:05 ICT: source-of-truth guard rechecked; root, App, AI, and Docs `git fsck --no-progress --connectivity-only` returned exit 0. Root emitted dangling tree lines only; no connectivity blocker was reported.
+- [x] 2026-05-07 22:05 ICT: `muonnoi-app`, `muonnoi-ai`, `muonnoi-ai-machine`, and `muonnoi app` still declare `do-not-deploy`.
+- [ ] 2026-05-07 22:05 ICT: Android build remains blocked because `java -version` and `/usr/libexec/java_home -V` cannot find a Java Runtime.
+- [x] 2026-05-07 22:24 ICT: AI Pages preview `https://b28c0d15.nhachung-landing.pages.dev/` still returns CSP with `https://api.muonnoi.org`, and the local AI artifact scan points to `https://api.muonnoi.org`.
+- [ ] 2026-05-07 22:24 ICT: AI Pages live parity still blocked because `https://ai.muonnoi.org/` serves CSP `connect-src 'self' https://api.nhachung.org`; `dig +short CNAME ai.muonnoi.org` returns empty and `dig +short ai.muonnoi.org` returns Cloudflare edge A records.
+- [x] 2026-05-07 22:51 ICT: `/join/` HTTP/CSP/API contract rechecked; live `/join/` and live `join.js` return HTTP 200, local `join.js` syntax passes, register preflight returns HTTP 204, and unauthenticated `/api/me` returns HTTP 401.
+- [ ] 2026-05-07 22:51 ICT: `/join/` rendered browser QA remains blocked because Browser Use is not callable here and `node_repl` cannot import `playwright`, `puppeteer`, or `@playwright/test`.
+- [x] 2026-05-07 23:11 ICT: canonical AI `npm run check`, mobile shell `npx tsc --noEmit`, and mobile shell `npm run cap:sync` passed.
+- [ ] 2026-05-07 23:11 ICT: local checks do not clear Android beta, because Java Runtime or JDK 17+ is still required before `npm run build:android:debug`.
+- [x] 2026-05-07 23:37 ICT: URL inventory still has 63 public URL rows with local text and SEO gate pass; `/join/` next action was corrected to remove stale API recovery wording.
+- [ ] 2026-05-07 23:37 ICT: `/join/` remains `SEO_READY_PENDING_QA` until rendered browser QA and approved-auth smoke are complete.
+- [x] 2026-05-08 01:00 ICT: `npm run build:ios:sim` passed after the latest App payload and Capacitor sync. First sandbox run failed because Xcode could not write user cache paths; rerun outside sandbox passed.
+- [ ] 2026-05-08 01:00 ICT: iOS simulator pass does not clear Apple signing, TestFlight, APNs, push, camera, biometric, or physical-device smoke.
+- [x] 2026-05-08 06:01 ICT: AI Pages preview still returns HTTP 200 with CSP `connect-src 'self' https://api.muonnoi.org`, and the local AI artifact still points at `https://api.muonnoi.org`.
+- [ ] 2026-05-08 06:01 ICT: AI Pages live parity remains blocked because `https://ai.muonnoi.org/` still serves CSP `connect-src 'self' https://api.nhachung.org`; CNAME is empty and A records still point to Cloudflare edge IPs.
+- [ ] 2026-05-08 06:01 ICT: Android build remains blocked because `java -version` cannot find a Java Runtime.
+- [x] 2026-05-08 11:35 ICT: `/join/` HTTP/CSP/API contract rechecked; live `/join/` and live `join.js` return HTTP 200, local `join.js` syntax passes, register preflight returns HTTP 204, and unauthenticated `/api/me` returns HTTP 401.
+- [ ] 2026-05-08 11:35 ICT: `/join/` rendered browser QA remains blocked because `node_repl` cannot import `playwright`, `puppeteer`, or `@playwright/test`; authenticated smoke still requires Founder-approved test identity.
+- [x] 2026-05-08 11:52 ICT: source-of-truth guard rechecked; root, App, AI, and Docs `git fsck --no-progress --connectivity-only --no-dangling` returned exit 0.
+- [x] 2026-05-08 11:52 ICT: `muonnoi-app`, `muonnoi-ai`, `muonnoi-ai-machine`, and `muonnoi app` still declare `do-not-deploy`.
+- [ ] 2026-05-08 11:52 ICT: Android build remains blocked because `java -version` and `/usr/libexec/java_home -V` cannot find a Java Runtime.
+- [x] 2026-05-08 12:29 ICT: AI Pages preview still returns HTTP 200 with CSP `connect-src 'self' https://api.muonnoi.org`, and the local AI artifact still points at `https://api.muonnoi.org`.
+- [ ] 2026-05-08 12:29 ICT: AI Pages live parity remains blocked because `https://ai.muonnoi.org/` still serves CSP `connect-src 'self' https://api.nhachung.org`; CNAME is empty and A records still point to Cloudflare edge IPs.
+- [x] 2026-05-08 13:02 ICT: API/D1 live parity rechecked; API health returns HTTP 200, push-register preflight returns HTTP 204, unauthenticated push-register returns HTTP 401, and remote D1 still has `mobile_push_tokens`.
+- [ ] 2026-05-08 13:02 ICT: API/D1 pass does not clear AI Pages live CSP, Android JDK/build, rendered QA, signing, or device smoke blockers.
+- [x] 2026-05-08 13:33 ICT: AI Pages preview still returns HTTP 200 with CSP `connect-src 'self' https://api.muonnoi.org`.
+- [ ] 2026-05-08 13:33 ICT: AI Pages live parity remains blocked because `https://ai.muonnoi.org/` still serves CSP `connect-src 'self' https://api.nhachung.org`; CNAME is empty and A records still point to Cloudflare edge IPs.
+- [ ] 2026-05-08 13:33 ICT: Android build remains blocked because `java -version` cannot find a Java Runtime.
+- [x] 2026-05-08 14:07 ICT: source-of-truth guard rechecked; root, App, AI, and Docs `git fsck --no-progress --connectivity-only --no-dangling` returned exit 0.
+- [x] 2026-05-08 14:07 ICT: `muonnoi-app`, `muonnoi-ai`, `muonnoi-ai-machine`, and `muonnoi app` still declare `do-not-deploy`.
+- [ ] 2026-05-08 14:07 ICT: Android build remains blocked because `java -version` and `/usr/libexec/java_home -V` cannot find a Java Runtime.
+- [x] 2026-05-08 14:24 ICT: canonical AI `npm run check`, mobile shell `npx tsc --noEmit`, and mobile shell `npm run cap:sync` passed.
+- [ ] 2026-05-08 14:24 ICT: local checks do not clear Android beta, because Java Runtime or JDK 17+ is still required before `npm run build:android:debug`.
+- [x] 2026-05-08 14:49 ICT: `/join/` HTTP/CSP/API contract rechecked; live `/join/` and live `join.js` return HTTP 200, local `join.js` syntax passes, register preflight returns HTTP 204, and unauthenticated `/api/me` returns HTTP 401.
+- [ ] 2026-05-08 14:49 ICT: `/join/` rendered browser QA remains blocked because `playwright`, `puppeteer`, and `@playwright/test` are not installed in the checked Node path; authenticated smoke still requires Founder-approved test identity.
+- [x] 2026-05-08 15:05 ICT: root, App, API health, push preflight, unauthenticated push guard, remote D1 `mobile_push_tokens`, Docs, Lamviec, and AI Pages preview checks passed.
+- [ ] 2026-05-08 15:05 ICT: AI Pages live parity remains blocked because `https://ai.muonnoi.org/` still serves CSP `connect-src 'self' https://api.nhachung.org`; CNAME is empty and A records still point to Cloudflare edge IPs.
+- [ ] 2026-05-08 15:05 ICT: Android build remains blocked because `java -version` cannot find a Java Runtime.
+- [x] 2026-05-08 15:29 ICT: AI Pages preview and local artifact still point at `https://api.muonnoi.org`; `wrangler pages project list` confirms project `nhachung-landing` exists.
+- [ ] 2026-05-08 15:29 ICT: AI Pages live parity remains blocked because `https://ai.muonnoi.org/` still serves CSP `connect-src 'self' https://api.nhachung.org`; CNAME is empty, A records still point to Cloudflare edge IPs, and `wrangler pages project list` does not list `ai.muonnoi.org` under `nhachung-landing`.
+- [ ] 2026-05-08 15:29 ICT: Android build remains blocked because `java -version` cannot find a Java Runtime.
+- [x] 2026-05-08 15:48 ICT: source-of-truth guard rechecked; root, App, AI, and Docs `git fsck --no-progress --connectivity-only --no-dangling` returned exit 0.
+- [x] 2026-05-08 15:48 ICT: `muonnoi-app`, `muonnoi-ai`, `muonnoi-ai-machine`, and `muonnoi app` still declare `do-not-deploy`.
+- [ ] 2026-05-08 15:48 ICT: Android build remains blocked because `java -version` and `/usr/libexec/java_home -V` cannot find a Java Runtime.
+- [x] 2026-05-08 16:10 ICT: AI Pages preview and local artifact still point at `https://api.muonnoi.org`; `wrangler pages project list` confirms project `nhachung-landing` exists.
+- [ ] 2026-05-08 16:10 ICT: AI Pages live parity remains blocked because `https://ai.muonnoi.org/` still serves CSP `connect-src 'self' https://api.nhachung.org`; CNAME is empty, A records still point to Cloudflare edge IPs, and `wrangler pages project list` does not list `ai.muonnoi.org` under `nhachung-landing`.
+- [ ] 2026-05-08 16:10 ICT: Android build remains blocked because `java -version` cannot find a Java Runtime.
+- [x] 2026-05-08 16:28 ICT: canonical AI `npm run check`, mobile shell `npx tsc --noEmit`, and mobile shell `npm run cap:sync` passed.
+- [ ] 2026-05-08 16:28 ICT: local gates do not clear Android beta, because Java Runtime or JDK 17+ is still required before `npm run build:android:debug`.
+- [x] 2026-05-08 16:44 ICT: `/join/` HTTP/CSP/API contract rechecked; live `/join/` and live `join.js` return HTTP 200, local `join.js` syntax passes, register preflight returns HTTP 204, and unauthenticated `/api/me` returns HTTP 401.
+- [ ] 2026-05-08 16:44 ICT: `/join/` rendered browser QA remains blocked because `playwright`, `puppeteer`, and `@playwright/test` are not installed in the checked Node path; authenticated smoke still requires Founder-approved test identity.
+- [x] 2026-05-08 17:05 ICT: API/D1 live parity rechecked; API health returns HTTP 200, push-register preflight returns HTTP 204, unauthenticated push-register returns HTTP 401, and remote D1 still has `mobile_push_tokens`.
+- [ ] 2026-05-08 17:05 ICT: API/D1 pass does not clear AI Pages live CSP, Android JDK/build, rendered QA, signing, or device smoke blockers.
+- [x] 2026-05-08 18:20 ICT: AI Pages preview and local artifact still point at `https://api.muonnoi.org`; `wrangler pages project list` confirms project `nhachung-landing` exists.
+- [ ] 2026-05-08 18:20 ICT: AI Pages live parity remains blocked because `https://ai.muonnoi.org/` still serves CSP `connect-src 'self' https://api.nhachung.org`; CNAME is empty, A records still point to Cloudflare edge IPs, and `wrangler pages project list` does not list `ai.muonnoi.org` under `nhachung-landing`.
+- [ ] 2026-05-08 18:20 ICT: Android build remains blocked because `java -version` and `/usr/libexec/java_home -V` cannot find a Java Runtime.
+- [x] 2026-05-08 18:35 ICT: source-of-truth guard rechecked; root, App, AI, and Docs `git fsck --no-progress --connectivity-only --no-dangling` returned exit 0.
+- [x] 2026-05-08 18:35 ICT: `muonnoi-app`, `muonnoi-ai`, `muonnoi-ai-machine`, and `muonnoi app` still declare `do-not-deploy`.
+- [ ] 2026-05-08 18:35 ICT: Android build remains blocked because `java -version` and `/usr/libexec/java_home -V` cannot find a Java Runtime.
+- [x] 2026-05-08 18:59 ICT: root, App, `/join/`, API health, push preflight, unauthenticated push guard, remote D1 `mobile_push_tokens`, Docs, Lamviec, and AI Pages preview checks passed.
+- [ ] 2026-05-08 18:59 ICT: AI Pages live parity remains blocked because `https://ai.muonnoi.org/` still serves CSP `connect-src 'self' https://api.nhachung.org`; CNAME is empty and A records still point to Cloudflare edge IPs.
+- [ ] 2026-05-08 18:59 ICT: Android build remains blocked because `java -version` and `/usr/libexec/java_home -V` cannot find a Java Runtime.
+- [x] 2026-05-08 20:41 ICT: canonical AI `npm run check`, mobile shell `npx tsc --noEmit`, and mobile shell `npm run cap:sync` passed.
+- [ ] 2026-05-08 20:41 ICT: local gates do not clear release blockers; AI Pages live CSP/CNAME, Android JDK/build, rendered browser QA, signing, and physical-device smoke remain pending.
+- [x] 2026-05-08 20:58 ICT: AI Pages preview and local artifact still point at `https://api.muonnoi.org`; `wrangler pages project list` confirms project `nhachung-landing` exists.
+- [ ] 2026-05-08 20:58 ICT: AI Pages live parity remains blocked because `https://ai.muonnoi.org/` still serves CSP `connect-src 'self' https://api.nhachung.org`; CNAME is empty, A records still point to Cloudflare edge IPs, and `wrangler pages project list` does not list `ai.muonnoi.org` under `nhachung-landing`.
+- [ ] 2026-05-08 20:58 ICT: Android build remains blocked because `java -version` and `/usr/libexec/java_home -V` cannot find a Java Runtime.
+- [x] 2026-05-08 21:15 ICT: source-of-truth guard rechecked; root, App, AI, and Docs `git fsck --no-progress --connectivity-only --no-dangling` returned exit 0.
+- [x] 2026-05-08 21:15 ICT: `muonnoi-app`, `muonnoi-ai`, `muonnoi-ai-machine`, and `muonnoi app` still declare `do-not-deploy`.
+- [ ] 2026-05-08 21:15 ICT: Android build remains blocked because `java -version` and `/usr/libexec/java_home -V` cannot find a Java Runtime.
+- [x] 2026-05-08 21:53 ICT: API/D1 live parity rechecked; API health returns HTTP 200, push-register preflight returns HTTP 204, unauthenticated push-register returns HTTP 401, and remote D1 still has `mobile_push_tokens`.
+- [ ] 2026-05-08 21:53 ICT: API/D1 pass does not clear AI Pages live CSP, Android JDK/build, rendered QA, signing, or device smoke blockers.
+- [x] 2026-05-08 22:25 ICT: `/join/` HTTP/CSP/API contract rechecked; live `/join/` and live `join.js` return HTTP 200, local `join.js` syntax passes, register preflight returns HTTP 204, and unauthenticated `/api/me` returns HTTP 401.
+- [ ] 2026-05-08 22:25 ICT: `/join/` rendered browser QA remains blocked because `playwright`, `puppeteer`, and `@playwright/test` are not installed in shell or `node_repl`; authenticated smoke still requires Founder-approved test identity.
+- [x] 2026-05-08 22:51 ICT: AI Pages preview and local artifact still point at `https://api.muonnoi.org`; `wrangler pages project list` confirms project `nhachung-landing` exists.
+- [ ] 2026-05-08 22:51 ICT: AI Pages live parity remains blocked because `https://ai.muonnoi.org/` still serves CSP `connect-src 'self' https://api.nhachung.org`; CNAME is empty, A records still point to Cloudflare edge IPs, and `wrangler pages project list` does not list `ai.muonnoi.org` under `nhachung-landing`.
+- [ ] 2026-05-08 22:51 ICT: Android build remains blocked because `java -version` and `/usr/libexec/java_home -V` cannot find a Java Runtime.
+- [x] 2026-05-08 23:15 ICT: canonical AI `npm run check`, mobile shell `npx tsc --noEmit`, and mobile shell `npm run cap:sync` passed.
+- [ ] 2026-05-08 23:15 ICT: local gates do not clear release blockers; Android JDK/build, AI Pages live CSP/CNAME, rendered browser QA, signing, and physical-device smoke remain pending.
+- [ ] 2026-05-08 23:15 ICT: Android build remains blocked because `java -version` and `/usr/libexec/java_home -V` cannot find a Java Runtime.
+- [x] 2026-05-08 23:40 ICT: source-of-truth guard rechecked; root, App, AI, and Docs `git fsck --no-progress --connectivity-only --no-dangling` returned exit 0.
+- [x] 2026-05-08 23:40 ICT: `muonnoi-app`, `muonnoi-ai`, `muonnoi-ai-machine`, and `muonnoi app` still declare `do-not-deploy`.
+- [ ] 2026-05-08 23:40 ICT: Android build remains blocked because `java -version` and `/usr/libexec/java_home -V` cannot find a Java Runtime.
+- [x] 2026-05-09 00:38 ICT: root, App, `/join/`, API health, push preflight, unauthenticated push guard, remote D1 `mobile_push_tokens`, Docs, Lamviec, and AI Pages preview checks passed.
+- [ ] 2026-05-09 00:38 ICT: AI Pages live parity remains blocked because `https://ai.muonnoi.org/` still serves CSP `connect-src 'self' https://api.nhachung.org`; CNAME is empty and A records still point to Cloudflare edge IPs.
+- [ ] 2026-05-09 00:38 ICT: Android build remains blocked because `java -version` and `/usr/libexec/java_home -V` cannot find a Java Runtime.
+- [x] 2026-05-09 01:05 ICT: AI Pages preview and local artifact still point at `https://api.muonnoi.org`; `wrangler pages project list` confirms project `nhachung-landing` exists.
+- [ ] 2026-05-09 01:05 ICT: AI Pages live parity remains blocked because `https://ai.muonnoi.org/` still serves CSP `connect-src 'self' https://api.nhachung.org`; CNAME is empty, A records still point to Cloudflare edge IPs, and `wrangler pages project list` does not list `ai.muonnoi.org` under `nhachung-landing`.
+- [ ] 2026-05-09 01:05 ICT: Android build remains blocked because `java -version` and `/usr/libexec/java_home -V` cannot find a Java Runtime.
+- [x] 2026-05-09 01:30 ICT: canonical AI `npm run check`, mobile shell `npx tsc --noEmit`, and mobile shell `npm run cap:sync` passed.
+- [ ] 2026-05-09 01:30 ICT: local gates do not clear release blockers; Android JDK/build, AI Pages live CSP/CNAME, rendered browser QA, signing, and physical-device smoke remain pending.
+- [ ] 2026-05-09 01:30 ICT: Android build remains blocked because `java -version` and `/usr/libexec/java_home -V` cannot find a Java Runtime.
+- [x] 2026-05-09 01:54 ICT: source-of-truth guard rechecked; root, App, AI, and Docs `git fsck --no-progress --connectivity-only --no-dangling` returned exit 0.
+- [x] 2026-05-09 01:54 ICT: `muonnoi-app`, `muonnoi-ai`, `muonnoi-ai-machine`, and `muonnoi app` still declare `do-not-deploy`.
+- [ ] 2026-05-09 01:54 ICT: Android build remains blocked because `java -version` and `/usr/libexec/java_home -V` cannot find a Java Runtime.
+- [x] 2026-05-09 02:18 ICT: API/D1 live parity rechecked; API health returns HTTP 200, push-register preflight returns HTTP 204, unauthenticated push-register returns HTTP 401, and remote D1 still has `mobile_push_tokens`.
+- [ ] 2026-05-09 02:18 ICT: API/D1 pass does not clear AI Pages live CSP, Android JDK/build, rendered QA, signing, or device smoke blockers.
+- [x] 2026-05-09 02:48 ICT: `/join/` HTTP/CSP/API contract rechecked; live `/join/` and live `join.js` return HTTP 200, local `join.js` syntax passes, register preflight returns HTTP 204, and unauthenticated `/api/me` returns HTTP 401.
+- [ ] 2026-05-09 02:48 ICT: `/join/` rendered browser QA remains blocked because `playwright`, `puppeteer`, and `@playwright/test` are not installed in the checked shell path; authenticated smoke still requires Founder-approved test identity.
+- [x] 2026-05-09 03:14 ICT: AI Pages preview and local artifact still point at `https://api.muonnoi.org`; `wrangler pages project list` confirms project `nhachung-landing` exists.
+- [ ] 2026-05-09 03:14 ICT: AI Pages live parity remains blocked because `https://ai.muonnoi.org/` still serves CSP `connect-src 'self' https://api.nhachung.org`; CNAME is empty, A records still point to Cloudflare edge IPs, and `wrangler pages project list` does not list `ai.muonnoi.org` under `nhachung-landing`.
+- [ ] 2026-05-09 03:14 ICT: Android build remains blocked because `java -version` cannot find a Java Runtime.
+- [x] 2026-05-09 03:54 ICT: source-of-truth guard rechecked; root, App, AI, and Docs `git fsck --no-progress --connectivity-only --no-dangling` returned exit 0.
+- [x] 2026-05-09 03:54 ICT: `muonnoi-app`, `muonnoi-ai`, `muonnoi-ai-machine`, and `muonnoi app` still declare `do-not-deploy`.
+- [ ] 2026-05-09 03:54 ICT: Android build remains blocked because `java -version` and `/usr/libexec/java_home -V` cannot find a Java Runtime.
+- [x] 2026-05-09 04:11 ICT: API/D1 live parity rechecked; API health returns HTTP 200, push-register preflight returns HTTP 204, unauthenticated push-register returns HTTP 401, and remote D1 still has `mobile_push_tokens`.
+- [ ] 2026-05-09 04:11 ICT: API/D1 pass does not clear AI Pages live CSP, Android JDK/build, rendered QA, signing, or device smoke blockers.
+- [x] 2026-05-09 04:29 ICT: canonical AI `npm run check`, mobile shell `npx tsc --noEmit`, and mobile shell `npm run cap:sync` passed.
+- [ ] 2026-05-09 04:29 ICT: local gates do not clear release blockers; Android JDK/build, AI Pages live CSP/CNAME, rendered browser QA, signing, and physical-device smoke remain pending.
+- [ ] 2026-05-09 04:29 ICT: Android build remains blocked because `java -version` and `/usr/libexec/java_home -V` cannot find a Java Runtime.
+- [x] 2026-05-09 04:47 ICT: AI Pages preview and local artifact still point at `https://api.muonnoi.org`; `wrangler pages project list` confirms project `nhachung-landing` exists.
+- [ ] 2026-05-09 04:47 ICT: AI Pages live parity remains blocked because `https://ai.muonnoi.org/` still serves CSP `connect-src 'self' https://api.nhachung.org`; CNAME is empty, A records still point to Cloudflare edge IPs, and `wrangler pages project list` does not list `ai.muonnoi.org` under `nhachung-landing`.
+- [ ] 2026-05-09 04:47 ICT: Android build remains blocked because `java -version` and `/usr/libexec/java_home -V` cannot find a Java Runtime.
+- [x] 2026-05-09 05:10 ICT: source-of-truth guard rechecked; root, App, AI, and Docs `git fsck --no-progress --connectivity-only --no-dangling` returned exit 0.
+- [x] 2026-05-09 05:10 ICT: `muonnoi-app`, `muonnoi-ai`, `muonnoi-ai-machine`, and `muonnoi app` still declare `do-not-deploy`.
+- [ ] 2026-05-09 05:10 ICT: Android build remains blocked because `java -version` and `/usr/libexec/java_home -V` cannot find a Java Runtime.
+- [x] 2026-05-09 05:38 ICT: API/D1 live parity rechecked; API health returns HTTP 200, push-register preflight returns HTTP 204, unauthenticated push-register returns HTTP 401, and remote D1 still has `mobile_push_tokens`.
+- [ ] 2026-05-09 05:38 ICT: API/D1 pass does not clear AI Pages live CSP, Android JDK/build, rendered QA, signing, or device smoke blockers.
+- [x] 2026-05-09 08:26 ICT: AI Pages preview and local artifact still point at `https://api.muonnoi.org`; `wrangler pages project list` confirms project `nhachung-landing` exists.
+- [ ] 2026-05-09 08:26 ICT: AI Pages live parity remains blocked because `https://ai.muonnoi.org/` still serves CSP `connect-src 'self' https://api.nhachung.org`; CNAME is empty, A records still point to Cloudflare edge IPs, and `wrangler pages project list` does not list `ai.muonnoi.org` under `nhachung-landing`.
+- [ ] 2026-05-09 08:26 ICT: Android build remains blocked because `java -version` cannot find a Java Runtime.
+- [x] 2026-05-09 08:49 ICT: source-of-truth guard rechecked; root, App, AI, and Docs `git fsck --no-progress --connectivity-only --no-dangling` returned exit 0.
+- [x] 2026-05-09 08:49 ICT: `muonnoi-app`, `muonnoi-ai`, `muonnoi-ai-machine`, and `muonnoi app` still declare `do-not-deploy`.
+- [ ] 2026-05-09 08:49 ICT: Android build remains blocked because `java -version` and `/usr/libexec/java_home -V` cannot find a Java Runtime.
+- [x] 2026-05-07 20:41 ICT: root, App, `/join/`, API health, API push preflight, unauthenticated push guard, remote D1 `mobile_push_tokens`, Docs, Lamviec, and AI Pages preview checks passed.
+- [ ] 2026-05-07 20:40 ICT: AI Pages live parity still blocked because `https://ai.muonnoi.org/` serves CSP `connect-src 'self' https://api.nhachung.org` and `dig +short CNAME ai.muonnoi.org` returns empty.
+- [ ] 2026-05-07 20:41 ICT: Android build remains blocked because `java -version` and `/usr/libexec/java_home -V` cannot find a Java Runtime.
+- [x] 2026-05-07 20:16 ICT: source-of-truth guard rechecked; root, App, AI, and Docs `git fsck --no-progress --connectivity-only` returned exit 0. Root emitted dangling tree lines only; no connectivity blocker was reported.
+- [x] 2026-05-07 20:16 ICT: `muonnoi-app`, `muonnoi-ai`, `muonnoi-ai-machine`, and `muonnoi app` still declare `do-not-deploy`.
+- [ ] 2026-05-07 20:16 ICT: `/join/` rendered browser QA remains blocked because this session has no callable Browser Use, Playwright, or Puppeteer path.
+- [x] 2026-05-07 20:04 ICT: root, App, API health, API push preflight, unauthenticated push guard, Docs, and Lamviec production smoke checks passed.
+- [ ] 2026-05-07 20:04 ICT: AI Pages live parity still blocked because `https://ai.muonnoi.org/` serves CSP `connect-src 'self' https://api.nhachung.org` and `dig +short CNAME ai.muonnoi.org` returns empty.
+- [x] 2026-05-07 20:04 ICT: canonical AI `npm run check`, mobile `npx tsc --noEmit`, and mobile `npm run cap:sync` passed.
+- [ ] 2026-05-07 20:04 ICT: Android build remains blocked because `java -version` and `/usr/libexec/java_home -V` cannot find a Java Runtime.
+- [ ] 2026-05-07 20:04 ICT: `/join/` rendered browser QA remains blocked because this runtime cannot import `playwright` or `puppeteer`.
+- [x] 2026-05-07 18:22 ICT: root, App, API health, API push preflight, unauthenticated push guard, Docs, and Lamviec production smoke checks passed.
+- [ ] 2026-05-07 18:22 ICT: AI Pages live parity still blocked because `https://ai.muonnoi.org/` serves CSP `connect-src 'self' https://api.nhachung.org` and `dig +short CNAME ai.muonnoi.org` returns empty.
+- [x] 2026-05-07 18:22 ICT: canonical AI `npm run check`, mobile `npx tsc --noEmit`, and mobile `npm run cap:sync` passed.
+- [ ] 2026-05-07 18:22 ICT: Android build remains blocked because `java -version` and `/usr/libexec/java_home -V` cannot find a Java Runtime.
+- [x] 2026-05-07 17:35 ICT: `npx tsc --noEmit` passed in `app.muonnoi.org/mobile-shell`.
+- [x] 2026-05-07 17:35 ICT: `npm run cap:sync` passed again.
+- [x] App join page static auth wiring check passed locally.
+- [x] `node --check apps/web/assets/join.js` passed.
+- [x] Join page has no inline script blocks and loads `/assets/join.js`.
+- [x] App release route script gate passed for index, feed, join, verify, complaints, create, commit, admin, and legal pages.
+- [x] `node --check` passed for `feed.js`, `create.js`, `complaints.js`, `verify.js`, `join.js`, and `legal-theme.js`.
+- [x] `git diff --check` passed for App CSP/script extraction files.
+- [x] `npm run cap:sync` passed after App web payload update.
+- [x] `npx tsc --noEmit` passed in `mobile-shell`.
+- [x] `npm run build:ios:sim` passed after Xcode was allowed to use user cache and DerivedData paths.
+- [x] Capacitor sync copied the new external route controllers into Android and iOS app public assets.
+- [x] 2026-05-07 10:58 ICT: legacy clone source-of-truth guard rechecked; `muonnoi-app`, `muonnoi-ai`, `muonnoi-ai-machine`, and `muonnoi app` still declare `do-not-deploy`.
+- [x] 2026-05-07 10:58 ICT: `git fsck --no-progress --connectivity-only` passed for `app.muonnoi.org` and `docs.muonnoi.org`.
+- [x] 2026-05-07 11:30 ICT: root `git fsck --no-progress --connectivity-only --no-dangling` passed.
+- [x] 2026-05-07 11:31 ICT: old AI worktree failed `git fsck --no-progress --connectivity-only --no-dangling` with broken tree links and missing objects even after `git fetch origin`.
+- [x] 2026-05-07 11:51 ICT: canonical `ai.muonnoi.org` was replaced with a clean clone from `feat/flow-mvp-backend` at `2b4ab3f84c587329d2b9a44e91d32f4d0b0ee8e2`; reviewed dirty manifest was reapplied; old worktree is preserved as `ai.muonnoi.org.corrupt-2026-05-07`.
+- [x] 2026-05-07 11:51 ICT: canonical AI `git fsck --no-progress --connectivity-only --no-dangling` passed after clean clone replacement.
+- [x] 2026-05-07 11:51 ICT: canonical AI `git fetch origin` passed, then `git fsck --no-progress --connectivity-only --no-dangling` still passed.
+- [x] 2026-05-07 11:51 ICT: canonical AI `npm run check` passed; `node --check` passed for `site.js`, `assets/api.js`, and `assets/builder.js`.
+- [x] 2026-05-07 11:51 ICT: AI scan found no `api.nhachung.org`, no ` , ` comma spacing, and no scanned decorative dash/arrow/emoji tokens, including `.pages-deploy/_headers`.
+- [x] 2026-05-07 12:25 ICT: live `https://app.muonnoi.org/join/` returned HTTP 200 with CSP `connect-src 'self' https://api.muonnoi.org`.
+- [x] 2026-05-07 12:25 ICT: live `https://app.muonnoi.org/assets/join.js?v=1.0.2` uses `https://api.muonnoi.org` for register, login, me, logout, and profile endpoints.
+- [x] 2026-05-07 12:25 ICT: `wrangler whoami` confirmed OAuth Cloudflare access for account `f3f9e76222dcb488d5e303e29e8ba192`; `CLOUDFLARE_API_TOKEN` remains unexported but did not block this local deploy.
+- [x] 2026-05-07 12:25 ICT: D1 `iai-flow-db` owner verified with database id `3ceac8b1-1c0f-47c3-ad05-2b9da0983c32`.
+- [x] 2026-05-07 12:25 ICT: Worker `ai-muonnoi-api` deployed with custom domain `api.muonnoi.org`; current version id `ad876fb0-4ef8-4314-bd29-051e5741989f`.
+- [x] 2026-05-07 12:25 ICT: remote D1 migration `0007_mobile_push_tokens.sql` executed successfully; `mobile_push_tokens` table exists remotely.
+- [x] 2026-05-07 12:25 ICT: live `https://api.muonnoi.org/api/health` returned HTTP 200 with `service: ai-muonnoi-api` and CORS for `https://app.muonnoi.org`.
+- [x] 2026-05-07 12:25 ICT: live preflight for `POST /api/mobile/push/register` returned HTTP 204 with `Access-Control-Allow-Origin: https://app.muonnoi.org`.
+- [x] 2026-05-07 12:25 ICT: live unauthenticated push-register smoke returned HTTP 401 JSON `Chưa đăng nhập`, so the endpoint is reachable and guarded.
+- [x] 2026-05-07 12:25 ICT: live join auth contract probes returned expected guarded responses: `/api/me` 401, invalid `/api/login` 401, invalid `/api/register` 400, `/api/logout` 200 with expired `ai_muonnoi_session` cookie.
+- [x] 2026-05-07 12:25 ICT: AI and App scans found no `api.nhachung.org` in canonical AI workspace or App web payload.
+- [x] 2026-05-07 12:29 ICT: live App route matrix returned HTTP 200 for `/`, `/feed/`, `/join/`, `/verify/`, `/complaints/`, `/create/`, `/commit/`, and `/admin/`, each with CSP allowing `https://api.muonnoi.org`.
+- [ ] 2026-05-07 12:29 ICT: live `https://ai.muonnoi.org/` still returns CSP `connect-src 'self' https://api.nhachung.org`; this is AI Pages parity, not App Pages or API Worker.
+- [x] 2026-05-07 13:01 ICT: AI Pages artifact deploy to project `nhachung-landing` succeeded; preview `https://b28c0d15.nhachung-landing.pages.dev/` returns CSP `connect-src 'self' https://api.muonnoi.org`.
+- [ ] 2026-05-07 13:01 ICT: Pages custom domain `ai.muonnoi.org` was added to `nhachung-landing` but remains `pending` with Cloudflare verification error `CNAME record not set`; live `ai.muonnoi.org` still serves the old CSP.
+- [x] 2026-05-07 13:01 ICT: API health with `Origin: https://ai.muonnoi.org` returned HTTP 200 and allowed origin `https://ai.muonnoi.org`.
+- [x] 2026-05-07 13:01 ICT: canonical AI `npm run check` and `git diff --check` passed after the AI Pages deploy attempt.
+- [x] 2026-05-07 13:03 ICT: source-of-truth guard rechecked; `muonnoi-app`, `muonnoi-ai`, `muonnoi-ai-machine`, and `muonnoi app` still say `do-not-deploy`.
+- [x] 2026-05-07 13:03 ICT: `git fsck --no-progress --connectivity-only --no-dangling` passed for root, app, AI, and Docs worktrees.
+- [x] 2026-05-07 13:03 ICT: `curl -I https://app.muonnoi.org/` returns CSP including `connect-src 'self' https://api.muonnoi.org`.
+- [ ] 2026-05-07 13:03 ICT: `https://ai.muonnoi.org/` still serves CSP `connect-src 'self' https://api.nhachung.org`; custom domain DNS/CNAME remains pending.
+- [x] 2026-05-07 13:03 ICT: `https://api.muonnoi.org/api/health` remains HTTP 200 with `service: ai-muonnoi-api`.
+- [ ] 2026-05-07 13:03 ICT: `java -version` still fails (`Unable to locate a Java Runtime`).
+- [ ] 2026-05-07 13:57 ICT: live `https://ai.muonnoi.org/` still serves CSP with `https://api.nhachung.org`; Pages custom-domain state remains `pending` with `CNAME record not set`.
+- [ ] 2026-05-07 13:57 ICT: current Wrangler OAuth can read Pages custom-domain state but cannot read DNS records; Cloudflare DNS API returns authentication error. DNS dashboard or DNS record permission is required to replace the `ai` record with CNAME `nhachung-landing.pages.dev`.
+- [ ] 2026-05-07 13:57 ICT: `/usr/libexec/java_home -V` also confirms no Java Runtime is installed.
+- [ ] 2026-05-07 14:02 ICT: live `https://ai.muonnoi.org/` still returns HTTP 200 with CSP `connect-src 'self' https://api.nhachung.org`; Pages custom-domain state is still `pending` with `CNAME record not set`.
+- [ ] 2026-05-07 14:02 ICT: `dig +short CNAME ai.muonnoi.org` still returns empty and `dig +short ai.muonnoi.org` returns Cloudflare edge A records, confirming the DNS/CNAME correction has not landed yet.
+- [x] 2026-05-07 14:03 ICT: source-of-truth guard rechecked again; `muonnoi-app`, `muonnoi-ai`, `muonnoi-ai-machine`, and `muonnoi app` still declare `do-not-deploy`.
+- [x] 2026-05-07 14:03 ICT: `git fsck --no-progress --connectivity-only --no-dangling` passed for root, app, AI, and Docs worktrees.
+- [ ] 2026-05-07 14:02 ICT: `java -version` and `/usr/libexec/java_home -V` still fail because no Java Runtime is installed.
+- [x] 2026-05-07 14:11 ICT: Team 2 dev heartbeat `team2-auto-dev-loop` is active (`FREQ=MINUTELY;INTERVAL=15`) and attached with cadence instructions.
+- [ ] 2026-05-07 14:11 ICT: `https://ai.muonnoi.org/` still returns CSP with `connect-src 'self' https://api.nhachung.org`; live AI Pages parity remains blocked by DNS/CNAME mapping.
+- [x] 2026-05-07 14:11 ICT: `curl -I -L https://app.muonnoi.org/` returns HTTP 200 and CSP includes `connect-src 'self' https://api.muonnoi.org`.
+- [ ] 2026-05-07 14:11 ICT: `dig +short ai.muonnoi.org` / `dig +short CNAME ai.muonnoi.org` could not be completed in this environment due local DNS bind permission (`bind: Operation not permitted`); DNS/CNAME correction still externally blocked.
+- [x] 2026-05-07 14:45 ICT: rollback note exists at `app.muonnoi.org/ROLLBACK_NOTE.md`; it covers App Pages, AI Pages, API Worker, D1 forward-fix boundaries, mobile distribution rollback, forbidden actions, and required post-rollback evidence.
+- [ ] 2026-05-07 14:44 ICT: live `https://ai.muonnoi.org/` still returns HTTP 200 with CSP `connect-src 'self' https://api.nhachung.org`; Pages custom-domain state remains `pending` with `CNAME record not set`.
+- [ ] 2026-05-07 14:44 ICT: `java -version` still fails because no Java Runtime is installed.
+- [x] 2026-05-07 16:16 ICT: production smoke report exists at `reports/continuous-dev/muonnoi-production-smoke.latest.md`.
+- [x] 2026-05-07 16:16 ICT: root `https://muonnoi.org/`, App `https://app.muonnoi.org/`, API health, API push preflight, Docs, and Lamviec live smoke checks returned expected HTTP/CSP/CORS results.
+- [ ] 2026-05-07 16:16 ICT: AI `https://ai.muonnoi.org/` still returns legacy CSP `connect-src 'self' https://api.nhachung.org`; Pages custom-domain API still reports `pending` with `CNAME record not set`.
+- [ ] 2026-05-07 16:16 ICT: Android build remains blocked because `java -version` and `/usr/libexec/java_home -V` cannot find a Java Runtime.
+- [x] 2026-05-07 16:54 ICT: human-text gate report refreshed at `reports/human-text/muonnoi-human-text-gate.latest.md`; stale Cloudflare credential blocker state was replaced with current partial OAuth, AI DNS, Android JDK, and `/join/` QA states.
+- [ ] 2026-05-07 16:54 ICT: `/join/` remains `SEO_READY_PENDING_QA` until rendered-page evidence and browser-level form QA are captured.
+- [ ] 2026-05-07 16:54 ICT: AI `https://ai.muonnoi.org/` still returns legacy CSP `connect-src 'self' https://api.nhachung.org`; `dig +short CNAME ai.muonnoi.org` returns empty.
+- [x] 2026-05-07 17:51 ICT: join rendered browser QA work order exists at `reports/human-text/app-join-rendered-browser-qa-workorder.latest.md`.
+- [x] 2026-05-07 17:51 ICT: live `/join/` returns HTTP 200 with CSP allowing `https://api.muonnoi.org`; live `join.js` returns HTTP 200; local `node --check apps/web/assets/join.js` passes.
+- [x] 2026-05-07 17:51 ICT: API register preflight from `https://app.muonnoi.org` returns HTTP 204 and unauthenticated `/api/me` returns HTTP 401 JSON `Chưa đăng nhập`.
+- [ ] 2026-05-07 17:51 ICT: rendered browser QA remains blocked in this environment because `node_repl` cannot import `playwright` or `puppeteer`; manual/browser automation evidence is still required.
+- [ ] 2026-05-07 17:51 ICT: authenticated join smoke remains blocked until a Founder-approved production test identity exists.
+- [ ] Android build remains blocked because `java -version` cannot find a Java Runtime.
+- [ ] Full production parity remains incomplete for non-API gates: AI Pages live CSP, Android JDK/build, signing, and device smoke.
+- [ ] Release GO is not recorded. True state: `RELEASE_READY_PENDING_LIVE_AND_DEVICE_EVIDENCE`.
+- [x] 2026-05-07 15:01 ICT: `curl -I -L https://app.muonnoi.org/` returns HTTP 200 and CSP includes `connect-src 'self' https://api.muonnoi.org`.
+- [ ] 2026-05-07 15:01 ICT: `curl -I -L https://ai.muonnoi.org/` still returns CSP `connect-src 'self' https://api.nhachung.org`; DNS/CNAME remains pending.
+- [x] 2026-05-07 15:01 ICT: `curl -i https://api.muonnoi.org/api/health` returns HTTP 200 with `service: ai-muonnoi-api`.
+- [x] 2026-05-07 15:01 ICT: `curl -i -X OPTIONS https://api.muonnoi.org/api/mobile/push/register` from `https://app.muonnoi.org` returns HTTP 204 and `Access-Control-Allow-Origin: https://app.muonnoi.org`.
+- [x] 2026-05-07 15:44 ICT: `curl -I -L https://app.muonnoi.org/` returns HTTP 200 and CSP includes `connect-src 'self' https://api.muonnoi.org`.
+- [ ] 2026-05-07 15:44 ICT: `curl -I -L https://ai.muonnoi.org/` still returns CSP `connect-src 'self' https://api.nhachung.org`; DNS/CNAME remains pending.
+- [x] 2026-05-07 15:44 ICT: `curl -i https://api.muonnoi.org/api/health` returns HTTP 200 with `service: ai-muonnoi-api`.
+- [x] 2026-05-07 15:44 ICT: `curl -i -X OPTIONS https://api.muonnoi.org/api/mobile/push/register` from `https://app.muonnoi.org` returns HTTP 204 and `Access-Control-Allow-Origin: https://app.muonnoi.org`.
+- [x] 2026-05-07 15:44 ICT: Unauthenticated push-register POST returns HTTP 401 JSON `{"ok":false,"error":"Chưa đăng nhập"}`.
