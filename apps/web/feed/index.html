@@ -7,7 +7,7 @@
   <meta name="theme-color" content="#0b0f0c" />
   <meta name="robots" content="index,follow" />
 
-  <title>Bảng tin — Muôn Nơi</title>
+  <title>Bảng tin - Muôn Nơi</title>
   <meta name="description" content="Bảng tin Muôn Nơi: chia sẻ, làm việc, mua bán, học tập. UI sạch, link sạch, privacy-first." />
   <link rel="canonical" href="https://app.muonnoi.org/feed/" />
 
@@ -54,6 +54,12 @@
     }
     html[data-theme="light"] .mn-muted{color:rgba(0,0,0,.62)}
   </style>
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Bảng tin - Muôn Nơi" />
+  <meta property="og:description" content="Bảng tin Muôn Nơi: chia sẻ, làm việc, mua bán, học tập. UI sạch, link sạch, privacy-first." />
+  <meta property="og:url" content="https://app.muonnoi.org/feed/" />
+  <meta property="og:image" content="https://app.muonnoi.org/assets/muonnoi-mn-logo.png" />
+  <meta name="twitter:card" content="summary_large_image" />
 </head>
 
 <body class="mn-body">
@@ -86,7 +92,7 @@
       </nav>
 
       <div class="mn-top__actions">
-        <button class="mn-btn mn-btn--ghost" type="button" id="themeBtn" aria-label="Đổi theme">◐</button>
+        <button class="mn-btn mn-btn--ghost" type="button" id="themeBtn" aria-label="Đổi theme">D</button>
         <button class="mn-btn mn-btn--ghost" type="button" id="langBtn" aria-label="Đổi ngôn ngữ">VI</button>
         <a class="mn-btn mn-btn--ghost" href="https://app.muonnoi.org/join/">Tài khoản</a>
         <a class="mn-btn mn-btn--primary" href="https://app.muonnoi.org/create/">Tạo</a>
@@ -118,9 +124,9 @@
           <div class="mn-glass" style="grid-column:span 12; border-radius:18px; padding:14px;">
             <div class="mn-row" style="display:flex; gap:10px; flex-wrap:wrap; align-items:center; justify-content:space-between;">
               <div>
-                <div class="mn-h1" style="font-size:34px; margin:0;">Bảng Tin</div>
+                <h1 class="mn-h1" style="font-size:34px; margin:0;">Bảng Tin</h1>
                 <div class="mn-sub" style="margin-top:8px;">
-                  Không phải “lướt vô thức”. Đây là bảng tin vận hành: việc làm, dự án, mua bán, học, và chia sẻ giá trị.
+                  Không phải 'lướt vô thức'. Đây là bảng tin vận hành: việc làm, dự án, mua bán, học, và chia sẻ giá trị.
                 </div>
               </div>
 
@@ -146,7 +152,7 @@
                       <div class="mn-inline" style="justify-content:space-between;">
                         <div class="mn-postMeta">
                           <span class="mn-pillMini">Bạn</span>
-                          <span class="mn-muted">•</span>
+                          <span class="mn-muted">,</span>
                           <span class="mn-muted">Privacy-first</span>
                         </div>
                         <a class="mn-link" href="https://app.muonnoi.org/join/">Đăng nhập để đăng</a>
@@ -175,7 +181,7 @@
 
                       <div id="composerResult" class="mn-glass" style="display:none; border-radius:14px; padding:12px; margin-top:10px;">
                         <div class="mn-h2" style="font-size:16px;">Đã tạo bài demo</div>
-                        <div class="mn-sub" style="margin-top:6px;">Link: <b id="demoLink">/p/…</b></div>
+                        <div class="mn-sub" style="margin-top:6px;">Link: <b id="demoLink">/p/...</b></div>
                         <div class="mn-inline" style="margin-top:10px;">
                           <button class="mn-btn mn-btn--ghost" type="button" id="copyDemoLink">Sao chép link</button>
                           <a class="mn-btn mn-btn--primary" id="openDemoLink" href="#">Mở</a>
@@ -241,11 +247,11 @@
                   <div class="mn-sub" style="margin-top:6px;">Chuẩn bị cho các subdomain, không để link thô trên UI chính.</div>
                   <div style="height:10px;"></div>
                   <div class="mn-row" style="display:grid; gap:8px;">
-                    <a class="mn-footer__link" href="https://nhachung.muonnoi.org/" rel="noopener">Nhà Chung Muôn Nơi</a>
+                    <a class="mn-footer__link" href="https://muonnoi.org/ecosystem/" rel="noopener">Nhà Chung Muôn Nơi (roadmap)</a>
                     <a class="mn-footer__link" href="https://lamviec.muonnoi.org/" rel="noopener">Làm Việc Muôn Nơi</a>
-                    <a class="mn-footer__link" href="https://hoc.muonnoi.org/" rel="noopener">Học Muôn Nơi</a>
-                    <a class="mn-footer__link" href="https://dulich.muonnoi.org/" rel="noopener">Du Lịch Muôn Nơi</a>
-                    <a class="mn-footer__link" href="https://dautu.muonnoi.org/" rel="noopener">Đầu Tư Muôn Nơi</a>
+                    <a class="mn-footer__link" href="https://muonnoi.org/ecosystem/" rel="noopener">Học Muôn Nơi (roadmap)</a>
+                    <a class="mn-footer__link" href="https://muonnoi.org/ecosystem/" rel="noopener">Du Lịch Muôn Nơi (roadmap)</a>
+                    <a class="mn-footer__link" href="https://muonnoi.org/ecosystem/" rel="noopener">Đầu Tư Muôn Nơi (roadmap)</a>
                   </div>
                   <div class="mn-sub" style="margin-top:10px;">
                     Giai đoạn đầu: link có thể chưa hoạt động. Nhưng UI đã sẵn cho roadmap.
@@ -263,7 +269,7 @@
             <span class="mn-mark mn-mark--sm" aria-hidden="true">MN</span>
             <div>
               <div class="mn-footer__name">Muôn Nơi</div>
-              <div class="mn-footer__tag">© 2026 muonnoi.org • social-first • privacy-first</div>
+              <div class="mn-footer__tag">2026 muonnoi.org , social-first , privacy-first</div>
             </div>
           </div>
           <div class="mn-footer__right">
@@ -281,299 +287,6 @@
   <script src="/assets/ui.js?v=1.0.2" defer></script>
 
   <!-- Feed controller (stage-1: UI demo, no backend) -->
-  <script>
-    (function(){
-      "use strict";
-
-      const $ = (s, el=document)=> el.querySelector(s);
-      const $$ = (s, el=document)=> Array.from(el.querySelectorAll(s));
-
-      function pad(n){ return String(n).padStart(2,"0"); }
-      function chainId(prefix="mn"){
-        const t = Date.now();
-        const r = Math.floor(Math.random()*1e9);
-        const raw = prefix+"."+t+"."+r;
-        let h = 2166136261;
-        for(let i=0;i<raw.length;i++){ h ^= raw.charCodeAt(i); h = Math.imul(h, 16777619); }
-        const c = (h>>>0).toString(36).padStart(6,"0").slice(0,6);
-        return `${prefix}_${(t>>>0).toString(36)}_${(r>>>0).toString(36)}_${c}`;
-      }
-
-      async function copy(text){
-        try{
-          if(navigator.clipboard && navigator.clipboard.writeText){
-            await navigator.clipboard.writeText(text);
-            return true;
-          }
-        }catch{}
-        try{
-          const ta=document.createElement("textarea");
-          ta.value=text;
-          ta.style.position="fixed"; ta.style.left="-9999px";
-          document.body.appendChild(ta);
-          ta.select(); document.execCommand("copy");
-          ta.remove();
-          return true;
-        }catch{ return false; }
-      }
-
-      const state = {
-        filter: "all",
-        items: []
-      };
-
-      function sampleData(n=9, type="all"){
-        const types = ["work","market","learn","invest"];
-        const pick = ()=> types[Math.floor(Math.random()*types.length)];
-        const now = Date.now();
-
-        const out = [];
-        for(let i=0;i<n;i++){
-          const t = (type==="all") ? pick() : type;
-          const id = chainId("mn");
-          out.push({
-            id,
-            type: t,
-            author: (t==="work" ? "Người Tuyển Dụng" :
-                     t==="market" ? "Người Bán" :
-                     t==="learn" ? "Người Dạy" : "Nhà Đầu Tư"),
-            handle: (t==="work" ? "workhub" :
-                     t==="market" ? "marketvn" :
-                     t==="learn" ? "learnlab" : "investroom"),
-            title: (t==="work" ? "Tuyển: Designer / Dev (Remote)" :
-                    t==="market" ? "Bán: Gói dịch vụ / sản phẩm" :
-                    t==="learn" ? "Khóa học: Kỹ năng / tư duy" : "Deal: Cơ hội hợp tác"),
-            body: (t==="work" ? "Mô tả công việc rõ ràng. Không spam. Có trách nhiệm." :
-                   t==="market" ? "Giá trị thật, điều kiện rõ. Không lừa đảo." :
-                   t==="learn" ? "Học để làm được. Không lý thuyết rỗng." : "Đầu tư minh bạch. Không hype."),
-            ts: now - Math.floor(Math.random()*86400000),
-            likes: Math.floor(Math.random()*120),
-            saves: Math.floor(Math.random()*60),
-            comments: Math.floor(Math.random()*18),
-            verified: Math.random() > 0.7
-          });
-        }
-        return out;
-      }
-
-      function badge(type){
-        if(type==="work") return "Làm việc";
-        if(type==="market") return "Mua bán";
-        if(type==="learn") return "Học";
-        if(type==="invest") return "Đầu tư";
-        return "Tất cả";
-      }
-
-      function timeAgo(ts){
-        const s = Math.max(1, Math.floor((Date.now()-ts)/1000));
-        const m = Math.floor(s/60);
-        const h = Math.floor(m/60);
-        const d = Math.floor(h/24);
-        if(d>0) return d+"d";
-        if(h>0) return h+"h";
-        if(m>0) return m+"m";
-        return s+"s";
-      }
-
-      function postCard(item){
-        const v = item.verified ? `<span class="mn-pillMini">Verified</span>` : "";
-        const link = `/p/${encodeURIComponent(item.id)}/`;
-        return `
-          <article class="mn-glass" style="border-radius:18px; padding:14px;">
-            <div class="mn-postTop">
-              <div class="mn-ava" aria-hidden="true">${item.handle.slice(0,2).toUpperCase()}</div>
-              <div style="flex:1">
-                <div class="mn-inline" style="justify-content:space-between;">
-                  <div class="mn-postMeta">
-                    <span class="mn-pillMini">${badge(item.type)}</span>
-                    ${v}
-                    <span class="mn-muted">•</span>
-                    <a class="mn-link" href="/u/${encodeURIComponent(item.handle)}/">u/${item.handle}</a>
-                    <span class="mn-muted">•</span>
-                    <span class="mn-muted">${timeAgo(item.ts)}</span>
-                  </div>
-                  <a class="mn-link" href="${link}">Mở</a>
-                </div>
-
-                <div style="height:8px;"></div>
-                <div class="mn-h2" style="margin:0; font-size:16px;">${item.title}</div>
-                <div class="mn-sub" style="margin-top:8px;">${item.body}</div>
-
-                <div style="height:12px;"></div>
-
-                <div class="mn-actions">
-                  <button class="mn-act" type="button" data-act="like" data-id="${item.id}">
-                    ❤ <span>${item.likes}</span>
-                  </button>
-                  <button class="mn-act" type="button" data-act="save" data-id="${item.id}">
-                    ⧉ <span>${item.saves}</span>
-                  </button>
-                  <button class="mn-act" type="button" data-act="comment" data-id="${item.id}">
-                    💬 <span>${item.comments}</span>
-                  </button>
-                  <button class="mn-act" type="button" data-act="share" data-id="${item.id}">
-                    ↗ <span>Share</span>
-                  </button>
-                </div>
-
-                <div class="mn-sub" style="margin-top:10px;">
-                  Link sạch: <span class="mn-code">${link}</span>
-                </div>
-              </div>
-            </div>
-          </article>
-        `;
-      }
-
-      function render(){
-        const list = $("#feedList");
-        if(!list) return;
-        list.innerHTML = state.items.map(postCard).join("");
-      }
-
-      function setFilter(f){
-        state.filter = f;
-        $$(".mn-segBtn").forEach(btn=>{
-          btn.classList.toggle("is-active", btn.getAttribute("data-feed")===f);
-        });
-        // reset list
-        state.items = sampleData(9, f);
-        render();
-      }
-
-      function bindActions(){
-        // filter buttons
-        $$(".mn-segBtn").forEach(btn=>{
-          btn.addEventListener("click", ()=>{
-            setFilter(btn.getAttribute("data-feed") || "all");
-          });
-        });
-
-        // tags
-        $$("[data-tag]").forEach(btn=>{
-          btn.addEventListener("click", ()=>{
-            const t = btn.getAttribute("data-tag");
-            if(t==="nhachung") { window.location.href = "https://nhachung.muonnoi.org/"; return; }
-            if(t==="work") setFilter("work");
-            else if(t==="market") setFilter("market");
-            else if(t==="learn") setFilter("learn");
-            else if(t==="invest") setFilter("invest");
-          });
-        });
-
-        // composer
-        const btnPost = $("#btnPost");
-        const btnAttach = $("#btnAttach");
-        const text = $("#composerText");
-        const type = $("#composerType");
-        const box = $("#composerResult");
-        const demo = $("#demoLink");
-        const open = $("#openDemoLink");
-        const copyBtn = $("#copyDemoLink");
-
-        btnAttach && btnAttach.addEventListener("click", ()=>{
-          alert("Giai đoạn sau: upload ảnh/video/tài liệu qua R2 signed upload + quét malware + chống spam.");
-        });
-
-        btnPost && btnPost.addEventListener("click", async ()=>{
-          const content = (text && text.value || "").trim();
-          if(!content){
-            alert("Hãy viết nội dung trước khi đăng.");
-            return;
-          }
-          const id = chainId("mn");
-          const t = (type && type.value) || "all";
-          const item = {
-            id,
-            type: t==="all" ? "work" : t,
-            author: "Bạn",
-            handle: "you",
-            title: "Bài mới",
-            body: content.slice(0, 320),
-            ts: Date.now(),
-            likes: 0, saves: 0, comments: 0,
-            verified: false
-          };
-          state.items = [item, ...state.items];
-          render();
-
-          const link = `/p/${encodeURIComponent(id)}/`;
-          if(demo) demo.textContent = link;
-          if(open) open.href = link;
-          if(box) box.style.display = "block";
-          try{ box.scrollIntoView({behavior:"smooth", block:"center"}); }catch{}
-          try{ text.value=""; }catch{}
-        });
-
-        copyBtn && copyBtn.addEventListener("click", async ()=>{
-          const ok = await copy((demo && demo.textContent) ? ("https://app.muonnoi.org"+demo.textContent) : "");
-          copyBtn.textContent = ok ? "Đã sao chép" : "Không sao chép được";
-          setTimeout(()=>{ copyBtn.textContent = "Sao chép link"; }, 1200);
-        });
-
-        // load more
-        const btnMore = $("#btnMore");
-        btnMore && btnMore.addEventListener("click", ()=>{
-          state.items = state.items.concat(sampleData(9, state.filter));
-          render();
-          window.scrollBy({ top: 420, behavior: "smooth" });
-        });
-
-        const btnRefresh = $("#btnRefresh");
-        btnRefresh && btnRefresh.addEventListener("click", ()=>{
-          state.items = sampleData(9, state.filter);
-          render();
-          window.scrollTo({ top: 0, behavior: "smooth" });
-        });
-
-        // post actions (delegate)
-        document.addEventListener("click", async (e)=>{
-          const btn = e.target && e.target.closest ? e.target.closest("[data-act]") : null;
-          if(!btn) return;
-          const act = btn.getAttribute("data-act");
-          const id = btn.getAttribute("data-id");
-          if(!act || !id) return;
-
-          const item = state.items.find(x=> x.id===id);
-          if(!item) return;
-
-          if(act==="like"){
-            item.likes += 1;
-            btn.classList.add("is-on");
-            btn.querySelector("span").textContent = String(item.likes);
-            return;
-          }
-          if(act==="save"){
-            item.saves += 1;
-            btn.classList.add("is-on");
-            btn.querySelector("span").textContent = String(item.saves);
-            return;
-          }
-          if(act==="comment"){
-            alert("Giai đoạn sau: mở thread /p/:id + bình luận + chống spam + quyền riêng tư.");
-            return;
-          }
-          if(act==="share"){
-            const link = "https://app.muonnoi.org/p/" + encodeURIComponent(id) + "/";
-            const ok = await copy(link);
-            btn.classList.add("is-on");
-            btn.querySelector("span").textContent = ok ? "Copied" : "Copy failed";
-            setTimeout(()=>{ btn.classList.remove("is-on"); btn.querySelector("span").textContent = "Share"; }, 1200);
-            return;
-          }
-        }, { passive:true });
-      }
-
-      // init
-      function init(){
-        state.items = sampleData(9, "all");
-        render();
-        bindActions();
-      }
-
-      if(document.readyState==="loading") document.addEventListener("DOMContentLoaded", init);
-      else init();
-    })();
-  </script>
+  <script src="/assets/feed.js?v=1.0.2" defer></script>
 </body>
 </html>

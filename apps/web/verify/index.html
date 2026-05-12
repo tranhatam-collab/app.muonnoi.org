@@ -7,7 +7,7 @@
   <meta name="theme-color" content="#0b0f0c" />
   <meta name="robots" content="index,follow" />
 
-  <title>Xác minh — Muôn Nơi</title>
+  <title>Xác minh - Muôn Nơi</title>
   <meta name="description" content="Xác minh nhiều lớp trên Muôn Nơi: identity, contact, proof-of-work lite, chống spam, và chuẩn minh bạch. Không tracking." />
   <link rel="canonical" href="https://app.muonnoi.org/verify/" />
 
@@ -137,6 +137,12 @@
     html[data-theme="light"] .mn-check{border-color:rgba(0,0,0,.12);background:rgba(0,0,0,.04)}
     html[data-theme="light"] .mn-check p{color:rgba(0,0,0,.56)}
   </style>
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Xác minh - Muôn Nơi" />
+  <meta property="og:description" content="Xác minh nhiều lớp trên Muôn Nơi: identity, contact, proof-of-work lite, chống spam, và chuẩn minh bạch. Không tracking." />
+  <meta property="og:url" content="https://app.muonnoi.org/verify/" />
+  <meta property="og:image" content="https://app.muonnoi.org/assets/muonnoi-mn-logo.png" />
+  <meta name="twitter:card" content="summary_large_image" />
 </head>
 
 <body class="mn-body">
@@ -169,7 +175,7 @@
       </nav>
 
       <div class="mn-top__actions">
-        <button class="mn-btn mn-btn--ghost" type="button" id="themeBtn" aria-label="Đổi theme">◐</button>
+        <button class="mn-btn mn-btn--ghost" type="button" id="themeBtn" aria-label="Đổi theme">D</button>
         <button class="mn-btn mn-btn--ghost" type="button" id="langBtn" aria-label="Đổi ngôn ngữ">VI</button>
         <a class="mn-btn mn-btn--ghost" href="https://app.muonnoi.org/join/">Tài khoản</a>
         <a class="mn-btn mn-btn--primary" href="https://app.muonnoi.org/feed/">Xem bảng tin</a>
@@ -181,7 +187,7 @@
     </div>
 
     <div class="mn-mobile" id="mnMobile" hidden>
-      <a class="mn-mobile__item mn-mobile__item--primary" href="https://app.muonnoi.org/feed/"><span>Bảng tin</span><span>→</span></a>
+      <a class="mn-mobile__item mn-mobile__item--primary" href="https://app.muonnoi.org/feed/"><span>Bảng tin</span><span>Mở</span></a>
       <a class="mn-mobile__item" href="https://app.muonnoi.org/">Trang chủ</a>
       <a class="mn-mobile__item" href="https://app.muonnoi.org/create/">Tạo</a>
       <a class="mn-mobile__item" href="https://app.muonnoi.org/verify/">Xác minh</a>
@@ -199,14 +205,14 @@
         <div class="mn-glass" style="border-radius:18px; padding:14px;">
           <div class="mn-row" style="justify-content:space-between;">
             <div>
-              <div class="mn-h1" style="font-size:34px; margin:0;">Xác minh</div>
+              <h1 class="mn-h1" style="font-size:34px; margin:0;">Xác minh</h1>
               <div class="mn-sub" style="margin-top:8px;">
-                Xác minh không phải để “khoe”. Xác minh để giảm spam, tăng độ tin cậy, và mở quyền theo lớp.
+                Xác minh không phải để 'khoe'. Xác minh để giảm spam, tăng độ tin cậy, và mở quyền theo lớp.
               </div>
             </div>
             <div class="mn-row">
-              <span class="mn-badge"><span aria-hidden="true">🛡️</span> Security-first</span>
-              <span class="mn-badge"><span aria-hidden="true">🧩</span> Multi-layer</span>
+              <span class="mn-badge"><span aria-hidden="true">SEC</span> Security-first</span>
+              <span class="mn-badge"><span aria-hidden="true">ML</span> Multi-layer</span>
               <span class="mn-codeInline">/verify</span>
             </div>
           </div>
@@ -241,7 +247,7 @@
 
               <div class="mn-note" id="note">
                 <div class="mn-h2" style="font-size:16px;margin:0;">Kết quả demo</div>
-                <div class="mn-sub" style="margin-top:6px;" id="noteText">—</div>
+                <div class="mn-sub" style="margin-top:6px;" id="noteText"> - </div>
               </div>
             </div>
 
@@ -278,7 +284,7 @@
                   <input type="checkbox" data-score="20" />
                   <div>
                     <b>Proof-of-Work lite</b>
-                    <p>Chống spam bằng “công” nhỏ. Stage 2: challenge token + time window.</p>
+                    <p>Chống spam bằng 'công' nhỏ. Stage 2: challenge token + time window.</p>
                   </div>
                 </label>
 
@@ -342,7 +348,7 @@
           <aside class="mn-sticky">
             <div class="mn-glass" style="border-radius:18px; padding:14px;">
               <div class="mn-h2">Mục tiêu của xác minh</div>
-              <div class="mn-sub" style="margin-top:6px;">Không phải để “lấy dữ liệu”. Mục tiêu là giảm rác, tăng tin cậy.</div>
+              <div class="mn-sub" style="margin-top:6px;">Không phải để 'lấy dữ liệu'. Mục tiêu là giảm rác, tăng tin cậy.</div>
 
               <div style="height:10px;"></div>
               <div class="mn-kpi">
@@ -398,7 +404,7 @@
             <span class="mn-mark mn-mark--sm" aria-hidden="true">MN</span>
             <div>
               <div class="mn-footer__name">Muôn Nơi</div>
-              <div class="mn-footer__tag">© 2026 muonnoi.org • social-first • privacy-first</div>
+              <div class="mn-footer__tag">2026 muonnoi.org , social-first , privacy-first</div>
             </div>
           </div>
           <div class="mn-footer__right">
@@ -414,32 +420,6 @@
   </main>
 
   <script src="/assets/ui.js?v=1.0.2" defer></script>
-
-  <script>
-    (function(){
-      "use strict";
-      const $ = (s, el=document)=> el.querySelector(s);
-      const $$ = (s, el=document)=> Array.from(el.querySelectorAll(s));
-
-function chainId(prefix="mn"){
-  const t = Date.now();
-  const r = Math.floor(Math.random()*1e9);
-  const raw = prefix+"."+t+"."+r;
-
-  // FNV-1a 32-bit
-  let h = 2166136261;
-  for(let i=0;i<raw.length;i++){
-    h ^= raw.charCodeAt(i);
-    h = Math.imul(h, 16777619);
-  }
-
-  // base36 helpers
-  const base36u32 = (n) => Math.max(0, (n >>> 0)).toString(36);
-  const pad6 = (s) => String(s).padStart(6,"0").slice(0,6);
-
-  // checksum (6 chars)
-  const c = pad6(base36u32(h >>> 0));
-
-  // chain-like id: mn_<time>_<rand>_<chk>
-  return `${prefix}_${base36u32(t)}_${base36u32(r)}_${c}`;
-}
+  <script src="/assets/verify.js?v=1.0.2" defer></script>
+</body>
+</html>

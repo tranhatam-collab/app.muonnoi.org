@@ -7,13 +7,19 @@
   <meta name="theme-color" content="#0b0f0c" />
   <meta name="robots" content="noindex,nofollow" />
 
-  <title>Admin — Muôn Nơi</title>
+  <title>Admin - Muôn Nơi</title>
   <meta name="description" content="Admin panel tối giản cho Muôn Nơi." />
   <link rel="canonical" href="https://app.muonnoi.org/admin/" />
 
   <link rel="icon" href="/favicon.ico" />
   <link rel="manifest" href="/manifest.json" />
   <link rel="stylesheet" href="/assets/ui.css?v=1.0.2" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Admin - Muôn Nơi" />
+  <meta property="og:description" content="Admin panel tối giản cho Muôn Nơi." />
+  <meta property="og:url" content="https://app.muonnoi.org/admin/" />
+  <meta property="og:image" content="https://app.muonnoi.org/assets/muonnoi-mn-logo.png" />
+  <meta name="twitter:card" content="summary_large_image" />
 </head>
 
 <body class="mn-body">
@@ -46,7 +52,7 @@
       </nav>
 
       <div class="mn-top__actions">
-        <button class="mn-btn mn-btn--ghost" type="button" id="themeBtn" aria-label="Đổi theme">◐</button>
+        <button class="mn-btn mn-btn--ghost" type="button" id="themeBtn" aria-label="Đổi theme">D</button>
         <button class="mn-btn mn-btn--ghost" type="button" id="langBtn" aria-label="Đổi ngôn ngữ">VI</button>
         <a class="mn-btn mn-btn--ghost" href="https://app.muonnoi.org/join/">Tài khoản</a>
         <a class="mn-btn mn-btn--primary" href="https://app.muonnoi.org/join/">Mở hệ</a>
@@ -58,7 +64,7 @@
     </div>
 
     <div class="mn-mobile" id="mnMobile" hidden>
-      <a class="mn-mobile__item mn-mobile__item--primary" href="https://app.muonnoi.org/join/"><span>Vào ứng dụng</span><span>→</span></a>
+      <a class="mn-mobile__item mn-mobile__item--primary" href="https://app.muonnoi.org/join/"><span>Vào ứng dụng</span><span>Mở</span></a>
       <a class="mn-mobile__item" href="https://app.muonnoi.org/">Trang chủ</a>
       <a class="mn-mobile__item" href="https://app.muonnoi.org/feed/">Bảng tin</a>
       <a class="mn-mobile__item" href="https://app.muonnoi.org/verify/">Xác minh</a>
@@ -75,7 +81,7 @@
       <section class="mn-section mn-glass" style="border-radius:28px; padding:18px;">
         <h1 class="mn-h1" style="font-size:38px;">Admin</h1>
         <p class="mn-sub" style="margin-top:10px; max-width:980px;">
-          Giai đoạn đầu là “khung admin” để khóa UI. Bước kế tiếp: kết nối Worker API (api.muonnoi.org)
+          Giai đoạn đầu là 'khung admin' để khóa UI. Bước kế tiếp: kết nối Worker API (api.muonnoi.org)
           cho login admin, duyệt khiếu nại, duyệt xác minh, rate-limit và audit log.
         </p>
 
@@ -100,7 +106,7 @@
             <span class="mn-mark mn-mark--sm" aria-hidden="true">MN</span>
             <div>
               <div class="mn-footer__name">Muôn Nơi</div>
-              <div class="mn-footer__tag">© 2026 muonnoi.org • social-first • privacy-first</div>
+              <div class="mn-footer__tag">2026 muonnoi.org , social-first , privacy-first</div>
             </div>
           </div>
           <div class="mn-footer__right">

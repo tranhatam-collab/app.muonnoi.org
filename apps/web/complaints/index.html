@@ -7,13 +7,19 @@
   <meta name="theme-color" content="#0b0f0c" />
   <meta name="robots" content="index,follow" />
 
-  <title>Khiếu nại & Báo cáo vi phạm — Muôn Nơi</title>
+  <title>Khiếu nại & Báo cáo vi phạm - Muôn Nơi</title>
   <meta name="description" content="Gửi khiếu nại và báo cáo vi phạm trên Muôn Nơi. Luồng chuẩn chống spam, chống giả mạo." />
   <link rel="canonical" href="https://app.muonnoi.org/complaints/" />
 
   <link rel="icon" href="/favicon.ico" />
   <link rel="manifest" href="/manifest.json" />
   <link rel="stylesheet" href="/assets/ui.css?v=1.0.2" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Khiếu nại &amp; Báo cáo vi phạm - Muôn Nơi" />
+  <meta property="og:description" content="Gửi khiếu nại và báo cáo vi phạm trên Muôn Nơi. Luồng chuẩn chống spam, chống giả mạo." />
+  <meta property="og:url" content="https://app.muonnoi.org/complaints/" />
+  <meta property="og:image" content="https://app.muonnoi.org/assets/muonnoi-mn-logo.png" />
+  <meta name="twitter:card" content="summary_large_image" />
 </head>
 
 <body class="mn-body">
@@ -30,7 +36,7 @@
         <span class="mn-mark" aria-hidden="true">MN</span>
         <span class="mn-brand__stack">
           <span class="mn-brand__title">Muôn Nơi</span>
-          <span class="mn-brand__sub">Social Operating Space. Báo cáo chuẩn. Không kẹt. Không #.</span>
+          <span class="mn-brand__sub">Hạ tầng số cho đời sống thật. Báo cáo chuẩn. Không kẹt. Không #.</span>
         </span>
       </a>
 
@@ -46,7 +52,7 @@
       </nav>
 
       <div class="mn-top__actions">
-        <button class="mn-btn mn-btn--ghost" type="button" id="themeBtn" aria-label="Đổi theme">◐</button>
+        <button class="mn-btn mn-btn--ghost" type="button" id="themeBtn" aria-label="Đổi theme">D</button>
         <button class="mn-btn mn-btn--ghost" type="button" id="langBtn" aria-label="Đổi ngôn ngữ">VI</button>
         <a class="mn-btn mn-btn--ghost" href="https://app.muonnoi.org/join/">Tài khoản</a>
         <a class="mn-btn mn-btn--primary" href="https://app.muonnoi.org/join/">Mở hệ</a>
@@ -58,7 +64,7 @@
     </div>
 
     <div class="mn-mobile" id="mnMobile" hidden>
-      <a class="mn-mobile__item mn-mobile__item--primary" href="https://app.muonnoi.org/join/"><span>Vào ứng dụng</span><span>→</span></a>
+      <a class="mn-mobile__item mn-mobile__item--primary" href="https://app.muonnoi.org/join/"><span>Vào ứng dụng</span><span>Mở</span></a>
       <a class="mn-mobile__item" href="https://app.muonnoi.org/">Trang chủ</a>
       <a class="mn-mobile__item" href="https://app.muonnoi.org/feed/">Bảng tin</a>
       <a class="mn-mobile__item" href="https://app.muonnoi.org/verify/">Xác minh</a>
@@ -125,7 +131,7 @@
 
                 <label class="mn-field" style="grid-column:span 12;">
                   <span class="mn-field__label">Nội dung sự việc</span>
-                  <textarea class="mn-input" name="details" rows="5" required placeholder="Mô tả ngắn gọn (tối đa ~800 ký tự), đúng sự thật: xảy ra khi nào, ở đâu, ai, làm gì…"></textarea>
+                  <textarea class="mn-input" name="details" rows="5" required placeholder="Mô tả ngắn gọn (tối đa ~800 ký tự), đúng sự thật: xảy ra khi nào, ở đâu, ai, làm gì..."></textarea>
                   <span class="mn-field__hint">Không gửi mã độc, không cố ý spam. MN sẽ xử lý theo tiêu chuẩn an toàn.</span>
                 </label>
 
@@ -217,7 +223,7 @@
             <span class="mn-mark mn-mark--sm" aria-hidden="true">MN</span>
             <div>
               <div class="mn-footer__name">Muôn Nơi</div>
-              <div class="mn-footer__tag">© 2026 muonnoi.org • social-first • privacy-first</div>
+              <div class="mn-footer__tag">2026 muonnoi.org , social-first , privacy-first</div>
             </div>
           </div>
           <div class="mn-footer__right">
@@ -234,87 +240,6 @@
   <script src="/assets/ui.js?v=1.0.2" defer></script>
 
   <!-- Complaints controller (no backend yet) -->
-  <script>
-    (function(){
-      "use strict";
-
-      function genRef(){
-        // MN-YYYYMMDD-HHMMSS-RAND
-        const d = new Date();
-        const pad = (n)=> String(n).padStart(2,"0");
-        const y = d.getFullYear();
-        const m = pad(d.getMonth()+1);
-        const da = pad(d.getDate());
-        const hh = pad(d.getHours());
-        const mm = pad(d.getMinutes());
-        const ss = pad(d.getSeconds());
-        const r = Math.random().toString(36).slice(2,8).toUpperCase();
-        return `MN-${y}${m}${da}-${hh}${mm}${ss}-${r}`;
-      }
-
-      async function copy(text){
-        try{
-          if(navigator.clipboard && navigator.clipboard.writeText){
-            await navigator.clipboard.writeText(text);
-            return true;
-          }
-        }catch{}
-        try{
-          const ta = document.createElement("textarea");
-          ta.value = text;
-          ta.style.position="fixed";
-          ta.style.left="-9999px";
-          document.body.appendChild(ta);
-          ta.select();
-          document.execCommand("copy");
-          ta.remove();
-          return true;
-        }catch{
-          return false;
-        }
-      }
-
-      const form = document.getElementById("complaintForm");
-      const resetBtn = document.getElementById("resetBtn");
-      const box = document.getElementById("resultBox");
-      const refCode = document.getElementById("refCode");
-      const copyRefBtn = document.getElementById("copyRefBtn");
-
-      if(resetBtn && form){
-        resetBtn.addEventListener("click", ()=>{
-          form.reset();
-          if(box){ box.style.display="none"; }
-        });
-      }
-
-      if(form){
-        form.addEventListener("submit", async (e)=>{
-          e.preventDefault();
-
-          // create local reference (stage-1)
-          const ref = genRef();
-          if(refCode) refCode.textContent = ref;
-          if(box) box.style.display = "block";
-
-          // future: POST to /api/complaints/create
-          // For now: keep it client-side only, no tracking.
-          try{ form.reset(); }catch{}
-          const agree = document.getElementById("agree");
-          if(agree) agree.checked = false;
-
-          // smooth scroll to result
-          try{ box.scrollIntoView({behavior:"smooth", block:"center"}); }catch{}
-        });
-      }
-
-      if(copyRefBtn && refCode){
-        copyRefBtn.addEventListener("click", async ()=>{
-          const ok = await copy(refCode.textContent || "");
-          copyRefBtn.textContent = ok ? "Đã sao chép" : "Không sao chép được";
-          setTimeout(()=>{ copyRefBtn.textContent = "Sao chép mã"; }, 1200);
-        });
-      }
-    })();
-  </script>
+  <script src="/assets/complaints.js?v=1.0.2" defer></script>
 </body>
 </html>

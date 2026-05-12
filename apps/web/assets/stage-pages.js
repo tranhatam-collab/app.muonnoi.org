@@ -232,9 +232,9 @@
                 <div class="mn-postMeta">
                   <span class="mn-pillMini">${badge(item.type)}</span>
                   ${verified}
-                  <span class="mn-muted">•</span>
+                  <span class="mn-muted">,</span>
                   <a class="mn-link" href="/u/${encodeURIComponent(item.handle)}/">u/${item.handle}</a>
-                  <span class="mn-muted">•</span>
+                  <span class="mn-muted">,</span>
                   <span class="mn-muted">${timeAgo(item.ts)}</span>
                 </div>
                 <a class="mn-link" href="${link}">Mở</a>
@@ -248,16 +248,16 @@
 
               <div class="mn-actions">
                 <button class="mn-act" type="button" data-act="like" data-id="${item.id}">
-                  ❤ <span>${item.likes}</span>
+                  Like <span>${item.likes}</span>
                 </button>
                 <button class="mn-act" type="button" data-act="save" data-id="${item.id}">
-                  ⧉ <span>${item.saves}</span>
+                  Save <span>${item.saves}</span>
                 </button>
                 <button class="mn-act" type="button" data-act="comment" data-id="${item.id}">
-                  💬 <span>${item.comments}</span>
+                  Comment <span>${item.comments}</span>
                 </button>
                 <button class="mn-act" type="button" data-act="share" data-id="${item.id}">
-                  ↗ <span>Share</span>
+                  Share <span>Share</span>
                 </button>
               </div>
 
@@ -294,7 +294,7 @@
         button.addEventListener("click", () => {
           const tag = button.getAttribute("data-tag");
           if (tag === "nhachung") {
-            window.location.href = "https://nhachung.muonnoi.org/";
+            window.location.href = "https://muonnoi.org/ecosystem/";
             return;
           }
           if (tag === "work") setFilter("work");
@@ -466,7 +466,7 @@
 
       if (previewTitle) previewTitle.textContent = titleInput.value.trim() || "Chưa có tiêu đề";
       if (previewBody) previewBody.textContent = bodyInput.value.trim() || "Nội dung sẽ hiển thị ở đây...";
-      if (previewMeta) previewMeta.textContent = `${visibility} • ${category}`;
+      if (previewMeta) previewMeta.textContent = `${visibility} , ${category}`;
       if (previewNow) previewNow.textContent = nowText();
       if (previewType) previewType.textContent = types[state.type].label;
     }
@@ -669,7 +669,7 @@
                     <div class="mn-postMeta">
                       <span class="mn-pillMini">${badge}</span>
                       ${appliedTag}
-                      <span class="mn-muted">•</span>
+                      <span class="mn-muted">,</span>
                       <span class="mn-muted">${timeAgo(item.ts)}</span>
                     </div>
                     <button class="mn-link" type="button" data-family-act="apply" data-id="${item.id}">
@@ -685,7 +685,7 @@
                       ${lang === "vi" ? "Hữu ích" : "Helpful"} <span>${item.helpful}</span>
                     </button>
                     <button class="mn-act" type="button" data-family-act="like" data-id="${item.id}">
-                      ❤ <span>${item.likes}</span>
+                      Like <span>${item.likes}</span>
                     </button>
                     <button class="mn-act" type="button" data-family-act="advice" data-id="${item.id}">
                       ${lang === "vi" ? "AI gợi ý" : "AI idea"} <span>+</span>
@@ -821,12 +821,12 @@
       const ideas = {
         parenting: {
           vi: [
-            "Chia nhỏ buổi học thành 15–20 phút + nghỉ ngắn.",
+            "Chia nhỏ buổi học thành 15-20 phút + nghỉ ngắn.",
             "Thiết lập phần thưởng không vật chất (ví dụ: quyền chọn hoạt động).",
             "Ghi lại 3 dấu hiệu cải thiện trong 7 ngày."
           ],
           en: [
-            "Split study into 15–20 minute blocks with short breaks.",
+            "Split study into 15-20 minute blocks with short breaks.",
             "Use non-material rewards (e.g., let them choose an activity).",
             "Track 3 improvement signals over the next 7 days."
           ]
@@ -834,12 +834,12 @@
         conflict: {
           vi: [
             "Xác định nhu cầu chính (an toàn, tôn trọng, tự chủ).",
-            "Chọn 1 câu ‘nói từ cảm xúc’ thay vì tranh luận đúng/sai.",
+            "Chọn 1 câu nói từ cảm xúc thay vì tranh luận đúng/sai.",
             "Thống nhất 1 thử nghiệm nhỏ trong 24 giờ."
           ],
           en: [
             "Identify the core need (safety, respect, autonomy).",
-            "Use one ‘I-feel’ sentence instead of right/wrong debate.",
+            "Use one I-feel sentence instead of right/wrong debate.",
             "Agree on one small experiment within 24 hours."
           ]
         },
@@ -857,12 +857,12 @@
         },
         schedule: {
           vi: [
-            "Tạo lịch sinh hoạt theo ‘nhịp sáng – nhịp học – nhịp tối’.",
+            "Tạo lịch sinh hoạt theo nhịp sáng, nhịp học, nhịp tối.",
             "Ưu tiên giờ chất lượng với trẻ và với nhau.",
-            "Đặt quy tắc ‘một việc quan trọng/ một việc nhẹ’ mỗi ngày."
+            "Đặt quy tắc một việc quan trọng, một việc nhẹ mỗi ngày."
           ],
           en: [
-            "Create a daily rhythm: morning – study – evening.",
+            "Create a daily rhythm: morning - study - evening.",
             "Prioritize quality time for kids and for each other.",
             "Use a rule: one important task + one light task daily."
           ]
@@ -870,7 +870,7 @@
       };
 
       const toolIdeas = ideas[tool] || ideas.parenting;
-      const list = (lang === "vi" ? toolIdeas.vi : toolIdeas.en).map((x) => `• ${x}`).join("\n");
+      const list = (lang === "vi" ? toolIdeas.vi : toolIdeas.en).map((x) => `, ${x}`).join("\n");
 
       const header = lang === "vi" ? summaryVi : summaryEn;
       resultBox.textContent = `${header}${raw}\n\n${lang === "vi" ? "Gợi ý thực tế:\n" : "Practical ideas:\n"}${list}\n\n${

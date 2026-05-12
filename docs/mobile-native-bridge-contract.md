@@ -15,9 +15,9 @@ This contract defines the shared bridge between `apps/web` and Capacitor native 
 
 ## Push Token Flow
 
-When push registration succeeds, the bridge posts token payload to:
+When push registration succeeds, the bridge posts token payload to the canonical API origin:
 
-- `POST /api/mobile/push/register`
+- `POST https://api.muonnoi.org/api/mobile/push/register`
 
 Payload:
 

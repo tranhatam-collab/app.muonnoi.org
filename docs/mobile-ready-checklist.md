@@ -25,7 +25,7 @@
 ## 4) Build & Release
 
 - [x] Capacitor shell scaffold (`mobile-shell`)
-- [ ] Add iOS/Android projects (`npx cap add ios|android`)
+- [x] Add iOS/Android projects (`npx cap add ios|android`)
 - [ ] Configure signing (Apple Team, Android keystore)
 - [ ] Set up build lanes (manual first, CI later)
 

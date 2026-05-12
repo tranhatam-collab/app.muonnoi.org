@@ -79,7 +79,7 @@
       const header = document.createElement("div");
       header.className = "mn-sub";
       header.style.margin = "0";
-      header.textContent = t(lang, "Bạn", "You") + " • " + new Date(item.ts).toLocaleTimeString();
+      header.textContent = t(lang, "Bạn", "You") + " , " + new Date(item.ts).toLocaleTimeString();
 
       const body = document.createElement("div");
       body.className = "mn-h2";

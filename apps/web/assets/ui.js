@@ -1,5 +1,5 @@
 /* apps/web/assets/ui.js
-   MUON NOI — UI Controller (No hash, no router)
+   MUON NOI - UI Controller (No hash, no router)
    - Mobile drawer stable (no stuck)
    - Theme dark/light saved
    - Language VI/EN saved (UI label only for now)
@@ -43,7 +43,7 @@
     safeSetAttr(document.documentElement, "data-theme", theme);
     setStored(KEY_THEME, theme);
     // Button icon (simple)
-    safeText(themeBtn, theme === "dark" ? "◐" : "◑");
+    safeText(themeBtn, theme === "dark" ? "D" : "L");
     // Meta theme-color
     const m = document.querySelector('meta[name="theme-color"]');
     if (m) m.setAttribute("content", theme === "dark" ? "#0b0f0c" : "#eef2f6");
@@ -83,7 +83,7 @@
     } catch {}
   }
 
-  // Overlay: one node to prevent “kẹt”
+  // Overlay: one node to prevent 'kẹt'
   let overlay = null;
   function ensureOverlay(){
     if (overlay && overlay.isConnected) return overlay;
@@ -166,7 +166,7 @@
       }
     } catch {}
 
-    const PUSH_ENDPOINT = window.MN_PUSH_ENDPOINT || "/api/mobile/push/register";
+    const PUSH_ENDPOINT = window.MN_PUSH_ENDPOINT || "https://api.muonnoi.org/api/mobile/push/register";
     const PUSH_SENT_KEY = "mn_push_token_sent";
 
     async function sendPushToken(token, platform) {

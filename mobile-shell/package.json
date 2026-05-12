@@ -10,7 +10,7 @@
     "cap:add:ios": "npx cap add ios",
     "cap:add:android": "npx cap add android",
     "build:android:debug": "cd android && ./gradlew assembleDebug",
-    "build:ios:sim": "xcodebuild -project ios/App/App.xcodeproj -scheme App -configuration Debug -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 15' build"
+    "build:ios:sim": "xcodebuild -project ios/App/App.xcodeproj -scheme App -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build"
   },
   "dependencies": {
     "@aparajita/capacitor-biometric-auth": "latest",

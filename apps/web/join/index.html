@@ -7,13 +7,19 @@
   <meta name="theme-color" content="#0b0f0c" />
   <meta name="robots" content="index,follow" />
 
-  <title>Join — Đăng nhập / Đăng ký — Muôn Nơi</title>
-  <meta name="description" content="Join Muôn Nơi: đăng nhập hoặc tạo tài khoản. Privacy-first, security-first. Không dùng hash routing." />
+  <title>Đăng nhập và tạo tài khoản - Muôn Nơi</title>
+  <meta name="description" content="Đăng nhập hoặc tạo tài khoản Muôn Nơi bằng email và mật khẩu. Kiểm tra trạng thái phiên, cập nhật hồ sơ cơ bản và tiếp tục vào ứng dụng." />
   <link rel="canonical" href="https://app.muonnoi.org/join/" />
 
   <link rel="icon" href="/favicon.ico" />
   <link rel="manifest" href="/manifest.json" />
   <link rel="stylesheet" href="/assets/ui.css?v=1.0.2" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Đăng nhập và tạo tài khoản - Muôn Nơi" />
+  <meta property="og:description" content="Đăng nhập hoặc tạo tài khoản Muôn Nơi bằng email và mật khẩu. Kiểm tra trạng thái phiên, cập nhật hồ sơ cơ bản và tiếp tục vào ứng dụng." />
+  <meta property="og:url" content="https://app.muonnoi.org/join/" />
+  <meta property="og:image" content="https://app.muonnoi.org/assets/muonnoi-mn-logo.png" />
+  <meta name="twitter:card" content="summary_large_image" />
 </head>
 
 <body class="mn-body">
@@ -46,7 +52,7 @@
       </nav>
 
       <div class="mn-top__actions">
-        <button class="mn-btn mn-btn--ghost" type="button" id="themeBtn" aria-label="Đổi theme">◐</button>
+        <button class="mn-btn mn-btn--ghost" type="button" id="themeBtn" aria-label="Đổi theme">D</button>
         <button class="mn-btn mn-btn--ghost" type="button" id="langBtn" aria-label="Đổi ngôn ngữ">VI</button>
         <a class="mn-btn mn-btn--primary" href="https://app.muonnoi.org/">Vào ứng dụng</a>
 
@@ -57,7 +63,7 @@
     </div>
 
     <div class="mn-mobile" id="mnMobile" hidden>
-      <a class="mn-mobile__item mn-mobile__item--primary" href="https://app.muonnoi.org/"><span>Vào ứng dụng</span><span>→</span></a>
+      <a class="mn-mobile__item mn-mobile__item--primary" href="https://app.muonnoi.org/"><span>Vào ứng dụng</span><span>Mở</span></a>
       <a class="mn-mobile__item" href="https://app.muonnoi.org/">Trang chủ</a>
       <a class="mn-mobile__item" href="https://app.muonnoi.org/feed/">Bảng tin</a>
       <a class="mn-mobile__item" href="https://app.muonnoi.org/verify/">Xác minh</a>
@@ -77,21 +83,21 @@
             <h1 class="mn-h1" style="font-size:40px; margin:0;">Join Muôn Nơi</h1>
             <p class="mn-sub" style="margin-top:10px; max-width:980px;">
               Một hệ thống xã hội vận hành thật, nơi bạn có thể làm việc, mua bán, học, chia sẻ, nhắn tin, gọi, và xây giá trị lâu dài.
-              Giai đoạn đầu: UI chuẩn, bảo mật nền, link sạch. Giai đoạn sau: nối API để bật tài khoản thật và quyền hạn theo cấp độ.
+              Trang này hiện đã nối tài khoản thật qua <span class="mn-code">api.muonnoi.org</span> cho email, mật khẩu, phiên đăng nhập và cập nhật hồ sơ cơ bản.
             </p>
 
             <div class="mn-grid" style="grid-template-columns:repeat(12,1fr); gap:10px; margin-top:12px;">
               <div class="mn-glass" style="grid-column:span 12; border-radius:14px; padding:12px;">
-                <div class="mn-h2" style="font-size:16px;">Mặc định: Privacy First</div>
+                <h2 class="mn-h2" style="font-size:16px; margin:0;">Mặc định: Privacy First</h2>
                 <div class="mn-sub" style="margin-top:6px;">
-                  Không pixel theo dõi. Không SDK bên thứ ba. Không “đào” hành vi người dùng. Tập trung vào người thật và giá trị thật.
+                  Không pixel theo dõi. Không SDK bên thứ ba. Không thu thập hành vi ngoài mục đích vận hành tài khoản. Tập trung vào người thật và giá trị thật.
                 </div>
               </div>
 
               <div class="mn-glass" style="grid-column:span 12; border-radius:14px; padding:12px;">
-                <div class="mn-h2" style="font-size:16px;">Mặc định: Security First</div>
+                <h2 class="mn-h2" style="font-size:16px; margin:0;">Mặc định: Security First</h2>
                 <div class="mn-sub" style="margin-top:6px;">
-                  Luồng đăng nhập ưu tiên Magic Link và OAuth. Hạn chế mật khẩu. Chuẩn bị cho 2FA, thiết bị tin cậy, khóa phiên.
+                  Luồng hiện tại dùng email và mật khẩu với session cookie HttpOnly. Magic Link, OAuth, 2FA và thiết bị tin cậy vẫn là hạng đang tiếp tục làm.
                 </div>
               </div>
             </div>
@@ -101,8 +107,8 @@
           <div class="mn-glass" style="grid-column:span 12; border-radius:18px; padding:14px;">
             <div class="mn-row" style="display:flex; gap:10px; flex-wrap:wrap; align-items:center; justify-content:space-between;">
               <div>
-                <div class="mn-h2" style="margin:0;">Đăng nhập / Đăng ký</div>
-                <div class="mn-sub" style="margin-top:6px;">Chọn chế độ. UI này chạy ngay. Backend sẽ nối vào api.muonnoi.org ở giai đoạn sau.</div>
+                <h2 class="mn-h2" style="margin:0;">Đăng nhập / Đăng ký</h2>
+                <div class="mn-sub" style="margin-top:6px;">Chọn chế độ để đăng nhập, tạo tài khoản, kiểm tra phiên hiện tại hoặc cập nhật hồ sơ cơ bản.</div>
               </div>
 
               <div class="mn-row" style="display:flex; gap:8px; flex-wrap:wrap;">
@@ -115,23 +121,29 @@
 
             <!-- SIGN IN -->
             <div id="panelSignIn" class="mn-glass" style="border-radius:16px; padding:12px;">
+              <h3 class="mn-h2" style="font-size:16px; margin:0 0 10px 0;">Đăng nhập bằng email</h3>
               <div class="mn-sub" style="margin:0 0 10px 0;">
-                Ưu tiên Magic Link. Không cần mật khẩu. Tránh bị lộ và bị đánh cắp.
+                Đăng nhập bằng email và mật khẩu. Sau khi thành công, phiên sẽ được giữ bằng cookie bảo mật.
               </div>
 
               <form id="formSignIn" class="mn-form" style="display:grid; gap:10px;">
                 <label class="mn-field">
                   <span class="mn-field__label">Email</span>
                   <input class="mn-input" type="email" name="email" autocomplete="email" placeholder="you@domain.com" required />
-                  <span class="mn-field__hint">Giai đoạn sau: gửi Magic Link qua email + anti-abuse + rate limit.</span>
+                </label>
+
+                <label class="mn-field">
+                  <span class="mn-field__label">Mật khẩu</span>
+                  <input class="mn-input" type="password" name="password" autocomplete="current-password" placeholder="Tối thiểu 8 ký tự" required />
+                  <span class="mn-field__hint">Magic Link và Google OAuth chưa bật trên trang này.</span>
                 </label>
 
                 <div class="mn-row" style="display:flex; gap:10px; flex-wrap:wrap;">
                   <button class="mn-btn mn-btn--primary" type="submit" id="btnMagic">
-                    Gửi Magic Link
+                    Đăng nhập
                   </button>
                   <button class="mn-btn mn-btn--ghost" type="button" id="btnGoogleIn">
-                    Tiếp tục với Google
+                    Google sắp mở
                   </button>
                 </div>
 
@@ -146,8 +158,9 @@
 
             <!-- SIGN UP -->
             <div id="panelSignUp" class="mn-glass" style="border-radius:16px; padding:12px; display:none;">
+              <h3 class="mn-h2" style="font-size:16px; margin:0 0 10px 0;">Tạo tài khoản mới</h3>
               <div class="mn-sub" style="margin:0 0 10px 0;">
-                Tạo tài khoản nhanh, sạch, không rác. Chuẩn bị cho cấp độ, điểm, và xác minh.
+                Tạo tài khoản mới bằng email, mật khẩu và handle. Sau khi tạo xong, phiên đăng nhập sẽ được mở ngay.
               </div>
 
               <form id="formSignUp" class="mn-form" style="display:grid; gap:10px;">
@@ -157,14 +170,20 @@
                 </label>
 
                 <label class="mn-field">
-                  <span class="mn-field__label">Handle (u/…)</span>
+                  <span class="mn-field__label">Handle (u/...)</span>
                   <input class="mn-input" type="text" name="handle" placeholder="vd: thanhtam" required />
-                  <span class="mn-field__hint">Chỉ chữ, số, dấu gạch dưới. Giai đoạn sau sẽ kiểm tra trùng và giữ chỗ handle.</span>
+                  <span class="mn-field__hint">Chỉ chữ thường, số, dấu gạch dưới. API sẽ kiểm tra hợp lệ và trùng lặp khi gửi.</span>
                 </label>
 
                 <label class="mn-field">
                   <span class="mn-field__label">Email</span>
                   <input class="mn-input" type="email" name="email" autocomplete="email" placeholder="you@domain.com" required />
+                </label>
+
+                <label class="mn-field">
+                  <span class="mn-field__label">Mật khẩu</span>
+                  <input class="mn-input" type="password" name="password" autocomplete="new-password" placeholder="Tối thiểu 8 ký tự" required />
+                  <span class="mn-field__hint">Mật khẩu cần ít nhất 8 ký tự theo contract hiện tại của API.</span>
                 </label>
 
                 <label class="mn-field">
@@ -190,13 +209,12 @@
                     Tạo tài khoản
                   </button>
                   <button class="mn-btn mn-btn--ghost" type="button" id="btnGoogleUp">
-                    Đăng ký với Google
+                    Google sắp mở
                   </button>
                 </div>
 
                 <div class="mn-sub">
-                  Sau khi tạo, bạn sẽ có link hồ sơ dạng sạch: <span class="mn-code">/u/handle</span>.
-                  Giai đoạn sau sẽ bật xác minh và cấp độ.
+                  Sau khi tạo, bạn sẽ có hồ sơ người dùng với username sạch và có thể cập nhật tên, bio, avatar ngay trên trang này.
                 </div>
               </form>
             </div>
@@ -205,15 +223,50 @@
 
             <!-- STATUS -->
             <div id="joinResult" class="mn-glass" style="display:none; border-radius:14px; padding:12px;">
-              <div class="mn-h2" style="font-size:16px;">Đã tạo mã tham chiếu</div>
-              <div class="mn-sub" style="margin-top:6px;">Mã: <b id="joinRef">MN-...</b></div>
+              <h2 class="mn-h2" style="font-size:16px; margin:0;" id="joinResultTitle">Trạng thái tài khoản</h2>
+              <div class="mn-sub" style="margin-top:6px;" id="joinResultBody">Đang xử lý.</div>
               <div class="mn-row" style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;">
-                <button class="mn-btn mn-btn--ghost" type="button" id="copyJoinRef">Sao chép mã</button>
+                <button class="mn-btn mn-btn--ghost" type="button" id="copyJoinRef">Sao chép mã phiên</button>
+                <button class="mn-btn mn-btn--ghost" type="button" id="refreshSessionBtn">Kiểm tra phiên</button>
+                <button class="mn-btn mn-btn--ghost" type="button" id="logoutBtn">Đăng xuất</button>
                 <a class="mn-btn mn-btn--primary" href="https://app.muonnoi.org/">Vào ứng dụng</a>
               </div>
-              <div class="mn-sub" style="margin-top:8px;">
-                Giai đoạn sau: mã này sẽ là “receipt” tạo tài khoản thật, có tiến trình, audit log, và bảo vệ spam.
+              <div class="mn-sub" style="margin-top:8px;" id="joinRefWrap">
+                Mã phiên: <b id="joinRef">MN-...</b>
               </div>
+            </div>
+
+            <div style="height:12px;"></div>
+
+            <div id="profilePanel" class="mn-glass" style="display:none; border-radius:16px; padding:12px;">
+              <h2 class="mn-h2" style="margin:0;">Hồ sơ cơ bản</h2>
+              <div class="mn-sub" style="margin-top:6px;">Chỉ cập nhật các trường đang được API hỗ trợ trực tiếp.</div>
+
+              <form id="profileForm" class="mn-form" style="display:grid; gap:10px; margin-top:12px;">
+                <label class="mn-field">
+                  <span class="mn-field__label">Tên hiển thị</span>
+                  <input class="mn-input" type="text" name="name" autocomplete="name" />
+                </label>
+
+                <label class="mn-field">
+                  <span class="mn-field__label">Username</span>
+                  <input class="mn-input" type="text" name="username" placeholder="vd: thanhtam" />
+                </label>
+
+                <label class="mn-field">
+                  <span class="mn-field__label">Bio</span>
+                  <textarea class="mn-input" name="bio" rows="4" placeholder="Viết ngắn gọn bạn là ai và đang muốn làm gì."></textarea>
+                </label>
+
+                <label class="mn-field">
+                  <span class="mn-field__label">Avatar URL</span>
+                  <input class="mn-input" type="url" name="avatar_url" placeholder="https://..." />
+                </label>
+
+                <div class="mn-row" style="display:flex; gap:10px; flex-wrap:wrap;">
+                  <button class="mn-btn mn-btn--primary" type="submit" id="saveProfileBtn">Lưu hồ sơ</button>
+                </div>
+              </form>
             </div>
           </div>
         </div>
@@ -225,7 +278,7 @@
             <span class="mn-mark mn-mark--sm" aria-hidden="true">MN</span>
             <div>
               <div class="mn-footer__name">Muôn Nơi</div>
-              <div class="mn-footer__tag">© 2026 muonnoi.org • social-first • privacy-first</div>
+              <div class="mn-footer__tag">2026 muonnoi.org , social-first , privacy-first</div>
             </div>
           </div>
           <div class="mn-footer__right">
@@ -240,111 +293,8 @@
   </main>
 
   <script src="/assets/ui.js?v=1.0.2" defer></script>
+  <script src="/assets/join.js?v=1.0.2" defer></script>
 
-  <!-- Join controller (stage-1 UI only, no backend) -->
-  <script>
-    (function(){
-      "use strict";
 
-      function pad(n){ return String(n).padStart(2,"0"); }
-      function genRef(){
-        const d = new Date();
-        const y = d.getFullYear();
-        const m = pad(d.getMonth()+1);
-        const da = pad(d.getDate());
-        const hh = pad(d.getHours());
-        const mm = pad(d.getMinutes());
-        const ss = pad(d.getSeconds());
-        const r = Math.random().toString(36).slice(2,8).toUpperCase();
-        return `MN-${y}${m}${da}-${hh}${mm}${ss}-${r}`;
-      }
-
-      async function copy(text){
-        try{
-          if(navigator.clipboard && navigator.clipboard.writeText){
-            await navigator.clipboard.writeText(text);
-            return true;
-          }
-        }catch{}
-        try{
-          const ta=document.createElement("textarea");
-          ta.value=text;
-          ta.style.position="fixed";
-          ta.style.left="-9999px";
-          document.body.appendChild(ta);
-          ta.select();
-          document.execCommand("copy");
-          ta.remove();
-          return true;
-        }catch{ return false; }
-      }
-
-      const tabIn = document.getElementById("tabSignIn");
-      const tabUp = document.getElementById("tabSignUp");
-      const pIn = document.getElementById("panelSignIn");
-      const pUp = document.getElementById("panelSignUp");
-
-      const formIn = document.getElementById("formSignIn");
-      const formUp = document.getElementById("formSignUp");
-
-      const res = document.getElementById("joinResult");
-      const joinRef = document.getElementById("joinRef");
-      const copyBtn = document.getElementById("copyJoinRef");
-
-      function show(which){
-        const isUp = which === "up";
-        if(pIn) pIn.style.display = isUp ? "none" : "block";
-        if(pUp) pUp.style.display = isUp ? "block" : "none";
-        if(tabIn) tabIn.classList.toggle("mn-btn--primary", !isUp);
-        if(tabIn) tabIn.classList.toggle("mn-btn--ghost", isUp);
-        if(tabUp) tabUp.classList.toggle("mn-btn--primary", isUp);
-        if(tabUp) tabUp.classList.toggle("mn-btn--ghost", !isUp);
-      }
-
-      tabIn && tabIn.addEventListener("click", ()=> show("in"));
-      tabUp && tabUp.addEventListener("click", ()=> show("up"));
-
-      function done(){
-        const code = genRef();
-        if(joinRef) joinRef.textContent = code;
-        if(res) res.style.display = "block";
-        try{ res.scrollIntoView({behavior:"smooth", block:"center"}); }catch{}
-      }
-
-      formIn && formIn.addEventListener("submit", (e)=>{
-        e.preventDefault();
-        // stage-2: POST /auth/magiclink/request (api.muonnoi.org)
-        done();
-        try{ formIn.reset(); }catch{}
-      });
-
-      formUp && formUp.addEventListener("submit", (e)=>{
-        e.preventDefault();
-        // stage-2: POST /auth/signup (api.muonnoi.org)
-        done();
-        try{ formUp.reset(); }catch{}
-        const agree = document.getElementById("agreeUp");
-        if(agree) agree.checked = false;
-      });
-
-      const btnGoogleIn = document.getElementById("btnGoogleIn");
-      const btnGoogleUp = document.getElementById("btnGoogleUp");
-      btnGoogleIn && btnGoogleIn.addEventListener("click", ()=>{
-        alert("UI sẵn. Giai đoạn sau bật Google OAuth trên api.muonnoi.org.");
-      });
-      btnGoogleUp && btnGoogleUp.addEventListener("click", ()=>{
-        alert("UI sẵn. Giai đoạn sau bật Google OAuth trên api.muonnoi.org.");
-      });
-
-      copyBtn && copyBtn.addEventListener("click", async ()=>{
-        const ok = await copy(joinRef ? (joinRef.textContent || "") : "");
-        copyBtn.textContent = ok ? "Đã sao chép" : "Không sao chép được";
-        setTimeout(()=>{ copyBtn.textContent = "Sao chép mã"; }, 1200);
-      });
-
-      // default state
-      show("up");
-    })();
-  </script>
 </body>
 </html>

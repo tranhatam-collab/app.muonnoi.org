@@ -5,14 +5,16 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <meta name="theme-color" content="#0b0f0c" />
   <meta name="color-scheme" content="dark light" />
-  <title>chat.muonnoi.org v1.0 — E2EE Family Chat</title>
-  <meta name="description" content="Muon Noi Chat v1.0: encrypted family chat, group creation, and voice/video preview with privacy-first design." />
-  <link rel="canonical" href="https://chat.muonnoi.org/" />
-  <meta property="og:title" content="chat.muonnoi.org v1.0 — E2EE Family Chat" />
-  <meta property="og:description" content="Encrypted family messaging for the Muon Noi ecosystem with privacy-first principles." />
+  <title>Muôn Nơi Chat v1.0 | Family Chat</title>
+  <meta name="description" content="Muôn Nơi Chat v1.0: encrypted family chat, group creation, and voice/video preview with privacy-first design." />
+  <link rel="canonical" href="https://app.muonnoi.org/chat/" />
+  <meta property="og:title" content="Muôn Nơi Chat v1.0 | Family Chat" />
+  <meta property="og:description" content="Encrypted family messaging for the Muôn Nơi ecosystem with privacy-first principles." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://chat.muonnoi.org/" />
+  <meta property="og:url" content="https://app.muonnoi.org/chat/" />
   <link rel="stylesheet" href="/assets/ui.css?v=1.0.2" />
+  <meta property="og:image" content="https://app.muonnoi.org/assets/muonnoi-mn-logo.png" />
+  <meta name="twitter:card" content="summary_large_image" />
 </head>
 <body class="mn-body">
   <header class="mn-top" role="banner">
@@ -20,21 +22,21 @@
       <a class="mn-brand" href="https://muonnoi.org/" rel="noopener">
         <span class="mn-mark" aria-hidden="true">MN</span>
         <span class="mn-brand__stack">
-          <span class="mn-brand__title" data-lang="vi">Chat Muon Noi</span>
-          <span class="mn-brand__title" data-lang="en">Chat Muon Noi</span>
+          <span class="mn-brand__title" data-lang="vi">Chat Muôn Nơi</span>
+          <span class="mn-brand__title" data-lang="en">Chat Muôn Nơi</span>
           <span class="mn-brand__sub" data-lang="vi">Chat mã hóa + nhóm gia đình</span>
           <span class="mn-brand__sub" data-lang="en">Encrypted chat + family groups</span>
         </span>
       </a>
       <div class="mn-top__actions">
-        <button class="mn-btn mn-btn--ghost" type="button" id="themeBtn" aria-label="Theme">◐</button>
+        <button class="mn-btn mn-btn--ghost" type="button" id="themeBtn" aria-label="Theme">D</button>
         <button class="mn-btn mn-btn--ghost" type="button" id="langBtn" aria-label="Language">VI</button>
         <button class="mn-burger" type="button" id="mnBurger" aria-label="Open menu"><span></span><span></span><span></span></button>
       </div>
     </div>
     <div class="mn-mobile" id="mnMobile" hidden>
       <a class="mn-mobile__item" href="https://app.muonnoi.org/">App</a>
-      <a class="mn-mobile__item" href="https://family.muonnoi.org/">Family</a>
+      <a class="mn-mobile__item" href="https://app.muonnoi.org/family/">Family</a>
     </div>
   </header>
 
@@ -74,7 +76,7 @@
                   <div class="mn-sub" style="margin:0;">
                     <span data-lang="vi">Mã vào nhóm</span>
                     <span data-lang="en">Join code</span>
-                    : <b id="chatJoinCode">—</b>
+                    : <b id="chatJoinCode">Pending</b>
                   </div>
                 </div>
               </div>
@@ -141,4 +143,3 @@
   <script src="/assets/chat.js?v=1.0.2" defer></script>
 </body>
 </html>
-
