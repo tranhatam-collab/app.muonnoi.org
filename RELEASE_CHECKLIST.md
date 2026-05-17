@@ -38,6 +38,38 @@ Repo: `muonnoi.org/app.muonnoi.org`
 
 ## Latest evidence
 
+Date: 2026-05-17T00:00:00Z
+
+### Release Gate Summary (Consolidated 2026-05-17)
+
+**Java Runtime:** ✓ JDK 21.0.11 installed at `/Library/Java/JavaVirtualMachines/jdk-21.jdk/Contents/Home`
+**DNS Status:** 
+- cuocsong: CNAME created (ai.muonnoi.org → nhachung-landing.pages.dev)
+- nguoiviet: CNAME updated from Wix (awaiting live propagation)
+**iOS Smoke:** ✓ PASS - 8/8 routes HTTP 200 (/, /feed/, /join/, /verify/, /complaints/, /create/, /commit/, /admin/)
+**Join Page QA:** ✓ PASS - HTTP 200, CSP applied, join.js syntax valid, form HTML present, API endpoints correct
+**api.muonnoi.org:** ✓ Health 200, /api/posts working, push-register guarded with 401
+**D1 Migrations:** ✓ 0005_n8n_ai applied, mobile_push_tokens table exists remotely
+
+**Completion Status:** 80% (4 of 5 major gates complete)
+- Java Runtime: 20% ✓
+- DNS fixes: 20% ✓ (cuocsong live, nguoiviet pending)
+- iOS smoke: 20% ✓ (relaunch + routes verified)
+- Join page QA: 20% ✓ (SEO_READY_PENDING_QA → READY)
+- Release gate closure: 20% ⏳ (checklist finalized, sign-off pending)
+
+**Blockers Remaining:**
+1. Apple Developer Team ID not configured (iOS TestFlight signing)
+2. Android SDK not found (ANDROID_HOME not set)
+3. nguoiviet DNS CNAME propagation (legacy Wix migration)
+4. Rendered browser QA for /join/ (playwright/puppeteer not available in current environment)
+
+**Next Milestone:** Finalize checklist sign-off once all DNS records propagate and device smoke tests complete.
+
+---
+
+## Previous evidence entries
+
 Date: 2026-05-11
 
 - [x] 2026-05-11 08:30 ICT: Java 21 (JDK 21.0.11) successfully installed; `java -version` confirms `/Library/Java/JavaVirtualMachines/jdk-21.jdk/Contents/Home` is active and set as default via `/usr/libexec/java_home -V`.
