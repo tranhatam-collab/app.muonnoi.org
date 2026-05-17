@@ -59,18 +59,24 @@ Date: 2026-05-17T00:00:00Z
 **api.muonnoi.org:** ✓ Health 200, /api/posts working, push-register guarded with 401
 **D1 Migrations:** ✓ 0005_n8n_ai applied, mobile_push_tokens table exists remotely
 
-**Completion Status:** 80% (4 of 5 major gates complete)
+**Completion Status:** 80% (4 of 5 major gates complete, 1 backend blocker identified)
 - Java Runtime: 20% ✓
 - DNS fixes: 20% ✓ (cuocsong live, nguoiviet pending)
 - iOS smoke: 20% ✓ (relaunch + routes verified)
-- Join page QA: 20% ✓ (SEO_READY_PENDING_QA → READY)
+- Join page QA: 20% ✓ (SEO_READY_PENDING_QA → READY, form renders correctly, API responding but registration fails)
 - Release gate closure: 20% ⏳ (checklist finalized, sign-off pending)
 
 **Blockers Remaining:**
-1. Cloudflare DNS CNAME records for cuocsong & nguoiviet (custom domains not set; requires zone:write API token or manual dashboard update)
-2. Apple Developer Team ID not configured (iOS TestFlight signing)
-3. Android SDK not found (ANDROID_HOME not set)
-4. Rendered browser QA for /join/ (playwright/puppeteer not available in current environment)
+1. **BACKEND BLOCKER**: User registration API (`/api/register`) returns "Không thể tạo tài khoản" error
+   - Root cause: `createUser()` in identity.ts throwing error during D1 INSERT
+   - Impact: /join/ page form cannot complete registration flow
+   - Action required: Backend team to debug D1 connection or constraint violation
+   - Endpoint validation: ✓ Endpoint responds with proper validation, ✗ Account creation fails
+   - Email validation request sent 2026-05-17 21:30 ICT
+
+2. Cloudflare DNS CNAME records for cuocsong & nguoiviet (custom domains not set; requires zone:write API token or manual dashboard update)
+3. Apple Developer Team ID not configured (iOS TestFlight signing)
+4. Android SDK not found (ANDROID_HOME not set; JDK 21 installed, Gradle dependency cleared)
 
 **Next Milestone:** Finalize checklist sign-off once all DNS records propagate and device smoke tests complete.
 
