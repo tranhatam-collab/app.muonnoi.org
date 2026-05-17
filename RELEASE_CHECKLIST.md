@@ -43,9 +43,11 @@ Date: 2026-05-17T00:00:00Z
 ### Release Gate Summary (Consolidated 2026-05-17)
 
 **Java Runtime:** ✓ JDK 21.0.11 installed at `/Library/Java/JavaVirtualMachines/jdk-21.jdk/Contents/Home`
-**DNS Status:** 
-- cuocsong: CNAME created (ai.muonnoi.org → nhachung-landing.pages.dev)
-- nguoiviet: CNAME updated from Wix (awaiting live propagation)
+**DNS Status:** PENDING - Manual Cloudflare dashboard update required
+- cuocsong.muonnoi.org: Pages project exists (cuocsong-muonnoi-org.pages.dev) but custom domain CNAME NOT SET (dig returns empty)
+- nguoiviet.muonnoi.org: Currently points to pointing.wixdns.net (Wix legacy); needs CNAME → nguoiviet-muonnoi-org.pages.dev
+- www.nguoiviet.muonnoi.org: Also points to 34.149.87.45 (Wix); needs CNAME update to Cloudflare Pages
+- Action: Add/update CNAME records via Cloudflare dashboard (zone:write API token not available)
 **iOS Simulator Smoke:** ✓ PASS - build succeeded, relaunch verified, routes launchable
 - Build: ✓ `npm run build:ios:sim` completed with "BUILD SUCCEEDED"
 - Simulator: ✓ iPhone 17 Pro booted and ready (Device ID A75E1DC6-7AAF-47EC-8D30-2DDE3ECAA40D)
@@ -65,9 +67,9 @@ Date: 2026-05-17T00:00:00Z
 - Release gate closure: 20% ⏳ (checklist finalized, sign-off pending)
 
 **Blockers Remaining:**
-1. Apple Developer Team ID not configured (iOS TestFlight signing)
-2. Android SDK not found (ANDROID_HOME not set)
-3. nguoiviet DNS CNAME propagation (legacy Wix migration)
+1. Cloudflare DNS CNAME records for cuocsong & nguoiviet (custom domains not set; requires zone:write API token or manual dashboard update)
+2. Apple Developer Team ID not configured (iOS TestFlight signing)
+3. Android SDK not found (ANDROID_HOME not set)
 4. Rendered browser QA for /join/ (playwright/puppeteer not available in current environment)
 
 **Next Milestone:** Finalize checklist sign-off once all DNS records propagate and device smoke tests complete.
@@ -78,6 +80,7 @@ Date: 2026-05-17T00:00:00Z
 
 Date: 2026-05-17
 
+- [ ] 2026-05-17 13:45 ICT: DNS investigation found Pages projects exist but custom domains need CNAME records. Wrangler CLI confirmed: `cuocsong-muonnoi-org` (only has .pages.dev), `nguoiviet-muonnoi-org` (only has .pages.dev). Dig results: cuocsong returns empty (no CNAME), nguoiviet returns 34.149.87.45 (Wix pointing.wixdns.net). Required action: Create cuocsong CNAME and update nguoiviet CNAME via Cloudflare dashboard (OAuth token has pages:write but not zone:write; browser dashboard experiencing loading issues).
 - [x] 2026-05-17 09:35 ICT: iOS simulator smoke tests PASSED; `npm run build:ios:sim` completed with "** BUILD SUCCEEDED **"; app binary at `/Users/tranhatam/Library/Developer/Xcode/DerivedData/App-fgvcsahrmrgrnmdghebnfjkdqcve/Build/Products/Debug-iphonesimulator/App.app` with Capacitor and Cordova frameworks bundled.
 - [x] 2026-05-17 09:36 ICT: iPhone 17 Pro simulator booted successfully (Device ID A75E1DC6-7AAF-47EC-8D30-2DDE3ECAA40D); xcrun simctl list devices confirmed status "Booted".
 - [x] 2026-05-17 09:37 ICT: App bundle org.muonnoi.app installed on iPhone 17 Pro simulator via `xcrun simctl install`; installation exit code 0 (success).
